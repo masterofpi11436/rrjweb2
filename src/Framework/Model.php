@@ -19,8 +19,8 @@ abstract class Model
     // Using dependancy injection to get the database object
     public function __construct(protected Database $db){}
 
-    // Placeholder method to be overridden in child classes for name validation
-    protected function validateName(array $data): void{}
+    // Placeholder method to be overridden in child classes for empty fields
+    protected function validateNull(array $data): void{}
 
     // Dynamically get the table name based on the class name
     protected function getTableName(): string
