@@ -8,14 +8,12 @@ $router = new Framework\Router;
 
 $router->add("/tablets/all", ["controller" => "tablets", "action" => "viewall"]);
 $router->add("/tablets/add", ["controller" => "tablets", "action" => "addNewTablet"]);
-$router->add("/tablets/one/{id:\d+}", ["controller" => "tablets", "action" => "viewone"]);
 $router->add("/tablets/create", ["controller" => "tablets", "action" => "create", "method" => "post"]);
-
-
-// $router->add("/product/add/{id:\d+}", ["controller" => "products", "action" => "addNewProduct"]);
-// $router->add("/product/edit/{id:\d+}", ["controller" => "products", "action" => "editProduct"]);
-// $router->add("/product/delete/{id:\d+}", ["controller" => "products", "action" => "deleteProduct"]);
-// $router->add("/product/destroy/{id:\d+}", ["controller" => "products", "action" => "destroyProduct", "method" => "post"]);
+$router->add("/tablets/one/{id:\d+}", ["controller" => "tablets", "action" => "viewone"]);
+$router->add("/tablets/edit/{id:\d+}", ["controller" => "tablets", "action" => "editTablet"]);
+$router->add("/tablets/update/{id:\d+}", ["controller" => "tablets", "action" => "updateTablet", "method" => "post"]);
+$router->add("/tablets/delete/{id:\d+}", ["controller" => "tablets", "action" => "deleteTablet"]);
+$router->add("/tablets/destroy/{id:\d+}", ["controller" => "tablets", "action" => "destroyTablet", "method" => "post"]);
 
 // Blanket Route
 // $router->add("/{controller}/{action}");

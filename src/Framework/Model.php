@@ -128,7 +128,7 @@ abstract class Model
     public function updateRecord(string $id, array $data): bool
     {
         // Validate the data
-        $this->validateName($data);
+        $this->validateForm($data);
 
         if (!empty($this->errorMessage)) {
 

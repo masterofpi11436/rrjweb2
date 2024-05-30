@@ -14,7 +14,7 @@ class Tablet extends Model
     protected $table = "tablet";
 
     // Validate the inamte number and last name fields to allow minumum information to look up person.
-    protected function validateNull(array $data): void
+    protected function validateForm(array $data): void
     {
         if (empty($data["inmate_number"])) {
 

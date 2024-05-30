@@ -1,5 +1,5 @@
 <a href="/tablets/all">Home</a>
-<a href="/tablets/edittablets/<?= $tablet["id"] ?>">Edit Product</a>
+<a href="/tablets/edit/<?= htmlspecialchars($tablet['id']) ?>">Edit Tablet</a>
 
 <p>Inmate Number: <?= htmlspecialchars($tablet["inmate_number"]) ?></p>
 <p>First Name: <?= htmlspecialchars($tablet["first_name"]) ?></p>

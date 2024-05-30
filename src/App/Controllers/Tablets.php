@@ -86,7 +86,7 @@ class Tablets extends Controller
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Tablet", "heading" => "Add Tablet"]));
 
         // Render the form for adding a new tablet
-        $this->response->appendBody($this->viewer->render("Tablets/form.php"));
+        $this->response->appendBody($this->viewer->render("Tablets/add_tablet.php"));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
@@ -116,7 +116,7 @@ class Tablets extends Controller
         // Attempt to insert the new tablet record
         if ($this->model->insertRecord($data)) {
             // Redirect to the newly created tablet's page
-            return $this->redirect("/tablets/viewOne/{$this->model->getInsertID()}");
+            return $this->redirect("/tablets/one/{$this->model->getInsertID()}");
         } else {
             // Render the form again with error messages
             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Tablet", "heading" => "Add Tablet"]));
@@ -140,7 +140,7 @@ class Tablets extends Controller
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Tablet", "heading" => "Edit Tablet"]));
 
-        // Render the one tablet view
+        // Render the edit tablet view
         $this->response->appendBody($this->viewer->render("Tablets/edit_tablet.php", ["tablet" => $tablet]));
 
         // Render the footer
@@ -171,7 +171,7 @@ class Tablets extends Controller
         if ($this->model->updateRecord($id, $tablet)) {
 
             // Redirect to the newly created tablet's page
-            return $this->redirect("/tabletts/viewone/{$id}");
+            return $this->redirect("/tablets/one/{$id}");
 
         } else {
 
@@ -219,6 +219,6 @@ class Tablets extends Controller
 
         $this->model->deleteRecord($id);
 
-        return $this->redirect("/tablets/viewall");
+        return $this->redirect("/tablets/all");
     }
 }

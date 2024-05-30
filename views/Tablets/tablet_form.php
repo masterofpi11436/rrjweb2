@@ -20,7 +20,7 @@
 
 <div>
     <label for="date_found">Date Found:</label>
-    <input type="date" id="date_found" name="date_found" value="<?= isset($tablet) ? htmlspecialchars($tablet['date_found']) : '' ?>">
+    <input type="date" id="date_found" name="date_found" value="<?= htmlspecialchars($tablet['date_found'] ?? '') ?>">
 </div>
 
 <div>
