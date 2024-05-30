@@ -26,4 +26,19 @@ class Tablet extends Model
             $this->addError("last_name", "Last name is required!");
         }
     }
+
+    public function searchTablets(string $search): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE inmate_number LIKE :search OR first_name LIKE :search OR last_name LIKE :search";
+        $stmt = $conn->prepare($sql);
+
+        $searchTerm = '%' . $search . '%';
+        $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

@@ -4,19 +4,19 @@
 </div>
 
 <div>
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['last_name']) : '' ?>" required>
+</div>
+
+<div>
     <label for="first_name">First Name:</label>
     <input type="text" id="first_name" name="first_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['first_name']) : '' ?>" required>
 </div>
 
-<div>
+<!-- <div>
     <label for="middle_name">Middle Name:</label>
     <input type="text" id="middle_name" name="middle_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['middle_name']) : '' ?>">
-</div>
-
-<div>
-    <label for="last_name">Last Name:</label>
-    <input type="text" id="last_name" name="last_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['last_name']) : '' ?>" required>
-</div>
+</div> -->
 
 <div>
     <label for="date_found">Date Found:</label>
@@ -24,7 +24,7 @@
 </div>
 
 <div>
-    <label for="is_reported">Is Reported:</label>
+    <label for="is_reported">101 Charge:</label>
     <input type="checkbox" id="is_reported" name="is_reported" <?= isset($tablet) && $tablet['is_reported'] ? 'checked' : '' ?>>
 </div>
 

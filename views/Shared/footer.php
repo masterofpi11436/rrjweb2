@@ -1,3 +1,3 @@
-<p>Created by: <?= $creator ?></p>
+<!-- <p>Created by: <?= $creator ?></p> -->
 </body>
 </html>

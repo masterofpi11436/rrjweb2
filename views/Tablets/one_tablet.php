@@ -6,5 +6,7 @@
 <p>Middle Name: <?= empty($tablet["middle_name"]) ? 'None' : htmlspecialchars($tablet["middle_name"]) ?></p>
 <p>Last Name: <?= htmlspecialchars($tablet["last_name"]) ?></p>
 <p>Date Found: <?= empty($tablet["date_found"]) ? 'No date' : htmlspecialchars($tablet["date_found"]) ?></p>
-<p>Reported: <?= $tablet["is_reported"] ? 'Reported' : 'Not Reported' ?></p>
-<p>Charged: <?= $tablet["is_charged"] ? 'Charged' : 'Not Charged' ?></p>
+<p>Incident Report: <?= $tablet["is_reported"] ? 'Reported' : 'Not Filed' ?></p>
+<p>Filed with Inmate Accounts: <?= $tablet["is_charged"] ? 'Charged' : 'Not Charged' ?></p>
+<p>Charged Finaclially: Charged or not</p>
+<p>Paid off: Inmate has paid bill or inmate has not paid bill</p>

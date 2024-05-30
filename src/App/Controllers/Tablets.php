@@ -45,14 +45,29 @@ class Tablets extends Controller
     }
 
     /**
-     * Displays all inmates.
+     * Displays all inmates or search results.
      */
     public function viewAll(): Response
     {
-        $tablets = $this->model->getAll();
+        $search = $this->request->get['search'] ?? '';
+
+        if ($search) {
+            // Perform search query
+            $tablets = $this->model->searchTablets($search);
+        } else {
+            // Retrieve all records if no search query
+            $tablets = $this->model->getAll();
+        }
+
+        // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Tablets", "heading" => "All Tablets"]));
+
+        // Render the all tablets view
         $this->response->appendBody($this->viewer->render("Tablets/all_tablets.php", ["tablets" => $tablets]));
+
+        // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
         return $this->response;
     }
 
