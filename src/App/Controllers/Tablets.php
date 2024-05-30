@@ -85,8 +85,8 @@ class Tablets extends Controller
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Tablet", "heading" => "Add Tablet"]));
 
-        // Render the new tablet form
-        $this->response->appendBody($this->viewer->render("Tablets/new_tablet.php"));
+        // Render the form for adding a new tablet
+        $this->response->appendBody($this->viewer->render("Tablets/form.php"));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
@@ -99,33 +99,34 @@ class Tablets extends Controller
      */
     public function create()
     {
+        // Debugging: Check if the method is called
+        echo "Create method called";
+
         // Get the form data
-        $data = ["inmate_number" => $this->request->post["inmate_number"],
-                 "first_name" => empty($this->request->post["first_name"]) ? null : $this->request->post["first_name"],
-                 "middle_name" => empty($this->request->post["middle_name"]) ? null : $this->request->post["middle_name"],
-                 "last_name" => $this->request->post["last_name"],
-                 "date_found" => empty($this->request->post["date_found"]) ? null : $this->request->post["date_found"],
-                 "is_reported" => isset($this->request->post["is_reported"]) ? 1 : 0,
-                 "is_charged" => isset($this->request->post["is_charged"]) ? 1 : 0];
+        $data = [
+            "inmate_number" => $this->request->post["inmate_number"],
+            "first_name" => empty($this->request->post["first_name"]) ? null : $this->request->post["first_name"],
+            "middle_name" => empty($this->request->post["middle_name"]) ? null : $this->request->post["middle_name"],
+            "last_name" => $this->request->post["last_name"],
+            "date_found" => empty($this->request->post["date_found"]) ? null : $this->request->post["date_found"],
+            "is_reported" => isset($this->request->post["is_reported"]) ? 1 : 0,
+            "is_charged" => isset($this->request->post["is_charged"]) ? 1 : 0
+        ];
 
         // Attempt to insert the new tablet record
         if ($this->model->insertRecord($data)) {
-
             // Redirect to the newly created tablet's page
             return $this->redirect("/tablets/viewOne/{$this->model->getInsertID()}");
-
         } else {
-
             // Render the form again with error messages
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Inmate", "heading" => "Add Inmate"]));
-
-            $this->response->appendBody($this->viewer->render("Tablets/new_tablet.php", ["errorMessage" => $this->model->getErrors(), "tablet" => $data]));
-    
+            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Tablet", "heading" => "Add Tablet"]));
+            $this->response->appendBody($this->viewer->render("Tablets/form.php", ["errorMessage" => $this->model->getErrors(), "tablet" => $data]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
             return $this->response;
         }
     }
+
 
     /**
      * Renders the form to edit an existing tablet.
@@ -160,19 +161,11 @@ class Tablets extends Controller
         // Get the form data
         $tablet["inmate_number"] = $this->request->post["inmate_number"];
         $tablet["first_name"] = $this->request->post["first_name"];
-        $tablet["middle_name"] = $this->request->post["middle_name"];
+        $tablet["middle_name"] = empty($this->request->post["middle_name"]) ? null : $this->request->post["middle_name"];
         $tablet["last_name"] = $this->request->post["last_name"];
-        $tablet["date_found"] = $this->request->post["date_found"];
-        $tablet["is_reported"] = $this->request->post["is_reported"];
-        $tablet["is_charged"] = empty($this->request->post["description"]) ? null : $this->request->post["description"];
-
-        "inmate_number" => $this->request->post["inmate_number"],
-                 "first_name" => empty($this->request->post["first_name"]) ? null : $this->request->post["first_name"],
-                 "middle_name" => empty($this->request->post["middle_name"]) ? null : $this->request->post["middle_name"],
-                 "last_name" => $this->request->post["last_name"],
-                 "date_found" => empty($this->request->post["date_found"]) ? null : $this->request->post["date_found"],
-                 "is_reported" => isset($this->request->post["is_reported"]) ? 1 : 0,
-                 "is_charged" => isset($this->request->post["is_charged"]) ? 1 : 0
+        $tablet["date_found"] = empty($this->request->post["date_found"]) ? null : $this->request->post["date_found"];
+        $tablet["is_reported"] = isset($this->request->post["is_reported"]) ? 1 : 0;
+        $tablet["is_charged"] = isset($this->request->post["is_charged"]) ? 1 : 0;
 
         // Attempt to insert the new tablet record
         if ($this->model->updateRecord($id, $tablet)) {

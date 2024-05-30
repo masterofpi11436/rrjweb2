@@ -90,7 +90,7 @@ abstract class Model
     public function insertRecord($data): bool
     {
         // Validate the data
-        $this->validateName($data);
+        $this->validateNull($data);
 
         if (!empty($this->errorMessage)) {
 

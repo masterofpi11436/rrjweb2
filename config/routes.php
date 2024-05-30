@@ -6,7 +6,11 @@ $router = new Framework\Router;
 // Routing table
 // $router->add("/", ["controller" => "home", "action" => "homepage"]);
 
-$router->add("/tablets/all/", ["controller" => "tablets", "action" => "viewall"]);
+$router->add("/tablets/all", ["controller" => "tablets", "action" => "viewall"]);
+$router->add("/tablets/add", ["controller" => "tablets", "action" => "addNewTablet"]);
+$router->add("/tablets/one/{id:\d+}", ["controller" => "tablets", "action" => "viewone"]);
+$router->add("/tablets/create", ["controller" => "tablets", "action" => "create", "method" => "post"]);
+
 
 // $router->add("/product/add/{id:\d+}", ["controller" => "products", "action" => "addNewProduct"]);
 // $router->add("/product/edit/{id:\d+}", ["controller" => "products", "action" => "editProduct"]);
