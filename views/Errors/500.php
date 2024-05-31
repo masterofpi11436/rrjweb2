@@ -9,8 +9,8 @@
     <h1>The website is not working</h1>
     <h2>Next Steps:</h2>
     <ol>
-        <li>Call MIU and tell them the website is not working</li>
-        <li>Wait until it works</li>
+        <li>Call MIU and tell them the SQL Server is not running.</li>
+        <li>Call 6035 first, then call 6024</li>
     </ol>
 </body>
 </html>

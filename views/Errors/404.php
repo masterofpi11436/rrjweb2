@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>ERROR 404</h1>
-    <h1>The page you are looking for is not working</h1>
-    <a href="/">Home Page</a>
+    <h1>The page you are looking for does not exist.</h1>
+    <a href="/login">Login Page</a>
 </body>
 </html>
