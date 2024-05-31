@@ -1,6 +1,10 @@
-<a href="/tablets/one/<?= $tablet["id"] ?>">Cancel</a>
+<form action="/tablets/one/<?= $tablet["id"] ?>">
+    <button>Cancel</button>
+</form>
 
-<a href="/tablets/delete/<?= htmlspecialchars($tablet['id']) ?>">Delete Tablet</a>
+<form action="/tablets/delete/<?= htmlspecialchars($tablet['id']) ?>">
+    <button>Delete Tablet</button>
+</form>
 
 <form method="post" action="/tablets/update/<?= htmlspecialchars($tablet['id']) ?>">
     <?php require "tablet_form.php"; ?>

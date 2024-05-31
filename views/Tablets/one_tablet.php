@@ -1,5 +1,10 @@
-<a href="/tablets/all">Home</a>
-<a href="/tablets/edit/<?= htmlspecialchars($tablet['id']) ?>">Edit Tablet</a>
+<form action="/tablets/all">
+    <button>Home</button>
+</form>
+
+<form action="/tablets/edit/<?= htmlspecialchars($tablet['id']) ?>">
+    <button>Edit Tablet</button>
+</form>
 
 <table>
     <tr>
