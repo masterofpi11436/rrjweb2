@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 31, 2024 at 04:25 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: May 31, 2024 at 09:37 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -47,7 +47,8 @@ CREATE TABLE `tablet` (
 INSERT INTO `tablet` (`id`, `inmate_number`, `first_name`, `middle_name`, `last_name`, `date_found`, `is_reported`, `is_filed`, `is_charged`, `is_paid`) VALUES
 (1, 36096, 'LEONARD', 'BRANDON', 'BOGAN', '2024-05-01', 0, 0, 1, 1),
 (3, 81857, 'ALEXANDER', NULL, 'NELSON', NULL, 0, 0, 0, 0),
-(4, 12345, 'Mark', 'Andrew', 'Tuggle', '2024-05-29', 0, 0, 0, 0);
+(4, 12345, 'Mark', 'Andrew', 'Tuggle', '2024-05-29', 0, 0, 1, 1),
+(11, 123423, 'aslkdfjh', 'askldfjh', 'asdflkj', NULL, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -96,7 +97,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `tablet`
 --
 ALTER TABLE `tablet`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user`
