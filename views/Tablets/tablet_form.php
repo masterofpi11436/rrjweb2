@@ -13,10 +13,10 @@
     <input type="text" id="first_name" name="first_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['first_name']) : '' ?>" required>
 </div>
 
-<!-- <div>
+<div>
     <label for="middle_name">Middle Name:</label>
     <input type="text" id="middle_name" name="middle_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['middle_name']) : '' ?>">
-</div> -->
+</div>
 
 <div>
     <label for="date_found">Date Found:</label>
@@ -29,8 +29,18 @@
 </div>
 
 <div>
-    <label for="is_charged">Is Charged:</label>
+    <label for="is_filed">Filed With Inmate Accounts:</label>
+    <input type="checkbox" id="is_filed" name="is_filed" <?= isset($tablet) && $tablet['is_filed'] ? 'checked' : '' ?>>
+</div>
+
+<div>
+    <label for="is_charged">Charged By Inmate Accounts:</label>
     <input type="checkbox" id="is_charged" name="is_charged" <?= isset($tablet) && $tablet['is_charged'] ? 'checked' : '' ?>>
+</div>
+
+<div>
+    <label for="is_paid">Payment Status:</label>
+    <input type="checkbox" id="is_paid" name="is_paid" <?= isset($tablet) && $tablet['is_paid'] ? 'checked' : '' ?>>
 </div>
 
 <div>
