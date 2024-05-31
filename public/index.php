@@ -5,6 +5,11 @@ declare(strict_types=1);
 
 // Front controller
 
+// Start the session if it has not started
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 define("ROOT_PATH", dirname(__DIR__));
 
 // Autoload the required classes

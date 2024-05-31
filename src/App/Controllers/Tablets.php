@@ -114,9 +114,6 @@ class Tablets extends Controller
      */
     public function create()
     {
-        // Debugging: Check if the method is called
-        echo "Create method called";
-
         // Get the form data
         $data = [
             "inmate_number" => $this->request->post["inmate_number"],

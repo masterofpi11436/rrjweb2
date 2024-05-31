@@ -3,7 +3,8 @@
 return [
     "message" => \App\Middleware\ChangeResponseExample::class,
     "trim" => \App\Middleware\ChangeRequestExample::class,
-    "deny" => \App\Middleware\RedirectExample::class
+    "deny" => \App\Middleware\RedirectExample::class,
+    "auth" => \App\Middleware\UserAuthorization::class
 ];
 
 // "message" appends a message
