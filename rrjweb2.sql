@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2024 at 09:57 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: May 31, 2024 at 04:25 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,16 +35,19 @@ CREATE TABLE `tablet` (
   `last_name` varchar(255) NOT NULL,
   `date_found` date DEFAULT NULL,
   `is_reported` tinyint(1) NOT NULL,
-  `is_charged` tinyint(1) NOT NULL
+  `is_filed` tinyint(1) NOT NULL,
+  `is_charged` tinyint(1) NOT NULL,
+  `is_paid` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tablet`
 --
 
-INSERT INTO `tablet` (`id`, `inmate_number`, `first_name`, `middle_name`, `last_name`, `date_found`, `is_reported`, `is_charged`) VALUES
-(1, 36096, 'LEONARD', 'BRANDON', 'BOGAN', NULL, 0, 0),
-(3, 81857, 'ALEXANDER', NULL, 'NELSON', NULL, 0, 0);
+INSERT INTO `tablet` (`id`, `inmate_number`, `first_name`, `middle_name`, `last_name`, `date_found`, `is_reported`, `is_filed`, `is_charged`, `is_paid`) VALUES
+(1, 36096, 'LEONARD', 'BRANDON', 'BOGAN', '2024-05-01', 0, 0, 1, 1),
+(3, 81857, 'ALEXANDER', NULL, 'NELSON', NULL, 0, 0, 0, 0),
+(4, 12345, 'Mark', 'Andrew', 'Tuggle', '2024-05-29', 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -93,7 +96,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `tablet`
 --
 ALTER TABLE `tablet`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`
