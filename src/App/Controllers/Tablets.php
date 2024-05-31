@@ -124,10 +124,10 @@ class Tablets extends Controller
             "middle_name" => empty($this->request->post["middle_name"]) ? null : $this->request->post["middle_name"],
             "last_name" => $this->request->post["last_name"],
             "date_found" => empty($this->request->post["date_found"]) ? null : $this->request->post["date_found"],
-            $tablet["is_reported"] = isset($this->request->post["is_reported"]) ? 1 : 0,
-            $tablet["is_filed"] = isset($this->request->post["is_filed"]) ? 1 : 0,
-            $tablet["is_charged"] = isset($this->request->post["is_charged"]) ? 1 : 0,
-            $tablet["is_paid"] = isset($this->request->post["is_paid"]) ? 1 : 0
+            "is_reported" => isset($this->request->post["is_reported"]) ? 1 : 0,
+            "is_filed" => isset($this->request->post["is_filed"]) ? 1 : 0,
+            "is_charged" => isset($this->request->post["is_charged"]) ? 1 : 0,
+            "is_paid" => isset($this->request->post["is_paid"]) ? 1 : 0
         ];
 
         // Attempt to insert the new tablet record
@@ -247,13 +247,14 @@ class Tablets extends Controller
     // View all in a table
     public function reportAll(): Response
     {
-        $tablet = $this->getTabletID($id);
+        // Get all the tablet records
+        $tablets = $this->model->getAll();
 
         // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Showing One Tablet", "heading" => "Showing One Tablet"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Tablet Status", "heading" => "Current Tablet Status"]));
     
         // Render the one tablet view
-        $this->response->appendBody($this->viewer->render("Tablets/one_tablet.php", ["tablet" => $tablet]));
+        $this->response->appendBody($this->viewer->render("Tablets/Reports/view_all.php", ["tablets" => $tablets]));
     
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));

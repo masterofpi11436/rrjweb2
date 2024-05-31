@@ -120,7 +120,7 @@ abstract class Model
 
             $stmt->bindValue($i++, $value, $type);
 
-        }
+        }    
 
         return $stmt->execute();
     }

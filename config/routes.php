@@ -6,6 +6,7 @@ $router = new Framework\Router;
 // Routing table
 // $router->add("/", ["controller" => "home", "action" => "homepage"]);
 
+// Admin Pages
 $router->add("/tablets/all", ["controller" => "tablets", "action" => "viewall"]);
 $router->add("/tablets/add", ["controller" => "tablets", "action" => "addNewTablet"]);
 $router->add("/tablets/create", ["controller" => "tablets", "action" => "create", "method" => "post"]);
@@ -14,6 +15,9 @@ $router->add("/tablets/edit/{id:\d+}", ["controller" => "tablets", "action" => "
 $router->add("/tablets/update/{id:\d+}", ["controller" => "tablets", "action" => "updateTablet", "method" => "post"]);
 $router->add("/tablets/delete/{id:\d+}", ["controller" => "tablets", "action" => "deleteTablet"]);
 $router->add("/tablets/destroy/{id:\d+}", ["controller" => "tablets", "action" => "destroyTablet", "method" => "post"]);
+
+// Report Views
+$router->add("/tablets/reportall", ["controller" => "tablets", "action" => "reportAll"]);
 
 // Blanket Route
 // $router->add("/{controller}/{action}");

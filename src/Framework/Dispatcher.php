@@ -59,18 +59,13 @@ class Dispatcher
         $args = $this->getActionArguments($controller, $action, $params);
         
         // Create a controller request handler.
-        $controller_handler = new ControllerRequestHandler($controller_object,
-                                                           $action,
-                                                           $args);
+        $controller_handler = new ControllerRequestHandler($controller_object, $action, $args);
 
         // Get the middleware for the current route.
         $middleware = $this->getMiddleware($params);
 
         // Create a middleware request handler.
-        $middleware_handler = new MiddlewareRequestHandler($middleware,
-                                                           $controller_handler);
-
-                                                           // Handle the request and return the response.
+        $middleware_handler = new MiddlewareRequestHandler($middleware, $controller_handler); // Handle the request and return the response.
         return $middleware_handler->handle($request);
     }
 

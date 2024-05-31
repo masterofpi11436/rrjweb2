@@ -1,12 +1,41 @@
 <a href="/tablets/all">Home</a>
 <a href="/tablets/edit/<?= htmlspecialchars($tablet['id']) ?>">Edit Tablet</a>
 
-<p>Inmate Number: <?= htmlspecialchars($tablet["inmate_number"]) ?></p>
-<p>First Name: <?= htmlspecialchars($tablet["first_name"]) ?></p>
-<p>Middle Name: <?= empty($tablet["middle_name"]) ? 'None' : htmlspecialchars($tablet["middle_name"]) ?></p>
-<p>Last Name: <?= htmlspecialchars($tablet["last_name"]) ?></p>
-<p>Date Found: <?= empty($tablet["date_found"]) ? 'No date' : htmlspecialchars($tablet["date_found"]) ?></p>
-<p>101 Incident Report: <?= $tablet["is_reported"] ? 'Reported' : 'Not Filed' ?></p>
-<p>Filed With Inmate Accounts: <?= $tablet["is_filed"] ? 'Filed' : 'Not Filed' ?></p>
-<p>Charged By Inmate Accountes: <?= $tablet["is_charged"] ? 'Charged' : 'Not Charged' ?></p>
-<p>Payment Status: <?= $tablet["is_paid"] ? 'Account Paid' : 'Owes $300 for Tablet' ?></p>
+<table>
+    <tr>
+        <th>Inmate Number</th>
+        <td><?= htmlspecialchars($tablet["inmate_number"]) ?></td>
+    </tr>
+    <tr>
+        <th>First Name</th>
+        <td><?= htmlspecialchars($tablet["first_name"]) ?></td>
+    </tr>
+    <tr>
+        <th>Middle Name</th>
+        <td><?= empty($tablet["middle_name"]) ? 'None' : htmlspecialchars($tablet["middle_name"]) ?></td>
+    </tr>
+    <tr>
+        <th>Last Name</th>
+        <td><?= htmlspecialchars($tablet["last_name"]) ?></td>
+    </tr>
+    <tr>
+        <th>Date Found</th>
+        <td><?= empty($tablet["date_found"]) ? 'No date' : htmlspecialchars($tablet["date_found"]) ?></td>
+    </tr>
+    <tr>
+        <th>101 Incident Report</th>
+        <td><?= $tablet["is_reported"] ? 'Reported' : 'Not Filed' ?></td>
+    </tr>
+    <tr>
+        <th>Filed With Inmate Accounts</th>
+        <td><?= $tablet["is_filed"] ? 'Filed' : 'Not Filed' ?></td>
+    </tr>
+    <tr>
+        <th>Charged By Inmate Accounts</th>
+        <td><?= $tablet["is_charged"] ? 'Charged' : 'Not Charged' ?></td>
+    </tr>
+    <tr>
+        <th>Payment Status</th>
+        <td><?= $tablet["is_paid"] ? 'Account Paid' : 'Owes $300 for Tablet' ?></td>
+    </tr>
+</table>
