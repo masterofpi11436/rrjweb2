@@ -10,7 +10,7 @@ $router = new Framework\Router;
 $router->add("/login", ["controller" => "users", "action" => "login"]);
 $router->add("/login/auth", ["controller" => "users", "action" => "auth", "method" => "post"]);
 
-// Admin Pages
+// Admin Pages (Tablet)
 $router->add("/tablets/all", ["controller" => "tablets", "action" => "viewall", "middleware" => "auth"]);
 $router->add("/tablets/add", ["controller" => "tablets", "action" => "addNewTablet", "middleware" => "auth"]);
 $router->add("/tablets/create", ["controller" => "tablets", "action" => "create", "method" => "post", "middleware" => "auth"]);
@@ -20,12 +20,24 @@ $router->add("/tablets/update/{id:\d+}", ["controller" => "tablets", "action" =>
 $router->add("/tablets/delete/{id:\d+}", ["controller" => "tablets", "action" => "deleteTablet", "middleware" => "auth"]);
 $router->add("/tablets/destroy/{id:\d+}", ["controller" => "tablets", "action" => "destroyTablet", "method" => "post", "middleware" => "auth"]);
 
-// Report Views
+// Report Views (Tablets)
 $router->add("/tablets/reportall", ["controller" => "tablets", "action" => "reportAll"]);
+
+// Admin Pages (Phone Listings)
+$router->add("/phones/all", ["controller" => "phones", "action" => "viewAll"]);
+$router->add("/phones/add", ["controller" => "phones", "action" => "addNewPhone"]);
+$router->add("/phones/create", ["controller" => "phones", "action" => "create", "method" => "post"]);
+$router->add("/phones/one/{id:\d+}", ["controller" => "phones", "action" => "viewone"]);
+$router->add("/phones/edit/{id:\d+}", ["controller" => "phones", "action" => "editPhone"]);
+$router->add("/phones/update/{id:\d+}", ["controller" => "phones", "action" => "updatePhone", "method" => "post"]);
+$router->add("/phones/delete/{id:\d+}", ["controller" => "phones", "action" => "deletePhone"]);
+$router->add("/phones/destroy/{id:\d+}", ["controller" => "phones", "action" => "destroyPhone", "method" => "post"]);
+
+// Report Views (Phone Listings)
+$router->add("/phones/reportall", ["controller" => "phones", "action" => "reportAll"]);
 
 // Blanket Route
 // $router->add("/{controller}/{action}");
 // $router->add("/{controller}/{action}/{id:\d+}");
-
 
 return $router;

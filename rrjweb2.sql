@@ -45,10 +45,9 @@ CREATE TABLE `tablet` (
 --
 
 INSERT INTO `tablet` (`id`, `inmate_number`, `first_name`, `middle_name`, `last_name`, `date_found`, `is_reported`, `is_filed`, `is_charged`, `is_paid`) VALUES
-(1, 36096, 'LEONARD', 'BRANDON', 'BOGAN', '2024-05-01', 0, 0, 1, 1),
-(3, 81857, 'ALEXANDER', NULL, 'NELSON', NULL, 0, 0, 0, 0),
-(4, 12345, 'Mark', 'Andrew', 'Tuggle', '2024-05-29', 0, 0, 1, 1),
-(11, 123423, 'aslkdfjh', 'askldfjh', 'asdflkj', NULL, 0, 0, 0, 0);
+(1, 89475, 'LastName', 'FirstName', 'MiddleName', '2024-05-01', 0, 0, 1, 1),
+(2, 89764, 'Smith', 'John', 'Andrew', '2024-01-22', 0, 0, 0, 0),
+(3, 06586, 'Doe', 'Jane', 'Smith', NULL, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 

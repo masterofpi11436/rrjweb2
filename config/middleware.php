@@ -10,3 +10,4 @@ return [
 // "message" appends a message
 // "trim" trims the leading and trailing spaces for the post
 // "deny" redirects the user to a specified URL
+// "auth" verifies the authenticated user
