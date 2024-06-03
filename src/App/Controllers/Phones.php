@@ -164,29 +164,29 @@ class Phones extends Controller
      *phone
      * @param string $id The phone ID
      */
-    public function updatePhone(string $id)
+    public function updatePhone(string $id): Response
     {
+        // Retrieve the phone record
         $phone = $this->getPhoneID($id);
 
-        // Get the form data
+        // Get the form data and set empty fields to null
         $phone["name"] = $this->request->post["name"];
         $phone["title"] = $this->request->post["title"];
-        $phone["section"] = empty($this->request->post["section"]) ? null : $this->request->post["section"];
+        $phone["section"] = $this->request->post["section"];
         $phone["extension"] = $this->request->post["extension"];
 
-        // Attempt to insert the new phone record
+        error_log(print_r($phone, true)); // Log the phone data to be updated
+
+        // Attempt to update the phone record
         if ($this->model->updateRecord($id, $phone)) {
 
-            // Redirect to the newly created phone's page
+            // Redirect to the newly created tablet's page
             return $this->redirect("/phones/one/{$id}");
-
         } else {
 
-            // Render the form again with error messages
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Listing", "heading" => "Edit Listing"]));
-
+            // Render the form again with error messages if update fails
+            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Phone", "heading" => "Edit Phone"]));
             $this->response->appendBody($this->viewer->render("Phones/edit_phone.php", ["errorMessage" => $this->model->getErrors(), "phone" => $phone]));
-    
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
             return $this->response;

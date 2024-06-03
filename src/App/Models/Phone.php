@@ -16,14 +16,14 @@ class Phone extends Model
     // Validate the inamte number and last name fields to allow minumum information to look up person.
     protected function validateForm(array $data): void
     {
-        if (empty($data["inmate_number"])) {
+        if (empty($data["name"])) {
 
-            $this->addError("inmate_number", "Inmate number is required!");
+            $this->addError("name", "Name is required!");
         }
 
-        if (empty($data["last_name"])) {
+        if (empty($data["extension"])) {
 
-            $this->addError("last_name", "Last name is required!");
+            $this->addError("extension", "Extension is required!");
         }
     }
 

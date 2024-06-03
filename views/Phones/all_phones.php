@@ -16,6 +16,7 @@
                 <th>Title</th>
                 <th>Section</th>
                 <th>Extendion</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,9 @@
                     <td><?= htmlspecialchars($phone['title']) ?></td>
                     <td><?= htmlspecialchars($phone['section']) ?></td>
                     <td><?= htmlspecialchars($phone['extension']) ?></td>
+                    <td>
+                        <a href="/phones/one/<?= htmlspecialchars($phone['id']) ?>">View</a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

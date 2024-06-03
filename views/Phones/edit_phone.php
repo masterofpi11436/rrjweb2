@@ -1,4 +1,4 @@
-<form action="/phones/one/<?= $phone["id"] ?>">
+<form action="/phones/one/<?= htmlspecialchars($phone["id"]) ?>">
     <button>Cancel</button>
 </form>
 
@@ -9,4 +9,3 @@
 <form method="post" action="/phones/update/<?= htmlspecialchars($phone['id']) ?>">
     <?php require "phone_form.php"; ?>
 </form>
-
