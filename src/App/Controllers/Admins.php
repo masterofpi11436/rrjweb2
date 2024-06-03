@@ -16,10 +16,7 @@ use Framework\Response;
  */
 class Admins extends Controller
 {
-    public function __construct(private User $model)
-    {
-
-    }
+    public function __construct(private User $model){}
 
     public function dashboard(): Response
     {

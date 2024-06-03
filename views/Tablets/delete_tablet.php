@@ -2,7 +2,7 @@
 
 <form method="post" action="/tablets/destroy/<?= htmlspecialchars($tablet['id']) ?>">
 
-    <h2>Are you sure you want to delete this inmate?</h2>
+    <h2>Are you sure you want to delete inmate <?= htmlspecialchars($tablet['last_name']) ?>, <?= htmlspecialchars($tablet['first_name']) ?>?</h2>
     <button type="submit">Delete Tablet</button>
 
 </form>
