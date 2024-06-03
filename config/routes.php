@@ -10,8 +10,16 @@ $router = new Framework\Router;
 $router->add("/login", ["controller" => "users", "action" => "login"]);
 $router->add("/login/auth", ["controller" => "users", "action" => "auth", "method" => "post"]);
 
-// Admin Pages
+// Admin Pages (Main)
 $router->add("/admins/dashboard", ["controller" => "admins", "action" => "dashboard", "middleware" => "auth"]);
+$router->add("/admins/all", ["controller" => "admins", "action" => "viewall", "middleware" => "auth"]);
+$router->add("/admins/add", ["controller" => "admins", "action" => "addNewUser", "middleware" => "auth"]);
+$router->add("/admins/create", ["controller" => "admins", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/admins/one/{id:\d+}", ["controller" => "admins", "action" => "viewone", "middleware" => "auth"]);
+$router->add("/admins/edit/{id:\d+}", ["controller" => "admins", "action" => "editUser", "middleware" => "auth"]);
+$router->add("/admins/update/{id:\d+}", ["controller" => "admins", "action" => "updateUser", "method" => "post", "middleware" => "auth"]);
+$router->add("/admins/delete/{id:\d+}", ["controller" => "admins", "action" => "deleteUser", "middleware" => "auth"]);
+$router->add("/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyUser", "method" => "post", "middleware" => "auth"]);
 
 // Admin Pages (Tablet)
 $router->add("/tablets/all", ["controller" => "tablets", "action" => "viewall", "middleware" => "auth"]);
