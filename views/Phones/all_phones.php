@@ -22,10 +22,10 @@
         <tbody>
             <?php foreach ($phones as $phone): ?>
                 <tr>
-                    <td><?= htmlspecialchars($phone['name']) ?></td>
-                    <td><?= htmlspecialchars($phone['title']) ?></td>
-                    <td><?= htmlspecialchars($phone['section']) ?></td>
-                    <td><?= htmlspecialchars($phone['extension']) ?></td>
+                    <td><?= htmlspecialchars($phone['name'] ?? '') ?></td>
+                    <td><?= htmlspecialchars($phone['title'] ?? '') ?></td>
+                    <td><?= htmlspecialchars($phone['section'] ?? '') ?></td>
+                    <td><?= htmlspecialchars($phone['extension'] ?? '') ?></td>
                     <td>
                         <a href="/phones/one/<?= htmlspecialchars($phone['id']) ?>">View</a>
                     </td>

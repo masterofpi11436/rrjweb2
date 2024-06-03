@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Models\User;
+use App\Security\User;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -28,36 +28,42 @@ class Users extends Controller
     {
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
 
-        $this->response->appendBody($this->viewer->render("tablets/login.php"));
+        $this->response->appendBody($this->viewer->render("login.php"));
 
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;
     }
 
-    // Authorize the log in
+    // Modify the auth() method in Users controller
     public function auth(): Response
     {
-        // Form data
         $data = [
             "email" => $this->request->post["email"],
             "password" => $this->request->post["password"]
         ];
 
-        // Authenticate the user
         if ($this->model->validateLogin($data)) {
             $user = $this->model->findByEmail($data["email"]);
-            if ($user && password_verify($data["password"], $user['password'])) { // Access 'password' key in the array
-                // Set up the session
+            if ($user && password_verify($data["password"], $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_email'] = $user['email'];
+                $_SESSION['role_id'] = $user['role_id']; // Store role_id in session
 
-                // Redirect to the dashboard or desired page
-                return $this->redirect('/tablets/all');
+                // Redirect based on role
+                switch ($user['role_id']) {
+                    case 1:
+                        return $this->redirect('/admins/dashboard'); // Admin dashboard or relevant page
+                    case 2:
+                        return $this->redirect('/tablets/all');
+                    case 3:
+                        return $this->redirect('/phones/all');
+                    default:
+                        return $this->redirect('/login'); // Default fallback
+                }
             }
         }
 
-        // Render the form again with error messages
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
         $this->response->appendBody($this->viewer->render("tablets/login.php", ["errorMessage" => $this->model->getErrors()]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));

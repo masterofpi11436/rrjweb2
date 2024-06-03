@@ -10,6 +10,9 @@ $router = new Framework\Router;
 $router->add("/login", ["controller" => "users", "action" => "login"]);
 $router->add("/login/auth", ["controller" => "users", "action" => "auth", "method" => "post"]);
 
+// Admin Pages
+$router->add("/admins/dashboard", ["controller" => "admins", "action" => "dashboard", "middleware" => "auth"]);
+
 // Admin Pages (Tablet)
 $router->add("/tablets/all", ["controller" => "tablets", "action" => "viewall", "middleware" => "auth"]);
 $router->add("/tablets/add", ["controller" => "tablets", "action" => "addNewTablet", "middleware" => "auth"]);

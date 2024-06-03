@@ -8,7 +8,7 @@
             "type": "msedge",
             "request": "launch",
             "name": "Launch Edge against localhost",
-            "url": "http://localhost/phones/all",
+            "url": "http://localhost/tablets/all",
             "webRoot": "${workspaceFolder}"
         }
     ]

@@ -9,18 +9,18 @@
 <table>
     <tr>
         <th>Name</th>
-        <td><?= htmlspecialchars($phone["name"]) ?></td>
+        <td><?= htmlspecialchars($phone["name"] ?? '') ?></td>
     </tr>
     <tr>
         <th>Title</th>
-        <td><?= htmlspecialchars($phone["title"]) ?></td>
+        <td><?= htmlspecialchars($phone["title"] ?? '') ?></td>
     </tr>
     <tr>
         <th>Section</th>
-        <td><?= htmlspecialchars($phone["section"]) ?></td>
+        <td><?= htmlspecialchars($phone["section"] ?? '') ?></td>
     </tr>
     <tr>
         <th>Extension</th>
-        <td><?= htmlspecialchars($phone["extension"]) ?></td>
+        <td><?= htmlspecialchars($phone["extension"] ?? '') ?></td>
     </tr>
 </table>
