@@ -8,7 +8,6 @@ use Framework\Request;
 use Framework\Response;
 use Framework\RequestHandlerInterface;
 use Framework\MiddlewareInterface;
-use Framework\Exceptions\PageNotFoundException;
 
 class UserAuthorization implements MiddlewareInterface
 {
@@ -35,6 +34,8 @@ class UserAuthorization implements MiddlewareInterface
 
         // Check if the user is logged in
         if (!isset($_SESSION['user_id'])) {
+            // Log the event
+            error_log("User not logged in. Redirecting to login page.");
             // Redirect to the login page if not logged in
             $this->response->redirect('/login');
             return $this->response;
@@ -45,12 +46,15 @@ class UserAuthorization implements MiddlewareInterface
 
         // Check if the user has permission to access the requested route
         $route = $request->uri;
-        if (!$this->hasAccess($route, $roleId)) {
-            throw new PageNotFoundException("You do not have access to this page.");
+        if ($this->hasAccess($route, $roleId)) {
+            // Proceed to the next middleware or controller if access is allowed
+            return $next->handle($request);
+        } else {
+            // Log the access denial
+            error_log("Access denied for role ID $roleId to route: $route. Redirecting to login page.");
+            $this->response->redirect('/login');
+            return $this->response;
         }
-
-        // Proceed to the next middleware or controller
-        return $next->handle($request);
     }
 
     private function hasAccess(string $route, ?int $roleId): bool
@@ -62,7 +66,14 @@ class UserAuthorization implements MiddlewareInterface
         ];
 
         if ($roleId === null) {
+            // Log the missing role ID
+            error_log("Role ID is null for user trying to access: $route");
             return false;
+        }
+
+        // Admin has access to all routes
+        if ($roleId == 1) {
+            return true;
         }
 
         // Check if the route matches the role's permissions

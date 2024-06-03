@@ -12,14 +12,14 @@ use Framework\Controller;
 use Framework\Response;
 
 /**
- * Controller for handling tablet-related actions.
+ * Controller for handling user-related actions.
  */
 class Users extends Controller
 {
     /**
      * Constructor.
      *
-     * @param User $model The tablet model
+     * @param User $model The user model
      */
     public function __construct(private User $model){}
 
@@ -64,8 +64,11 @@ class Users extends Controller
             }
         }
 
+        // Set error message
+        $errorMessage = 'Incorrect email or password. Please try again.';
+
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
-        $this->response->appendBody($this->viewer->render("tablets/login.php", ["errorMessage" => $this->model->getErrors()]));
+        $this->response->appendBody($this->viewer->render("login.php", ["errorMessage" => $errorMessage]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;
