@@ -39,4 +39,18 @@ class User extends Model
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Find user by email
+    public function findByPassword(string $password): array|bool
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE password = :password";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":password", $password, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

@@ -128,13 +128,13 @@ abstract class Model
     public function updateRecord(string $id, array $data): bool
     {
         // Validate the data
-        $this->validateForm($data);
+        // $this->validateForm($data);
 
-        if (!empty($this->errorMessage)) {
+        // if (!empty($this->errorMessage)) {
 
-            return false;
+        //     return false;
 
-        }
+        // }
 
         $sql = "UPDATE {$this->getTableName()} ";
 

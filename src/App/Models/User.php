@@ -13,18 +13,18 @@ class User extends Model
     // protected $table = "tablet";
 
     // Validate the inamte number and last name fields to allow minumum information to look up person.
-    protected function validateForm(array $data): void
-    {
-        if (empty($data["inmate_number"])) {
+    // protected function validateForm(array $data): void
+    // {
+    //     if (empty($data["inmate_number"])) {
 
-            $this->addError("inmate_number", "Inmate number is required!");
-        }
+    //         $this->addError("inmate_number", "Inmate number is required!");
+    //     }
 
-        if (empty($data["last_name"])) {
+    //     if (empty($data["last_name"])) {
 
-            $this->addError("last_name", "Last name is required!");
-        }
-    }
+    //         $this->addError("last_name", "Last name is required!");
+    //     }
+    // }
 
     public function searchUsers(string $search): array
     {

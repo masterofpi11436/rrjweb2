@@ -129,7 +129,7 @@ class Admins extends Controller
             "first_name" => $this->request->post["first_name"],
             "last_name" => $this->request->post["last_name"],
             "email" => $this->request->post["email"],
-            "password" => password_hash($this->request->post["password"], PASSWORD_DEFAULT),
+            "password" => $this->request->post["password"],
             "role_id" => $this->request->post["role_id"]
         ];
 
@@ -184,10 +184,7 @@ class Admins extends Controller
         $user["last_name"] = $this->request->post["last_name"];
         $user["email"] = $this->request->post["email"];
         $user["role_id"] = $this->request->post["role_id"];
-
-        if (!empty($this->request->post["password"])) {
-            $user["password"] = password_hash($this->request->post["password"], PASSWORD_DEFAULT);
-        }
+        $user["password"] = $this->request->post["password"];
 
         // Attempt to update the user record
         if ($this->model->updateRecord($id, $user)) {
