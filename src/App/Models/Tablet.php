@@ -25,6 +25,11 @@ class Tablet extends Model
 
             $this->addError("last_name", "Last name is required!");
         }
+
+        if (empty($data["first_name"])) {
+
+            $this->addError("first_name", "First name is required!");
+        }
     }
 
     public function searchTablets(string $search): array

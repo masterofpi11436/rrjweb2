@@ -1,18 +1,30 @@
 <div class="form-container">
     <div>
         <label for="inmate_number">Inmate Number:</label>
-        <input type="number" id="inmate_number" name="inmate_number" value="<?= isset($tablet) ? htmlspecialchars($tablet['inmate_number'] ?? '') : '' ?>" required>
+        <input type="number" id="inmate_number" name="inmate_number" value="<?= isset($tablet) ? htmlspecialchars($tablet['inmate_number'] ?? '') : '' ?>">
     </div>
+
+    <?php if (isset($errorMessage["inmate_number"])): ?>
+        <p><?= $errorMessage["inmate_number"] ?></p>
+    <?php endif; ?>
 
     <div>
         <label for="last_name">Last Name:</label>
-        <input type="text" id="last_name" name="last_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['last_name'] ?? '') : '' ?>" required>
+        <input type="text" id="last_name" name="last_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['last_name'] ?? '') : '' ?>">
     </div>
+
+    <?php if (isset($errorMessage["last_name"])): ?>
+        <p><?= $errorMessage["last_name"] ?></p>
+    <?php endif; ?>
 
     <div>
         <label for="first_name">First Name:</label>
-        <input type="text" id="first_name" name="first_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['first_name'] ?? '') : '' ?>" required>
+        <input type="text" id="first_name" name="first_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['first_name'] ?? '') : '' ?>">
     </div>
+
+    <?php if (isset($errorMessage["first_name"])): ?>
+        <p><?= $errorMessage["first_name"] ?></p>
+    <?php endif; ?>
 
     <div>
         <label for="middle_name">Middle Name:</label>

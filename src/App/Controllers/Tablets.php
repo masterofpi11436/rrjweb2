@@ -134,7 +134,7 @@ class Tablets extends Controller
         } else {
             // Render the form again with error messages
             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Tablet", "heading" => "Add Tablet"]));
-            $this->response->appendBody($this->viewer->render("Tablets/form.php", ["errorMessage" => $this->model->getErrors(), "tablet" => $data]));
+            $this->response->appendBody($this->viewer->render("Tablets/tablet_form.php", ["errorMessage" => $this->model->getErrors(), "tablet" => $data]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
             return $this->response;
