@@ -20,7 +20,7 @@ abstract class Model
     public function __construct(protected Database $db){}
 
     // Placeholder method to be overridden in child classes for empty fields
-    protected function validateNull(array $data): void{}
+    protected function validateForm(array $data): void{}
 
     // Dynamically get the table name based on the class name
     protected function getTableName(): string
@@ -90,7 +90,7 @@ abstract class Model
     public function insertRecord($data): bool
     {
         // Validate the data
-        $this->validateNull($data);
+        $this->validateForm($data);
 
         if (!empty($this->errorMessage)) {
 
@@ -128,13 +128,13 @@ abstract class Model
     public function updateRecord(string $id, array $data): bool
     {
         // Validate the data
-        // $this->validateForm($data);
+        $this->validateForm($data);
 
-        // if (!empty($this->errorMessage)) {
+        if (!empty($this->errorMessage)) {
 
-        //     return false;
+            return false;
 
-        // }
+        }
 
         $sql = "UPDATE {$this->getTableName()} ";
 

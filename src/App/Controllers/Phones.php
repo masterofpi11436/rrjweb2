@@ -130,7 +130,7 @@ class Phones extends Controller
         } else {
             // Render the form again with error messages
             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Phone Listing", "heading" => "Add Phone Listing"]));
-            $this->response->appendBody($this->viewer->render("Phones/form.php", ["errorMessage" => $this->model->getErrors(), "phone" => $data]));
+            $this->response->appendBody($this->viewer->render("Phones/add_phone.php", ["errorMessage" => $this->model->getErrors(), "phone" => $data]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
             return $this->response;
