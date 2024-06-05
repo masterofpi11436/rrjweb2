@@ -10,6 +10,8 @@ $router = new Framework\Router;
 $router->add("/login", ["controller" => "users", "action" => "login"]);
 $router->add("/login/auth", ["controller" => "users", "action" => "auth", "method" => "post"]);
 
+// *************************************************************************************************************************************************//
+
 // Admin Pages (Main)
 $router->add("/admins/dashboard", ["controller" => "admins", "action" => "dashboard", "middleware" => "auth"]);
 $router->add("/admins/all", ["controller" => "admins", "action" => "viewall", "middleware" => "auth"]);
@@ -20,6 +22,8 @@ $router->add("/admins/edit/{id:\d+}", ["controller" => "admins", "action" => "ed
 $router->add("/admins/update/{id:\d+}", ["controller" => "admins", "action" => "updateUser", "method" => "post", "middleware" => "auth"]);
 $router->add("/admins/delete/{id:\d+}", ["controller" => "admins", "action" => "deleteUser", "middleware" => "auth"]);
 $router->add("/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyUser", "method" => "post", "middleware" => "auth"]);
+
+// *************************************************************************************************************************************************//
 
 // Admin Pages (Tablet)
 $router->add("/tablets/all", ["controller" => "tablets", "action" => "viewall", "middleware" => "auth"]);
@@ -34,6 +38,8 @@ $router->add("/tablets/destroy/{id:\d+}", ["controller" => "tablets", "action" =
 // Report Views (Tablets)
 $router->add("/tablets/reportall", ["controller" => "tablets", "action" => "reportAll"]);
 
+// *************************************************************************************************************************************************//
+
 // Admin Pages (Phone Listings)
 $router->add("/phones/all", ["controller" => "phones", "action" => "viewAll", "middleware" => "auth"]);
 $router->add("/phones/add", ["controller" => "phones", "action" => "addNewPhone", "middleware" => "auth"]);
@@ -47,6 +53,7 @@ $router->add("/phones/destroy/{id:\d+}", ["controller" => "phones", "action" => 
 // Report Views (Phone Listings)
 $router->add("/phones/reportall", ["controller" => "phones", "action" => "reportAll"]);
 
+// *************************************************************************************************************************************************//
 // Admin Pages (Mailroom Listings)
 $router->add("/mailrooms/all", ["controller" => "mailrooms", "action" => "viewAll", "middleware" => "auth"]);
 $router->add("/mailrooms/add", ["controller" => "mailrooms", "action" => "addNewName", "middleware" => "auth"]);
