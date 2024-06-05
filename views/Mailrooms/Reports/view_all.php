@@ -1,11 +1,36 @@
+<style>
+    /* Styles for print */
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #printableTable, #printableTable * {
+            visibility: visible;
+        }
+        #printableTable {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
+</style>
+
 <form method="get" action="/mailrooms/reportall">
     <input type="text" name="search" placeholder="Search by Name or Inmate ID" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
 
+<button onclick="printTable()">Print</button>
+
+<script>
+    function printTable() {
+        window.print();
+    }
+</script>
+
 <!-- Display the list of tablets -->
 <?php if (!empty($names)): ?>
-    <table border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px; border-collapse:collapse;">
+    <table id="printableTable" border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px; border-collapse:collapse;">
         <thead>
             <tr>
                 <th>Inmate Number</th>
