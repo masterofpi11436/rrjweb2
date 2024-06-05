@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Security\User;
+use App\Models\User;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
