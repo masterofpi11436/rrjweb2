@@ -35,14 +35,14 @@ $router->add("/tablets/destroy/{id:\d+}", ["controller" => "tablets", "action" =
 $router->add("/tablets/reportall", ["controller" => "tablets", "action" => "reportAll"]);
 
 // Admin Pages (Phone Listings)
-$router->add("/phones/all", ["controller" => "phones", "action" => "viewAll"]);
-$router->add("/phones/add", ["controller" => "phones", "action" => "addNewPhone"]);
-$router->add("/phones/create", ["controller" => "phones", "action" => "create", "method" => "post"]);
-$router->add("/phones/one/{id:\d+}", ["controller" => "phones", "action" => "viewone"]);
-$router->add("/phones/edit/{id:\d+}", ["controller" => "phones", "action" => "editPhone"]);
-$router->add("/phones/update/{id:\d+}", ["controller" => "phones", "action" => "updatePhone", "method" => "post"]);
-$router->add("/phones/delete/{id:\d+}", ["controller" => "phones", "action" => "deletePhone"]);
-$router->add("/phones/destroy/{id:\d+}", ["controller" => "phones", "action" => "destroyPhone", "method" => "post"]);
+$router->add("/phones/all", ["controller" => "phones", "action" => "viewAll", "middleware" => "auth"]);
+$router->add("/phones/add", ["controller" => "phones", "action" => "addNewPhone", "middleware" => "auth"]);
+$router->add("/phones/create", ["controller" => "phones", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/phones/one/{id:\d+}", ["controller" => "phones", "action" => "viewone", "middleware" => "auth"]);
+$router->add("/phones/edit/{id:\d+}", ["controller" => "phones", "action" => "editPhone", "middleware" => "auth"]);
+$router->add("/phones/update/{id:\d+}", ["controller" => "phones", "action" => "updatePhone", "method" => "post", "middleware" => "auth"]);
+$router->add("/phones/delete/{id:\d+}", ["controller" => "phones", "action" => "deletePhone", "middleware" => "auth"]);
+$router->add("/phones/destroy/{id:\d+}", ["controller" => "phones", "action" => "destroyPhone", "method" => "post", "middleware" => "auth"]);
 
 // Report Views (Phone Listings)
 $router->add("/phones/reportall", ["controller" => "phones", "action" => "reportAll"]);

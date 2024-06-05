@@ -228,5 +228,34 @@ class Phones extends Controller
 
         return $this->redirect("/phones/all");
     }
+
+    /********************************************************************************************************************************* */
+    // Custom Action Methods
+
+    // View all in a table
+    public function reportAll(): Response
+    {
+        // Get all the tablet records
+        $search = $this->request->get['search'] ?? '';
+
+        if ($search) {
+            // Perform search query
+            $phones = $this->model->searchPhones($search);
+        } else {
+            // Retrieve all records if no search query
+            $phones = $this->model->getAll();
+        }
+
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Phones Extensions", "heading" => "All RRJ Numbers"]));
+
+        // Render the all phones view
+        $this->response->appendBody($this->viewer->render("Phones/Reports/view_all.php", ["phones" => $phones]));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
     
 }
