@@ -63,6 +63,7 @@ class UserAuthorization implements MiddlewareInterface
             1 => ['/.*'], // Role ID 1 (admin): Access to all routes
             2 => ['/tablets/.*'], // Role ID 2: Access to tablet-related routes
             3 => ['/phones/.*'], // Role ID 3: Access to phone-related routes
+            4 => ['/mailrooms/.*'], // Role ID 3: Access to phone-related routes
         ];
 
         if ($roleId === null) {

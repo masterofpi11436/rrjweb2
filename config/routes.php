@@ -44,8 +44,21 @@ $router->add("/phones/update/{id:\d+}", ["controller" => "phones", "action" => "
 $router->add("/phones/delete/{id:\d+}", ["controller" => "phones", "action" => "deletePhone", "middleware" => "auth"]);
 $router->add("/phones/destroy/{id:\d+}", ["controller" => "phones", "action" => "destroyPhone", "method" => "post", "middleware" => "auth"]);
 
-// Report Views (Phone Listings)
+// Report Views (Mailroom Listings)
 $router->add("/phones/reportall", ["controller" => "phones", "action" => "reportAll"]);
+
+// Admin Pages (Phone Listings)
+$router->add("/mailrooms/all", ["controller" => "mailrooms", "action" => "viewAll", "middleware" => "auth"]);
+$router->add("/mailrooms/add", ["controller" => "mailrooms", "action" => "addNewName", "middleware" => "auth"]);
+$router->add("/mailrooms/create", ["controller" => "mailrooms", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/mailrooms/one/{id:\d+}", ["controller" => "mailrooms", "action" => "viewone", "middleware" => "auth"]);
+$router->add("/mailrooms/edit/{id:\d+}", ["controller" => "mailrooms", "action" => "editName", "middleware" => "auth"]);
+$router->add("/mailrooms/update/{id:\d+}", ["controller" => "mailrooms", "action" => "updateName", "method" => "post", "middleware" => "auth"]);
+$router->add("/mailrooms/delete/{id:\d+}", ["controller" => "mailrooms", "action" => "deleteName", "middleware" => "auth"]);
+$router->add("/mailrooms/destroy/{id:\d+}", ["controller" => "mailrooms", "action" => "destroyName", "method" => "post", "middleware" => "auth"]);
+
+// Report Views (Phone Listings)
+$router->add("/mailrooms/reportall", ["controller" => "mailrooms", "action" => "reportAll"]);
 
 // Blanket Route
 // $router->add("/{controller}/{action}");

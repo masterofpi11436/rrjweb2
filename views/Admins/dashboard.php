@@ -11,3 +11,7 @@
 <form action="/tablets/all">
     <button>tablets</button>
 </form>
+
+<form action="/mailrooms/all">
+    <button>mailroom</button>
+</form>
