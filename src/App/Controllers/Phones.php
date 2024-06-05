@@ -175,8 +175,6 @@ class Phones extends Controller
         $phone["section"] = $this->request->post["section"];
         $phone["extension"] = $this->request->post["extension"];
 
-        error_log(print_r($phone, true)); // Log the phone data to be updated
-
         // Attempt to update the phone record
         if ($this->model->updateRecord($id, $phone)) {
 
