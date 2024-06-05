@@ -12,6 +12,12 @@ $router->add("/login/auth", ["controller" => "users", "action" => "auth", "metho
 
 // *************************************************************************************************************************************************//
 
+// Search for names on the Restricted tablet list and the OPR list
+$router->add("/names/all", ["controller" => "names", "action" => "viewall", "middleware" => "auth"]);
+$router->add("/names/viewall", ["controller" => "names", "action" => "viewall", "middleware" => "auth"]);
+
+// *************************************************************************************************************************************************//
+
 // Admin Pages (Main)
 $router->add("/admins/dashboard", ["controller" => "admins", "action" => "dashboard", "middleware" => "auth"]);
 $router->add("/admins/all", ["controller" => "admins", "action" => "viewall", "middleware" => "auth"]);
