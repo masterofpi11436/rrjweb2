@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 03, 2024 at 10:20 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jun 05, 2024 at 04:58 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -112,10 +112,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `password`, `role_id`) VALUES
-(1, 'Mark', 'Tuggle', 'tugglem@rrjva.org', '$2y$10$94ecROvDG35ob5LibYX6uua7Gcx3pfj0gw0UU8J7NMuQKbv7K9DCu', 1),
-(2, 'Heather', 'Scott', 'heather.scott@icsolutions.com', '$2y$10$IbC0Pe3DOmN0Y1z53XeSnuKskFaXo42VJXwbZbWrHKvYkdsHF3F/q', 2),
-(8, 'qwe', 'qwe', 'qwe', '$2y$10$WgGI1twksNDFLvyRt03f0ueEZxFrbEB13zrRtF.fKUxpkMHPB2rcG', 1),
-(9, 'asd', 'asd', 'tugglem@rrjva.org', '$2y$10$Qpm9Inxalf2OUsUe1OByFupxJ.hSs.46WeirdODlZDYRFjYc64b9.', 2);
+(1, 'Mark', 'Tuggle', 'asd', 'asd', 1),
+(2, 'Heather', 'Scott', '123', '123', 2),
+(13, 'asd', 'asd', 'asd', 'asd', 1);
 
 --
 -- Indexes for dumped tables
@@ -172,7 +171,7 @@ ALTER TABLE `tablet`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
