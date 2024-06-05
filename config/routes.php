@@ -70,6 +70,21 @@ $router->add("/mailrooms/update/{id:\d+}", ["controller" => "mailrooms", "action
 $router->add("/mailrooms/delete/{id:\d+}", ["controller" => "mailrooms", "action" => "deleteName", "middleware" => "auth"]);
 $router->add("/mailrooms/destroy/{id:\d+}", ["controller" => "mailrooms", "action" => "destroyName", "method" => "post", "middleware" => "auth"]);
 
+// *************************************************************************************************************************************************//
+
+// Admin Pages (Cell Listings)
+$router->add("/cells/all", ["controller" => "cells", "action" => "viewAll", "middleware" => "auth"]);
+$router->add("/cells/add", ["controller" => "cells", "action" => "addNewCell", "middleware" => "auth"]);
+$router->add("/cells/create", ["controller" => "cells", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/cells/one/{id:\d+}", ["controller" => "cells", "action" => "viewone", "middleware" => "auth"]);
+$router->add("/cells/edit/{id:\d+}", ["controller" => "cells", "action" => "editCell", "middleware" => "auth"]);
+$router->add("/cells/update/{id:\d+}", ["controller" => "cells", "action" => "updateCell", "method" => "post", "middleware" => "auth"]);
+$router->add("/cells/delete/{id:\d+}", ["controller" => "cells", "action" => "deleteCell", "middleware" => "auth"]);
+$router->add("/cells/destroy/{id:\d+}", ["controller" => "cells", "action" => "destroyCell", "method" => "post", "middleware" => "auth"]);
+
+// Report Views (Cell Listings)
+$router->add("/cells/reportall", ["controller" => "cells", "action" => "reportAll"]);
+
 // Report Views (Mailroom Listings)
 $router->add("/mailrooms/reportall", ["controller" => "mailrooms", "action" => "reportAll"]);
 

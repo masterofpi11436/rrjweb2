@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2024 at 12:30 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Jun 05, 2024 at 06:10 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,15 +24,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `opr`
+-- Table structure for table `cell`
 --
 
-CREATE TABLE `opr` (
+CREATE TABLE `cell` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `pid` varchar(255) DEFAULT NULL,
+  `emp_number` varchar(255) NOT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cell`
+--
+
+INSERT INTO `cell` (`id`, `name`, `description`, `pid`, `emp_number`, `phone`, `email`) VALUES
+(1, 'Mark Tuggle', 'MIU Technician', '395', '', '(804) 630-4730', 'tugglem@rrjva.org'),
+(3, 'Neil Marlowe', 'MIU Adminstrator', '1234', '', '123-123-1233', 'asdflkjh2@hhh.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mailroom`
+--
+
+CREATE TABLE `mailroom` (
   `id` int(11) NOT NULL,
   `inmate_number` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mailroom`
+--
+
+INSERT INTO `mailroom` (`id`, `inmate_number`, `first_name`, `last_name`) VALUES
+(1, '12345', 'John', 'Doe'),
+(4, '5432', 'Doe', 'Smith');
 
 -- --------------------------------------------------------
 
@@ -76,7 +108,8 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`id`, `name`) VALUES
 (1, 'admin'),
 (2, 'tablet'),
-(3, 'phone');
+(3, 'phone'),
+(4, 'mailroom');
 
 -- --------------------------------------------------------
 
@@ -129,16 +162,23 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `password`, `verify_password`, `role_id`) VALUES
 (13, 'asd', 'asd', 'asd', 'asd', 'asd', 1),
-(16, 'Heather', 'Scott', 'qwe', 'qwe', 'qwe', 2);
+(16, 'Heather', 'Scott', 'qwe', 'qwe', 'qwe', 2),
+(17, 'asd', 'asd', 'asd', 'asd', 'asd', 1);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `opr`
+-- Indexes for table `cell`
 --
-ALTER TABLE `opr`
+ALTER TABLE `cell`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `mailroom`
+--
+ALTER TABLE `mailroom`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -171,10 +211,16 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `opr`
+-- AUTO_INCREMENT for table `cell`
 --
-ALTER TABLE `opr`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `cell`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `mailroom`
+--
+ALTER TABLE `mailroom`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `phone`
@@ -186,7 +232,7 @@ ALTER TABLE `phone`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tablet`
@@ -198,7 +244,7 @@ ALTER TABLE `tablet`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Constraints for dumped tables

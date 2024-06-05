@@ -15,3 +15,7 @@
 <form action="/mailrooms/all">
     <button>mailroom</button>
 </form>
+
+<form action="/cells/all">
+    <button>Cells</button>
+</form>
