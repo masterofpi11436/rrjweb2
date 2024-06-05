@@ -37,6 +37,15 @@
     <?php endif; ?>
 
     <div>
+        <label for="verify_password">Verify Password:</label>
+        <input type="password" id="verify_password" name="verify_password" value="<?= isset($user) ? htmlspecialchars($user['verify_password'] ?? '') : '' ?>">
+    </div>
+
+    <?php if (isset($errorMessage["verify_password"])): ?>
+        <p><?= $errorMessage["verify_password"] ?></p>
+    <?php endif; ?>
+
+    <div>
         <label for="role_id">Role:</label>
         <select id="role_id" name="role_id">
             <option value="1" <?= isset($user) && $user['role_id'] == 1 ? 'selected' : '' ?>>Admin</option>
@@ -47,6 +56,6 @@
     </div>
 
     <div>
-        <button type="submit">Save</button>
+        <button type="submit" onclick="return validatePassword()">Save</button>
     </div>
 </div>

@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Framework\Model;
+use PDO;
 
 class User extends Model
 {
@@ -30,13 +31,24 @@ class User extends Model
         if (empty($data["password"])) {
             $this->addError("password", "Password is required!");
         }
+
+        if (empty($data["verify_password"])) {
+            $this->addError("verify_password", "Verify Password is required!");
+        }
+    
+        if (!empty($data["password"]) && $data["password"] !== $data["verify_password"]) {
+            $this->addError("password", "Passwords do not match!");
+        }
     }
 
-    public function searchUsers(string $search): array
+    // Search functionality
+    public function searchUsersWithRoles(string $search): array
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE first_name LIKE :search OR last_name LIKE :search OR email LIKE :search";
+        $sql = "SELECT user.*, role.name as role_name FROM user
+                LEFT JOIN role ON user.role_id = role.id
+                WHERE first_name LIKE :search OR last_name LIKE :search OR email LIKE :search";
         $stmt = $conn->prepare($sql);
 
         $searchTerm = '%' . $search . '%';
@@ -46,4 +58,16 @@ class User extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Get the name of the role
+    public function getUsersWithRoles(): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT user.*, role.name as role_name FROM user
+                LEFT JOIN role ON user.role_id = role.id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

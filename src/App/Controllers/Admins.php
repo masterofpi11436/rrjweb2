@@ -62,10 +62,10 @@ class Admins extends Controller
 
         if ($search) {
             // Perform search query
-            $users = $this->model->searchUsers($search);
+            $users = $this->model->searchUsersWithRoles($search);
         } else {
             // Retrieve all records if no search query
-            $users = $this->model->getAll();
+            $users = $this->model->getUsersWithRoles();
         }
 
         // Render the header
@@ -130,6 +130,7 @@ class Admins extends Controller
             "last_name" => $this->request->post["last_name"],
             "email" => $this->request->post["email"],
             "password" => $this->request->post["password"],
+            "verify_password" => $this->request->post["verify_password"],
             "role_id" => $this->request->post["role_id"]
         ];
 
@@ -185,6 +186,7 @@ class Admins extends Controller
         $user["email"] = $this->request->post["email"];
         $user["role_id"] = $this->request->post["role_id"];
         $user["password"] = $this->request->post["password"];
+        $user["verify_password"] = $this->request->post["verify_password"];
 
         // Attempt to update the user record
         if ($this->model->updateRecord($id, $user)) {

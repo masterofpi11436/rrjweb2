@@ -15,6 +15,7 @@
                 <th>Last Name</th>
                 <th>First Name</th>
                 <th>Email</th>
+                <th>Role</th>
                 <th>Edit</th>
             </tr>
         </thead>
@@ -24,6 +25,7 @@
                     <td><?= htmlspecialchars($user['last_name'] ?? '') ?></td>
                     <td><?= htmlspecialchars($user['first_name'] ?? '') ?></td>
                     <td><?= htmlspecialchars($user['email'] ?? '') ?></td>
+                    <td><?= htmlspecialchars($user['role_name'] ?? '') ?></td>
                     <td>
                         <a href="/admins/one/<?= htmlspecialchars($user['id']) ?>">View</a>
                     </td>
