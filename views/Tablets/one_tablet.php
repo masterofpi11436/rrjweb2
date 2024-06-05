@@ -43,4 +43,8 @@
         <th>Payment Status</th>
         <td><?= $tablet["is_paid"] ? 'Account Paid' : 'Owes $300 for Tablet' ?></td>
     </tr>
+    <tr>
+        <th>Notes</th>
+        <td><?= htmlspecialchars($tablet["note"]) ?></td>
+    </tr>
 </table>

@@ -57,6 +57,11 @@
     </div>
 
     <div>
+        <label for="note">Notes:</label>
+        <textarea id="note" name="note" rows="4" cols="50"><?= isset($tablet) ? htmlspecialchars($tablet['note'] ?? '') : '' ?></textarea>
+    </div>
+
+    <div>
         <button type="submit">Save</button>
     </div>
 </div>

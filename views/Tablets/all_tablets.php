@@ -15,6 +15,7 @@
                 <th>Inmate Number</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Notes</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,8 +23,9 @@
             <?php foreach ($tablets as $tablet): ?>
                 <tr>
                     <td><?= htmlspecialchars($tablet['inmate_number']) ?></td>
-                    <td><?= htmlspecialchars($tablet['first_name']) ?></td>
                     <td><?= htmlspecialchars($tablet['last_name']) ?></td>
+                    <td><?= htmlspecialchars($tablet['first_name']) ?></td>
+                    <td><?= htmlspecialchars($tablet['note']) ?></td>
                     <td>
                         <a href="/tablets/one/<?= htmlspecialchars($tablet['id']) ?>">View</a>
                     </td>

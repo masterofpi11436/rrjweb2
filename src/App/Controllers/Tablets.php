@@ -124,7 +124,8 @@ class Tablets extends Controller
             "is_reported" => isset($this->request->post["is_reported"]) ? 1 : 0,
             "is_filed" => isset($this->request->post["is_filed"]) ? 1 : 0,
             "is_charged" => isset($this->request->post["is_charged"]) ? 1 : 0,
-            "is_paid" => isset($this->request->post["is_paid"]) ? 1 : 0
+            "is_paid" => isset($this->request->post["is_paid"]) ? 1 : 0,
+            "note" => $this->request->post["note"]
         ];
 
         // Attempt to insert the new tablet record
@@ -182,6 +183,7 @@ class Tablets extends Controller
         $tablet["is_filed"] = isset($this->request->post["is_filed"]) ? 1 : 0;
         $tablet["is_charged"] = isset($this->request->post["is_charged"]) ? 1 : 0;
         $tablet["is_paid"] = isset($this->request->post["is_paid"]) ? 1 : 0;
+        $tablet["note"] = $this->request->post["note"];
 
         // Attempt to insert the new tablet record
         if ($this->model->updateRecord($id, $tablet)) {
