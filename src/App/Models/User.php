@@ -31,14 +31,6 @@ class User extends Model
         if (empty($data["password"])) {
             $this->addError("password", "Password is required!");
         }
-
-        if (empty($data["verify_password"])) {
-            $this->addError("verify_password", "Verify Password is required!");
-        }
-    
-        if (!empty($data["password"]) && $data["password"] !== $data["verify_password"]) {
-            $this->addError("password", "Passwords do not match!");
-        }
     }
 
     // Search functionality

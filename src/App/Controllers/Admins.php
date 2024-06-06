@@ -130,9 +130,11 @@ class Admins extends Controller
             "last_name" => $this->request->post["last_name"],
             "email" => $this->request->post["email"],
             "password" => $this->request->post["password"],
-            "verify_password" => $this->request->post["verify_password"],
             "role_id" => $this->request->post["role_id"]
         ];
+
+        // Hash the password
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         // Attempt to insert the new user record
         if ($this->model->insertRecord($data)) {
@@ -186,7 +188,9 @@ class Admins extends Controller
         $user["email"] = $this->request->post["email"];
         $user["role_id"] = $this->request->post["role_id"];
         $user["password"] = $this->request->post["password"];
-        $user["verify_password"] = $this->request->post["verify_password"];
+
+        // Hash the password
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         // Attempt to update the user record
         if ($this->model->updateRecord($id, $user)) {
