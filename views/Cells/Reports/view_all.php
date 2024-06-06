@@ -1,5 +1,5 @@
 <form method="get" action="/cells/reportall">
-    <input type="text" name="search" placeholder="Search by Name, Department, or Extension" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+    <input type="text" name="search" placeholder="Search by Name, Department, or Extension" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
 

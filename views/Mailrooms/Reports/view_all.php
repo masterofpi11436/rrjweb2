@@ -16,7 +16,7 @@
 </style>
 
 <form method="get" action="/mailrooms/reportall">
-    <input type="text" name="search" placeholder="Search by Name or Inmate ID" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+    <input type="text" name="search" placeholder="Search by Name or Inmate ID" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
 

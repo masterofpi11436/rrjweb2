@@ -3,7 +3,7 @@
 </form>
 
 <form method="get" action="/tablets/all">
-    <input type="text" name="search" placeholder="Search tablets..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+    <input type="text" name="search" placeholder="Search tablets..." class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
 

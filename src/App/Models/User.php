@@ -50,7 +50,7 @@ class User extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Get the name of the role
+    // Get the name of the role for all users
     public function getUsersWithRoles(): array
     {
         $conn = $this->db->getConn();
@@ -61,5 +61,20 @@ class User extends Model
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Get the name of the role for one user
+    public function getIndividualWithRole(int $userId): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT user.*, role.name as role_name FROM user
+                LEFT JOIN role ON user.role_id = role.id
+                WHERE user.id = :userId";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":userId", $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

@@ -75,4 +75,14 @@ class Users extends Controller
 
         return $this->response;
     }
+
+    // Log out of the current session
+    public function logout(): Response
+    {
+        // Destroy the session
+        session_destroy();
+
+        // Redirect to the login page or home page
+        return $this->redirect('/login');
+    }
 }

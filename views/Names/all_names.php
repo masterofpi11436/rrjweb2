@@ -1,5 +1,5 @@
 <form method="GET" action="/names/viewAll">
-    <input type="text" name="search" placeholder="Search by name...">
+    <input type="text" name="search" class="search-input" placeholder="Search by name...">
     <button type="submit">Search</button>
 </form>
 

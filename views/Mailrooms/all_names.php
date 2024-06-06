@@ -3,7 +3,7 @@
 </form>
 
 <form method="get" action="/mailrooms/all">
-    <input type="text" name="search" placeholder="Search Name or Inmate ID" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+    <input type="text" name="search" placeholder="Search Name or Inmate ID" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
 
@@ -15,6 +15,7 @@
                 <th>Inmate Number</th>
                 <th>First Name</th>
                 <th>Last Name</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>

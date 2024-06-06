@@ -2,7 +2,7 @@
 
 <form method="post" action="/phones/destroy/<?= htmlspecialchars($phone['id']) ?>">
 
-    <h2>Are you sure you want to delete this extension listing?</h2>
-    <button type="submit">Delete Extension</button>
+    <h2>Are you sure you want to delete the <?= htmlspecialchars($phone['name']) ?> listing?</h2>
+    <button type="submit">Delete Listing</button>
 
 </form>

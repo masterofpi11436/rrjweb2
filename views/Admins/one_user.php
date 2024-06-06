@@ -19,4 +19,8 @@
         <th>Email</th>
         <td><?= htmlspecialchars($user["email"] ?? '') ?></td>
     </tr>
+    <tr>
+        <th>Role</th>
+        <td><?= htmlspecialchars($user["role_name"] ?? '') ?></td>
+    </tr>
 </table>

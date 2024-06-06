@@ -4,7 +4,7 @@
 
 <form>
     <label for="paste-input">Paste Info:</label>
-    <input type="text" id="paste-input" oninput="parseInput()" placeholder="[number] [last name], [first name] [middle name]">
+    <input type="text" id="paste-input" oninput="parseInput()" placeholder="Inmate# Last Name, First Name (Middle Name)">
 </form>
 
 <form method="post" action="/tablets/create">

@@ -86,9 +86,13 @@ class Admins extends Controller
      *
      * @param string $id The user ID
      */
-    public function viewOne(string $id)
+    public function viewOne(string $id): Response
     {
-        $user = $this->getUserID($id);
+        // Convert the string ID to an integer
+        $userId = (int)$id;
+
+        // Get the user with role information
+        $user = $this->model->getIndividualWithRole($userId);
 
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Showing One Listing", "heading" => "Showing One Listing"]));
@@ -101,6 +105,7 @@ class Admins extends Controller
 
         return $this->response;
     }
+
 
     /**
      * Renders the form to add a new user.

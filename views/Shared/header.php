@@ -11,4 +11,15 @@
 </head>
 <body>
 
-<h1><?= $heading ?></h1>
+<header>
+    <div>
+        <h1><?= $heading ?></h1>
+    </div>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <div class="logout-button-container">
+            <form action="/logout" method="post" style="display:inline;">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    <?php endif; ?>
+</header>

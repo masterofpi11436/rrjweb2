@@ -3,7 +3,7 @@
 </form>
 
 <form method="get" action="/cells/all">
-    <input type="text" name="search" placeholder="Search exentsions..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+    <input type="text" name="search" placeholder="Search exentsions..." class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
 
