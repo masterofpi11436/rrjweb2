@@ -41,7 +41,7 @@ CREATE TABLE `emp_contact` (
 --
 
 INSERT INTO `emp_contact` (`empID`, `empDescription`, `empName`, `empPhone`, `empEmail`, `empNumber`) VALUES
-(395, 'IT SUPPORT TECHNICIA', 'TUGGLE, MARK A', '(907) 901-1977', 'tugglem@rrjva.org', 3100),
+(395, 'IT SUPPORT TECHNICIAN', 'TUGGLE, MARK A', '(907) 901-1977', 'tugglem@rrjva.org', 3100),
 (1, 'SUPERINTENDENT', 'LEABOUGH, LARRY J', '(804) 841-1212', 'lleabough@rrjva.org', 2865),
 (10, 'CAPTAIN', 'SMITH, JEFFREY A', '(804) 712-5878', 'smith.jeffrey@rrjva.org', 1544),
 (104, 'JAIL OFFICER', 'MASON, JASEN D', '(804) 721-7677', 'mason.jasen@rrjva.org', 1030),
