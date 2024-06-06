@@ -5,17 +5,21 @@
 
 <h2>Manage individual Applications</h2>
 <form action="/phones/all">
-    <button>phones</button>
+    <button>Phones</button>
 </form>
 
 <form action="/tablets/all">
-    <button>tablets</button>
+    <button>Tablets</button>
 </form>
 
 <form action="/mailrooms/all">
-    <button>mailroom</button>
+    <button>Mailroom</button>
 </form>
 
 <form action="/cells/all">
     <button>Cells</button>
+</form>
+
+<form action="/names/all">
+    <button>Names</button>
 </form>
