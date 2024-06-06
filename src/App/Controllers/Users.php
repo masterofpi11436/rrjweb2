@@ -58,6 +58,8 @@ class Users extends Controller
                         return $this->redirect('/tablets/all');
                     case 3:
                         return $this->redirect('/phones/all');
+                    case 4:
+                        return $this->redirect('/mailrooms/all');
                     default:
                         return $this->redirect('/login'); // Default fallback
                 }

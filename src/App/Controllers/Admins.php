@@ -143,7 +143,7 @@ class Admins extends Controller
         } else {
             // Render the form again with error messages
             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add User", "heading" => "Add User Listing"]));
-            $this->response->appendBody($this->viewer->render("Admins/add_user.php", ["errorMessage" => $this->model->getErrors(), "user" => $data]));
+            $this->response->appendBody($this->viewer->render("Admins/add_user.php", ["errorMessage" => $this->model->getErrors(), "user" => $user]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
             return $this->response;
@@ -182,15 +182,20 @@ class Admins extends Controller
         // Retrieve the user record
         $user = $this->getUserID($id);
 
-        // Get the form data and set empty fields to null
+        // Get the form data
         $user["first_name"] = $this->request->post["first_name"];
         $user["last_name"] = $this->request->post["last_name"];
         $user["email"] = $this->request->post["email"];
         $user["role_id"] = $this->request->post["role_id"];
-        $user["password"] = $this->request->post["password"];
-
-        // Hash the password
-        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        
+        // Check if password field is not empty before hashing and updating
+        if (!empty($this->request->post["password"])) {
+            $user["password"] = $this->request->post["password"];
+            $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
+        } else {
+            // Unset password key to prevent updating it
+            unset($user['password']);
+        }
 
         // Attempt to update the user record
         if ($this->model->updateRecord($id, $user)) {

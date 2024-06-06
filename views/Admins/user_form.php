@@ -29,20 +29,11 @@
 
     <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" value="<?= isset($user) ? htmlspecialchars($user['password'] ?? '') : '' ?>">
+        <input type="password" id="password" name="password" value="">
     </div>
 
     <?php if (isset($errorMessage["password"])): ?>
         <p><?= $errorMessage["password"] ?></p>
-    <?php endif; ?>
-
-    <div>
-        <label for="verify_password">Verify Password:</label>
-        <input type="password" id="verify_password" name="verify_password" value="<?= isset($user) ? htmlspecialchars($user['verify_password'] ?? '') : '' ?>">
-    </div>
-
-    <?php if (isset($errorMessage["verify_password"])): ?>
-        <p><?= $errorMessage["verify_password"] ?></p>
     <?php endif; ?>
 
     <div>
