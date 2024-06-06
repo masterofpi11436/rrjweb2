@@ -45,8 +45,7 @@ class Users extends Controller
 
         if ($this->model->validateLogin($data)) {
             $user = $this->model->findByEmail($data["email"]);
-            $password = $this->model->findByPassword($data["password"]);
-            if ($user && $password) {
+            if ($user && password_verify($data['password'], $user['password'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['role_id'] = $user['role_id']; // Store role_id in session
