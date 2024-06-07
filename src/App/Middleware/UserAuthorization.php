@@ -34,8 +34,6 @@ class UserAuthorization implements MiddlewareInterface
 
         // Check if the user is logged in
         if (!isset($_SESSION['user_id'])) {
-            // Log the event
-            error_log("User not logged in. Redirecting to login page.");
             // Redirect to the login page if not logged in
             $this->response->redirect('/login');
             return $this->response;
@@ -63,7 +61,8 @@ class UserAuthorization implements MiddlewareInterface
             1 => ['/.*'], // Role ID 1 (admin): Access to all routes
             2 => ['/tablets/.*'], // Role ID 2: Access to tablet-related routes
             3 => ['/phones/.*'], // Role ID 3: Access to phone-related routes
-            4 => ['/mailrooms/.*'], // Role ID 4: Access to phone-related routes
+            4 => ['/mailrooms/.*'], // Role ID 4: Access to OPR and Mailroom-related routes
+            5 => ['/programs/.*'], // Role ID 5: Access to programs-related routes
         ];
 
         if ($roleId === null) {
