@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2024 at 10:25 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jun 07, 2024 at 04:12 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -328,7 +328,7 @@ INSERT INTO `phone` (`id`, `name`, `title`, `section`, `extension`) VALUES
 (6, 'Tim Flexon', 'Chief', '6033', 'Maintenance '),
 (7, 'Hartsell', 'Sgt.', '2063', 'Training'),
 (8, 'C. Watson', 'Manager', '6048', 'Warehouse'),
-(12, 'L. Leabough', 'Superintendent', '6603', 'Administration '),
+(12, 'T. Mack', 'Acting Superintendent', '6603', 'Administration '),
 (14, 'Admin', 'Asst.', '6028', 'Administration '),
 (15, 'D. Holmes,', 'Asst. Supt.', '6403', 'Administration '),
 (16, 'C. Armstrong', 'Asst. Supt.', '6631', 'Administration'),
@@ -336,24 +336,24 @@ INSERT INTO `phone` (`id`, `name`, `title`, `section`, `extension`) VALUES
 (18, 'M. Coleman', 'Asst. Director of Admin Servic', '6068', 'Administration '),
 (19, 'V. Turner', 'Admin Asst.', '6026', 'Administration '),
 (20, 'M. Montijo', 'Acct. Mgr', '6031', 'Admin Services '),
-(21, 'P. Fazio', 'Acct Payable', '6023', 'Admin Services '),
+(21, 'A. Bowen', 'Acct Payable', '6023', 'Admin Services '),
 (22, 'K. Strubel', 'Inmate Acct.', '6027', 'Admin Services '),
-(23, 'T. Lewis-Jones', 'Manager', '6030', 'Admin Services '),
-(24, 'P. Harris', 'Purch. Tech', '6022', 'Admin Services '),
+(23, 'T. Lewis-Jones', 'Purchasing Manager', '6030', 'Admin Services '),
+(24, 'Vacant', 'Purch. Tech', '6022', 'Admin Services '),
 (25, 'S. Ward', 'HR Mgr.', '6029', 'Admin Services '),
 (26, 'L. Marlowe', 'HR Tech', '6025', 'Admin Services '),
 (27, 'D. Jones', 'Receptionist', '6000', 'HR '),
 (28, 'L. Reedy', '', '6226', 'Office Specialist'),
 (29, 'B. Hudson', '', '6225', 'Office Specialist '),
-(30, 'C.  Jones', 'LT.', '8438', 'Office of Profession'),
-(31, 'S. Brown', 'Sgt', '7884', 'Office of Profession'),
-(32, 'V. Spratley', 'Sgt.', '8461', 'Office of Profession'),
-(33, 'G. Coleman', 'Ofc.', '6622', 'Office of Profession'),
+(30, 'C.  Jones', 'LT.', '8438', 'OPR'),
+(31, 'S. Brown', 'Sgt', '7884', 'OPR'),
+(32, 'V. Spratley', 'Sgt.', '8461', 'OPR'),
+(33, 'G. Coleman', 'Ofc.', '6622', 'OPR'),
 (34, 'L. Feury', 'Supervisor', '3871', 'Maintenance '),
 (36, 'S. Parham', '', '2064', 'Warehouse'),
-(37, 'T. Mack', 'Asst. Supt', '6724', 'Administration'),
+(37, 'Vacant', 'Asst. Supt', '6724', 'Administration'),
 (38, 'K. Peterson', 'Major', '6743', 'Majors '),
-(39, 'D. Puryear (Booking/Transportation)', 'LT', '6043', 'Support Services'),
+(39, 'Trisvan (Booking/Transportation)', 'LT', '6043', 'Support Services'),
 (40, 'Transportation Office', '', '6046', 'Support Services'),
 (41, 'Laundry', '', '2061', 'Support Services'),
 (42, 'Landscape Shop', '', '2568', 'Support Services'),
@@ -364,8 +364,8 @@ INSERT INTO `phone` (`id`, `name`, `title`, `section`, `extension`) VALUES
 (48, 'Armory', '', '2057', 'Support Services'),
 (49, 'M. Bush (Mail Room)', '', '2053', 'Support Services'),
 (50, 'Barber  Shop', '', '6320', 'Support Services'),
-(51, 'Vacant Training', 'Vacant', '6038', 'Training'),
-(52, 'T. Minion', 'Ofc. Spec.', '6037', 'Training'),
+(51, 'Vacant', '', '6038', 'Training'),
+(52, 'Vacant', 'Ofc. Spec.', '6037', 'Training'),
 (53, 'Administration', '', '524-6659', 'Faxes'),
 (54, 'Booking', '', '524-6630', 'Faxes'),
 (55, 'Canteen', '', '520-8456', 'Faxes'),
@@ -408,7 +408,7 @@ INSERT INTO `phone` (`id`, `name`, `title`, `section`, `extension`) VALUES
 (95, 'E. Locust', 'Auditor Compliance', '6243', 'Compliance'),
 (96, 'Sgt. N. Brewton', 'Standards Compliance', '6227', 'Compliance'),
 (97, 'Williams', 'Sgt. ', '6208', 'Compliance'),
-(98, 'W. Sanders', 'LT. ', '8437', 'Compliance'),
+(98, 'Puryear', 'LT. ', '8437', 'Compliance'),
 (99, 'B. Coleman', 'Grievance Programs', '2051', 'Programs'),
 (100, 'S. Whitaker', 'Vol. Coord.', '6608', 'Programs'),
 (101, 'Chaplain Blackwell', '', '6052', 'Programs'),
@@ -452,7 +452,7 @@ INSERT INTO `phone` (`id`, `name`, `title`, `section`, `extension`) VALUES
 (148, 'H. Massenburg ', '', 'LT.', 'Housing Unit 6'),
 (149, 'Sergeant Office', '', '6066', 'Housing Unit 6'),
 (150, 'C. Davis, W/E - O/S', '', '7888', 'Housing Unit 6'),
-(151, 'R. Weeks', 'Case Worker, TU, THU', '6006', 'Sections'),
+(151, 'R. Weeks', 'Case Worker, TU, THU', 'Case Workers', '6006'),
 (152, 'Primary Control', '', '6712', 'Housing Unit 6'),
 (153, 'Unit Control', '', '6726', 'Housing Unit 6'),
 (154, 'Intake', '', '6727', 'Housing Unit 6'),
@@ -490,7 +490,7 @@ INSERT INTO `phone` (`id`, `name`, `title`, `section`, `extension`) VALUES
 (187, 'Uniform Room', '', '6326', 'Facility Phones'),
 (188, 'Staff Gym', '', '2028', 'Facility Phones'),
 (189, 'Magistrate', '', '6611', 'Facility Phones'),
-(219, 'Mark Tuggle', 'Technician', '6035', 'MIU'),
+(219, 'Mark Tuggle', 'IT Technician', '6035', 'MIU'),
 (259, 'Housing Unit 3', 'Unit Control', '6300', 'Housing Unit 3'),
 (260, 'Housing Unit 4', 'Unit Control', '6400', 'Housing Unit 4'),
 (261, 'Housing Unit 5', 'Unit Control', '6500', 'Housing Unit 5'),
@@ -521,7 +521,7 @@ INSERT INTO `phone` (`id`, `name`, `title`, `section`, `extension`) VALUES
 (288, 'Housing Unit 3', 'Pod C', '2330', 'Housing Unit 3'),
 (289, '', 'QMHP', '6105', 'Housing Unit 1'),
 (290, '', 'QMHP', '6084', 'Housing Unit 4'),
-(291, 'Ofc. Christy Jones', 'Ofc', '6008', 'Housing Unit 6'),
+(291, 'C. Jones', 'Ofc', '6008', 'Housing Unit 6'),
 (292, 'QMHP', 'QMHP/Pysch', '6654', 'QMHP'),
 (294, 'Lt. Whirley', 'Training Lt.', '6612', 'Training'),
 (295, 'S. Underdue', 'QMHP Manager', '8458', 'QMHP'),
