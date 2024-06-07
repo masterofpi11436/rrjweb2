@@ -671,7 +671,7 @@ INSERT INTO `tablet` (`id`, `inmate_number`, `first_name`, `middle_name`, `last_
 (54, 76255, 'MATTHEW', 'S', 'PERKINS', NULL, 0, 0, 0, 0, ''),
 (55, 33045, 'BRANDON', 'LEE', 'CRUTCHFIELD', NULL, 0, 0, 0, 0, ''),
 (56, 84405, 'JOHNNY', 'DANIEL', 'FUQUA', '2024-04-01', 0, 0, 0, 0, ''),
-(57, 86049, 'DARIAN', 'LAVEY', 'HERRING', '2024-04-17', 1, 0, 0, 0, 'Broke inmate Shannon\'s tablet.'),
+(57, 86049, 'DARIAN', 'LAVEY', 'HERRING', '2024-04-17', 1, 0, 0, 0, 'Broke inmate Shannons tablet.'),
 (58, 67149, 'JEFFREY', 'DANIEL', 'CONNER', '2024-04-23', 1, 1, 1, 0, ''),
 (59, 69960, 'MELVIN', 'LEON', 'MYRICK', '2024-04-23', 1, 1, 1, 0, ''),
 (60, 39171, 'BRYANT', 'KYLE', 'SAUNDERS', NULL, 0, 0, 0, 0, ''),
@@ -717,7 +717,62 @@ INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `password`, `role_
 (27, 'Heather', 'Scott', 'heather.scott@icsolutions.com', '$2y$10$ciRdDHbwqXYnUl0v003TIOQLWmoc.9HTVdVENRv/J9Fjsocm36dYi', 2),
 (28, 'Danny', 'Hines', 'danny.hines@icsolutions.com', '$2y$10$ruKyoggOrx8.I/TdNEIZCeo88HfJ/Iowfo7SDUfCpfRqYO72IdZLm', 2),
 (29, 'Neil', 'Marlowe', 'nmarlowe@rrjva.org', '$2y$10$Qkzeq5l28lzYk2ZtdXRREO.v2i13w5Xg5aLNDeBU/4sq7wWFCgyye', 1),
-(30, 'Charlene', 'Jones', 'jones.charlene@rrjva.org', '$2y$10$uXA5hHp6cQQXKwMRxuLM3.0FXazCQ8QSYSu3hV3RVRS8uCRExYHfO', 4);
+(30, 'Charlene', 'Jones', 'jones.charlene@rrjva.org', '$2y$10$Na.SONOfk4RNUInKG82Cseq9G2cX94nxLgT2eMFW/f9WSPSk8oVyK', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `volunteer`
+--
+
+CREATE TABLE `volunteer` (
+  `id` int(11) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `group_name` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `zip` int(11) DEFAULT NULL,
+  `home_phone` varchar(255) DEFAULT NULL,
+  `cell_phone` varchar(255) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `date_hired` date DEFAULT NULL,
+  `schedule` varchar(255) DEFAULT NULL,
+  `signature` varchar(255) DEFAULT NULL,
+  `church_locator` varchar(255) DEFAULT NULL,
+  `work_phone` varchar(255) DEFAULT NULL,
+  `experience_training` varchar(255) DEFAULT NULL,
+  `degree_type` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `race` varchar(255) DEFAULT NULL,
+  `sex` varchar(255) DEFAULT NULL,
+  `ssn` varchar(255) DEFAULT NULL,
+  `document_status` varchar(255) DEFAULT NULL,
+  `church_address` varchar(255) DEFAULT NULL,
+  `church_leader` varchar(255) DEFAULT NULL,
+  `church_phone` varchar(255) DEFAULT NULL,
+  `specific_skills_education` varchar(255) DEFAULT NULL,
+  `category_name` varchar(255) DEFAULT NULL,
+  `quarterly_meeting_attended` date DEFAULT NULL,
+  `volunteer_dinner_rsvp` tinyint(1) DEFAULT NULL,
+  `dinner_guest` tinyint(1) DEFAULT NULL,
+  `attended_quarterly_meeting` tinyint(1) DEFAULT NULL,
+  `active_inactive` varchar(255) DEFAULT NULL,
+  `activity_status` varchar(255) DEFAULT NULL,
+  `ministry_group` varchar(255) DEFAULT NULL,
+  `chaplains_assistant` varchar(255) DEFAULT NULL,
+  `on_call_schedule` varchar(255) DEFAULT NULL,
+  `on_call_status` tinyint(1) DEFAULT NULL,
+  `birth_month` varchar(255) DEFAULT NULL,
+  `minstry_orientation` date DEFAULT NULL,
+  `vol_manual_number` int(255) DEFAULT NULL,
+  `prea_training` date DEFAULT NULL,
+  `main` varchar(255) DEFAULT NULL,
+  `hu6` varchar(255) DEFAULT NULL,
+  `denomination` varchar(255) DEFAULT NULL,
+  `devices_approved` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
