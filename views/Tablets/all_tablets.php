@@ -13,8 +13,8 @@
         <thead>
             <tr>
                 <th>Inmate Number</th>
-                <th>First Name</th>
                 <th>Last Name</th>
+                <th>First Name/Initial</th>
                 <th>Notes</th>
                 <th>Actions</th>
             </tr>

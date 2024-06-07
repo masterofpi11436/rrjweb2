@@ -18,7 +18,7 @@
     <?php endif; ?>
 
     <div>
-        <label for="first_name">First Name:</label>
+        <label for="first_name">First Name/Initial:</label>
         <input type="text" id="first_name" name="first_name" value="<?= isset($tablet) ? htmlspecialchars($tablet['first_name'] ?? '') : '' ?>">
     </div>
 

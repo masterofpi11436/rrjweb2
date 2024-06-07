@@ -41,7 +41,7 @@
     </tr>
     <tr>
         <th>Payment Status</th>
-        <td><?= $tablet["is_paid"] ? 'Account Paid' : 'Owes $300 for Tablet' ?></td>
+        <td><?= $tablet["is_paid"] ? 'Account Paid' : 'Owes money' ?></td>
     </tr>
     <tr>
         <th>Notes</th>
