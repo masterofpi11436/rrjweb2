@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 07, 2024 at 04:12 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Jun 07, 2024 at 10:01 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -264,6 +264,62 @@ INSERT INTO `cell` (`id`, `pid`, `description`, `name`, `phone`, `email`, `numbe
 (223, '87', 'JAIL OFFICER', 'BERRY, THOMAS W', '(804) 852-9877', 'berry.thomas@rrjva.org', '1442'),
 (224, '9', 'CAPTAIN', 'JENKINS, DARYON L', '(804) 218-3852', 'jenkins.daryon@rrjva.org', '1467'),
 (225, '90', 'JAIL OFFICER', 'JONES, ASHLEY D', '(804) 243-1212', 'williams.ashley@rrjva.org', '1512');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contractor`
+--
+
+CREATE TABLE `contractor` (
+  `id` int(11) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `group_name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `zip` int(255) NOT NULL,
+  `home_phone` varchar(255) NOT NULL,
+  `cell_phone` varchar(255) NOT NULL,
+  `birthdate` date NOT NULL,
+  `date_hired` date NOT NULL,
+  `schedule` varchar(255) NOT NULL,
+  `signature` varchar(255) NOT NULL,
+  `church_locator` varchar(255) NOT NULL,
+  `work_phone` varchar(255) NOT NULL,
+  `experience_training` varchar(255) NOT NULL,
+  `degree_type` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `race` varchar(255) NOT NULL,
+  `sex` varchar(255) NOT NULL,
+  `ssn` varchar(255) NOT NULL,
+  `document_status` varchar(255) NOT NULL,
+  `church_address` varchar(255) NOT NULL,
+  `church_leader` varchar(255) NOT NULL,
+  `church_phone` varchar(255) NOT NULL,
+  `specific_skills_education` varchar(255) NOT NULL,
+  `category_name` varchar(255) NOT NULL,
+  `quarterly_meeting_attended` date NOT NULL,
+  `volunteer_dinner_rsvp` tinyint(1) NOT NULL,
+  `dinner_guest` tinyint(1) NOT NULL,
+  `attended_quarterly_meeting` tinyint(1) NOT NULL,
+  `active_inactive_terminated` varchar(255) NOT NULL,
+  `activity_status` varchar(255) NOT NULL,
+  `ministry_group` varchar(255) NOT NULL,
+  `chaplains_assistant` varchar(255) NOT NULL,
+  `on_call_status` tinyint(1) NOT NULL,
+  `birth_month` varchar(255) NOT NULL,
+  `ministry_orientation` varchar(255) NOT NULL,
+  `vol_manual_number` int(255) NOT NULL,
+  `prea_training` date NOT NULL,
+  `main` varchar(255) NOT NULL,
+  `hu6` varchar(255) NOT NULL,
+  `denomination` varchar(255) NOT NULL,
+  `devices_approved` varchar(255) NOT NULL,
+  `termination_date` date NOT NULL,
+  `termination_reason` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -528,7 +584,8 @@ INSERT INTO `phone` (`id`, `name`, `title`, `section`, `extension`) VALUES
 (296, 'Heather Scott', 'ICS Administrator', '6010', 'ICS'),
 (297, 'Danny Hines', 'ICS Administrator', '6010', 'ICS'),
 (298, 'Taylor Q.', 'Classification Technician', '6238', 'Classifications'),
-(299, 'D. Manning', 'TC Counselor', '6218', 'Programs');
+(299, 'D. Manning', 'TC Counselor', '6218', 'Programs'),
+(300, 'Long C.', 'LIDS Technician', 'Records', '2666');
 
 -- --------------------------------------------------------
 
@@ -571,6 +628,70 @@ CREATE TABLE `tablet` (
   `note` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tablet`
+--
+
+INSERT INTO `tablet` (`id`, `inmate_number`, `first_name`, `middle_name`, `last_name`, `date_found`, `is_reported`, `is_filed`, `is_charged`, `is_paid`, `note`) VALUES
+(19, 45991, 'MICHAEL', 'ERIC', 'JENKINS', NULL, 0, 0, 0, 0, 'Broke 2 tablets.'),
+(20, 85476, 'BENJAMIN', 'DALE', 'LAUTERBACH', NULL, 1, 0, 0, 0, ''),
+(21, 85476, 'BENJAMIN', 'DALE', 'LAUTERBACH', NULL, 0, 0, 0, 0, ''),
+(22, 81601, 'IOSHA', 'NACHELLE', 'MORGAN', NULL, 0, 0, 0, 0, ''),
+(23, 72062, 'KEWUAN', 'MALIK', 'JASEY', NULL, 0, 0, 0, 0, ''),
+(24, 82529, 'Jorge', 'M', 'PALAEZ AUILA', NULL, 0, 0, 0, 0, ''),
+(25, 77381, 'NEIL', NULL, 'HOOPER', NULL, 0, 0, 0, 0, ''),
+(26, 25980, 'ALONZA', 'ANTHONY', 'ELLIS', NULL, 0, 0, 0, 0, ''),
+(27, 83429, 'YAHIR', 'ESTUARDO', 'BARRIENTOS', NULL, 1, 1, 1, 0, ''),
+(28, 85238, 'BRANDON', 'LEE', 'TANNER', NULL, 0, 0, 0, 0, 'Burned a hole in assigned Tablet'),
+(29, 74009, 'SHAWN', 'TIMOTHY', 'GIRARD', NULL, 1, 1, 1, 0, ''),
+(30, 21707, 'MICHAEL', 'KENNETH', 'DAWSON', NULL, 1, 0, 0, 0, ''),
+(31, 85351, 'DENZEL', 'KADEEM', 'GAINES', NULL, 0, 0, 0, 0, ''),
+(32, 10539, 'JAMES', 'WILLIAM', 'HILL', NULL, 0, 0, 0, 0, ''),
+(33, 73162, 'RAYVAUGHN', 'TELVIN', 'JOHNSON', NULL, 0, 0, 0, 0, ''),
+(34, 65203, 'BRADLEY', 'JAMES', 'HALL', NULL, 0, 0, 0, 0, ''),
+(35, 81610, 'DAVID', 'LEE', 'HINES', NULL, 0, 0, 0, 0, ''),
+(36, 86181, 'WISDOM', 'EMMANUEL', 'PIRTLE', NULL, 0, 0, 0, 0, ''),
+(37, 83324, 'TAMMARA', 'DENAY', 'PEACE', NULL, 1, 1, 1, 0, ''),
+(38, 84406, 'LOPEZ', NULL, 'HECTOR', '2024-05-20', 0, 0, 0, 0, ''),
+(39, 70822, 'RAQUAN', 'TERELL', 'BETHEA', '2024-05-20', 0, 0, 0, 0, ''),
+(40, 31945, 'TYESHA', 'DENISE', 'MALONE', '2024-05-20', 0, 0, 0, 0, ''),
+(41, 81949, 'EJIYA', 'LAMARCUS', 'CARSON', '2024-05-20', 1, 1, 1, 0, ''),
+(42, 86230, 'VERNON', NULL, 'HARRISON', '2024-05-21', 1, 1, 1, 0, ''),
+(43, 36096, 'LEONARD', 'BRANDON', 'BOGAN', '2024-05-20', 1, 1, 1, 0, ''),
+(44, 84111, 'DESHAWN', 'LAMONT', 'LYONS', NULL, 0, 0, 0, 0, ''),
+(45, 42962, 'DONALD', 'RAY', 'COOKE', NULL, 1, 0, 0, 0, ''),
+(46, 85272, 'VASQUEZ', NULL, 'MORALES', NULL, 0, 0, 0, 0, ''),
+(47, 82068, 'MARLON', 'MAURICE', 'JOHNSON', NULL, 0, 0, 0, 0, ''),
+(48, 86291, 'JACOB', NULL, 'MIDKIFF', NULL, 0, 0, 0, 0, ''),
+(49, 84432, 'JESSIE', 'SCOTT', 'HICKS', NULL, 0, 0, 0, 0, ''),
+(50, 82382, 'DAVID', 'CHARLES', 'JOHNSON', NULL, 0, 0, 0, 0, ''),
+(51, 85973, 'ERIC', NULL, 'SUCHOMELLY', NULL, 1, 0, 0, 0, ''),
+(52, 82474, 'JESIAH', NULL, 'FLOWERS', NULL, 0, 0, 0, 0, ''),
+(53, 81180, 'JUMON', 'DIAMONTE', 'BELTON', NULL, 0, 0, 0, 0, ''),
+(54, 76255, 'MATTHEW', 'S', 'PERKINS', NULL, 0, 0, 0, 0, ''),
+(55, 33045, 'BRANDON', 'LEE', 'CRUTCHFIELD', NULL, 0, 0, 0, 0, ''),
+(56, 84405, 'JOHNNY', 'DANIEL', 'FUQUA', '2024-04-01', 0, 0, 0, 0, ''),
+(57, 86049, 'DARIAN', 'LAVEY', 'HERRING', '2024-04-17', 1, 0, 0, 0, 'Broke inmate Shannon\'s tablet.'),
+(58, 67149, 'JEFFREY', 'DANIEL', 'CONNER', '2024-04-23', 1, 1, 1, 0, ''),
+(59, 69960, 'MELVIN', 'LEON', 'MYRICK', '2024-04-23', 1, 1, 1, 0, ''),
+(60, 39171, 'BRYANT', 'KYLE', 'SAUNDERS', NULL, 0, 0, 0, 0, ''),
+(61, 86902, 'SHELTON', NULL, 'JONES', NULL, 0, 0, 0, 0, ''),
+(62, 19590, 'ANTHONY', 'JAMES', 'ANGELINA', NULL, 1, 1, 1, 0, ''),
+(63, 56902, 'SUSAN', 'MICHELLE', 'ARCHER', NULL, 1, 1, 1, 0, ''),
+(64, 66091, 'MELVYN', 'PERRY', 'CHATMAN', NULL, 0, 0, 0, 0, ''),
+(65, 86782, 'JACOB', NULL, 'BELLAMY', NULL, 0, 0, 0, 0, ''),
+(66, 13026, 'ALGIA', 'WEBSTER', 'BAILEY', '2024-04-30', 0, 0, 0, 0, ''),
+(67, 63517, 'JAMES', 'M', 'MCGRATH', '2024-04-30', 0, 0, 0, 0, ''),
+(68, 85222, 'NERY', NULL, 'ESTRADA', '2024-05-20', 0, 0, 0, 0, ''),
+(69, 81857, 'ALEXANDER', NULL, 'NELSON', '2024-05-21', 0, 0, 0, 0, ''),
+(70, 87016, 'ANDRE', NULL, 'GLOVER', '2024-05-28', 0, 0, 0, 0, ''),
+(71, 86957, 'LARRY', NULL, 'STONE', '2024-05-28', 0, 0, 0, 0, 'Burned a hole in the tablet'),
+(72, 12602, 'JASON', 'LEE', 'MEEKINS', '2024-05-28', 0, 0, 0, 0, 'Broken Screen'),
+(73, 81034, 'TRAVIS', 'DALTON', 'VAUGHAN', '2024-05-28', 0, 0, 0, 0, 'Back Broken'),
+(74, 80282, 'JAMARI', 'ANTONIO', 'TAYLOR', '2024-05-28', 0, 0, 0, 0, 'Broken Screen'),
+(75, 85670, 'JAMARCUS', 'VYSHAWN', 'WATKINS', '2024-05-28', 0, 0, 0, 0, ''),
+(76, 47372, 'GENE', 'RAY', 'BROWDER', NULL, 1, 1, 1, 0, '');
+
 -- --------------------------------------------------------
 
 --
@@ -591,12 +712,67 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `password`, `role_id`) VALUES
-(20, 'asd', 'asd', 'asd', '$2y$10$x1AACP1WIpOplroj4/aor.z5mxBbdxy9Y3sZwewHufM3tXo7EGEwC', 1),
+(20, 'asd', 'asd', 'asd', '$2y$10$6uMHNNdfOca2YPhFHGX.EOUAxqfy2CG8ayUGIEgTkpSmUIIMH3TKC', 1),
 (26, 'Mark', 'Tuggle', 'tugglem@rrjva.org', '$2y$10$YX4NUpNfpclLmVKwRmj2W.tHw6WLcATxgIp/elZJI2llypXiu741.', 1),
 (27, 'Heather', 'Scott', 'heather.scott@icsolutions.com', '$2y$10$ciRdDHbwqXYnUl0v003TIOQLWmoc.9HTVdVENRv/J9Fjsocm36dYi', 2),
 (28, 'Danny', 'Hines', 'danny.hines@icsolutions.com', '$2y$10$ruKyoggOrx8.I/TdNEIZCeo88HfJ/Iowfo7SDUfCpfRqYO72IdZLm', 2),
 (29, 'Neil', 'Marlowe', 'nmarlowe@rrjva.org', '$2y$10$Qkzeq5l28lzYk2ZtdXRREO.v2i13w5Xg5aLNDeBU/4sq7wWFCgyye', 1),
-(30, 'Charlene', 'Jones', 'jones.charlene@rrjva.org', '$2y$10$uXA5hHp6cQQXKwMRxuLM3.0FXazCQ8QSYSu3hV3RVRS8uCRExYHfO', 4);
+(30, 'Charlene', 'Jones', 'jones.charlene@rrjva.org', '$2y$10$Na.SONOfk4RNUInKG82Cseq9G2cX94nxLgT2eMFW/f9WSPSk8oVyK', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `volunteer`
+--
+
+CREATE TABLE `volunteer` (
+  `id` int(11) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `group_name` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `zip` int(11) DEFAULT NULL,
+  `home_phone` varchar(255) DEFAULT NULL,
+  `cell_phone` varchar(255) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `date_hired` date DEFAULT NULL,
+  `schedule` varchar(255) DEFAULT NULL,
+  `signature` varchar(255) DEFAULT NULL,
+  `church_locator` varchar(255) DEFAULT NULL,
+  `work_phone` varchar(255) DEFAULT NULL,
+  `experience_training` varchar(255) DEFAULT NULL,
+  `degree_type` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `race` varchar(255) DEFAULT NULL,
+  `sex` varchar(255) DEFAULT NULL,
+  `ssn` varchar(255) DEFAULT NULL,
+  `document_status` varchar(255) DEFAULT NULL,
+  `church_address` varchar(255) DEFAULT NULL,
+  `church_leader` varchar(255) DEFAULT NULL,
+  `church_phone` varchar(255) DEFAULT NULL,
+  `specific_skills_education` varchar(255) DEFAULT NULL,
+  `category_name` varchar(255) DEFAULT NULL,
+  `quarterly_meeting_attended` date DEFAULT NULL,
+  `volunteer_dinner_rsvp` tinyint(1) DEFAULT NULL,
+  `dinner_guest` tinyint(1) DEFAULT NULL,
+  `attended_quarterly_meeting` tinyint(1) DEFAULT NULL,
+  `active_inactive` varchar(255) DEFAULT NULL,
+  `activity_status` varchar(255) DEFAULT NULL,
+  `ministry_group` varchar(255) DEFAULT NULL,
+  `chaplains_assistant` varchar(255) DEFAULT NULL,
+  `on_call_schedule` varchar(255) DEFAULT NULL,
+  `on_call_status` tinyint(1) DEFAULT NULL,
+  `birth_month` varchar(255) DEFAULT NULL,
+  `ministry_orientation` date DEFAULT NULL,
+  `vol_manual_number` int(255) DEFAULT NULL,
+  `prea_training` date DEFAULT NULL,
+  `main` varchar(255) DEFAULT NULL,
+  `hu6` varchar(255) DEFAULT NULL,
+  `denomination` varchar(255) DEFAULT NULL,
+  `devices_approved` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -606,6 +782,12 @@ INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `password`, `role_
 -- Indexes for table `cell`
 --
 ALTER TABLE `cell`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contractor`
+--
+ALTER TABLE `contractor`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -640,6 +822,12 @@ ALTER TABLE `user`
   ADD KEY `roles` (`role_id`);
 
 --
+-- Indexes for table `volunteer`
+--
+ALTER TABLE `volunteer`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -648,6 +836,12 @@ ALTER TABLE `user`
 --
 ALTER TABLE `cell`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
+
+--
+-- AUTO_INCREMENT for table `contractor`
+--
+ALTER TABLE `contractor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `mailroom`
@@ -659,7 +853,7 @@ ALTER TABLE `mailroom`
 -- AUTO_INCREMENT for table `phone`
 --
 ALTER TABLE `phone`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=300;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=301;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -671,13 +865,19 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT for table `tablet`
 --
 ALTER TABLE `tablet`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT for table `volunteer`
+--
+ALTER TABLE `volunteer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
