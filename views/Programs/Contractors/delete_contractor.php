@@ -1,8 +1,8 @@
-<a href="/phones/one/<?= $phone["id"] ?>">Cancel</a>
+<a href="/contractors/one/<?= $contractor["id"] ?>">Cancel</a>
 
-<form method="post" action="/phones/destroy/<?= htmlspecialchars($phone['id']) ?>">
+<form method="post" action="/contractors/destroy/<?= htmlspecialchars($contractor['id']) ?>">
 
-    <h2>Are you sure you want to delete the <?= htmlspecialchars($phone['name']) ?> listing?</h2>
-    <button type="submit">Delete Listing</button>
+    <h2>Are you sure you want to delete the <?= htmlspecialchars($contractor['last_name']) ?>,  <?= htmlspecialchars($contractor['first_name']) ?>?</h2>
+    <button type="submit">Delete Contractor</button>
 
 </form>

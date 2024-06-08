@@ -71,6 +71,9 @@ $router->add("/mailrooms/update/{id:\d+}", ["controller" => "mailrooms", "action
 $router->add("/mailrooms/delete/{id:\d+}", ["controller" => "mailrooms", "action" => "deleteName", "middleware" => "auth"]);
 $router->add("/mailrooms/destroy/{id:\d+}", ["controller" => "mailrooms", "action" => "destroyName", "method" => "post", "middleware" => "auth"]);
 
+// Report Views (Mailroom Listings)
+$router->add("/mailrooms/reportall", ["controller" => "mailrooms", "action" => "reportAll"]);
+
 // *************************************************************************************************************************************************//
 
 // Admin Pages (Cell Listings)
@@ -86,8 +89,29 @@ $router->add("/cells/destroy/{id:\d+}", ["controller" => "cells", "action" => "d
 // Report Views (Cell Listings)
 $router->add("/cells/reportall", ["controller" => "cells", "action" => "reportAll"]);
 
-// Report Views (Mailroom Listings)
-$router->add("/mailrooms/reportall", ["controller" => "mailrooms", "action" => "reportAll"]);
+// *************************************************************************************************************************************************//
+
+// Admin Pages (Contractor Listings)
+$router->add("/contractors/all", ["controller" => "contractors", "action" => "viewAll", "middleware" => "auth"]);
+$router->add("/contractors/add", ["controller" => "contractors", "action" => "addNewCell", "middleware" => "auth"]);
+$router->add("/contractors/create", ["controller" => "contractors", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/contractors/one/{id:\d+}", ["controller" => "contractors", "action" => "viewone", "middleware" => "auth"]);
+$router->add("/contractors/edit/{id:\d+}", ["controller" => "contractors", "action" => "editCell", "middleware" => "auth"]);
+$router->add("/contractors/update/{id:\d+}", ["controller" => "contractors", "action" => "updateCell", "method" => "post", "middleware" => "auth"]);
+$router->add("/contractors/delete/{id:\d+}", ["controller" => "contractors", "action" => "deleteCell", "middleware" => "auth"]);
+$router->add("/contractors/destroy/{id:\d+}", ["controller" => "contractors", "action" => "destroyCell", "method" => "post", "middleware" => "auth"]);
+
+// *************************************************************************************************************************************************//
+
+// Admin Pages (Contractor Listings)
+$router->add("/volunteers/all", ["controller" => "volunteers", "action" => "viewAll", "middleware" => "auth"]);
+$router->add("/volunteers/add", ["controller" => "volunteers", "action" => "addNewCell", "middleware" => "auth"]);
+$router->add("/volunteers/create", ["controller" => "volunteers", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/volunteers/one/{id:\d+}", ["controller" => "volunteers", "action" => "viewone", "middleware" => "auth"]);
+$router->add("/volunteers/edit/{id:\d+}", ["controller" => "volunteers", "action" => "editCell", "middleware" => "auth"]);
+$router->add("/volunteers/update/{id:\d+}", ["controller" => "volunteers", "action" => "updateCell", "method" => "post", "middleware" => "auth"]);
+$router->add("/volunteers/delete/{id:\d+}", ["controller" => "volunteers", "action" => "deleteCell", "middleware" => "auth"]);
+$router->add("/volunteers/destroy/{id:\d+}", ["controller" => "volunteers", "action" => "destroyCell", "method" => "post", "middleware" => "auth"]);
 
 // Blanket Route
 // $router->add("/{controller}/{action}");

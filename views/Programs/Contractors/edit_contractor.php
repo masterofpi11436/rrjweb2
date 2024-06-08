@@ -1,11 +1,11 @@
-<form action="/phones/one/<?= htmlspecialchars($phone["id"]) ?>">
+<form action="/contractors/one/<?= htmlspecialchars($contractor["id"]) ?>">
     <button>Cancel</button>
 </form>
 
-<form action="/phones/delete/<?= htmlspecialchars($phone['id']) ?>">
+<form action="/contractors/delete/<?= htmlspecialchars($contractor['id']) ?>">
     <button>Delete Extension</button>
 </form>
 
-<form method="post" action="/phones/update/<?= htmlspecialchars($phone['id']) ?>">
-    <?php require "phone_form.php"; ?>
+<form method="post" action="/contractors/update/<?= htmlspecialchars($contractor['id']) ?>">
+    <?php require "contractor_form.php"; ?>
 </form>
