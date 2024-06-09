@@ -50,7 +50,7 @@ $router->add("/tablets/reportall", ["controller" => "tablets", "action" => "repo
 // Admin Pages (Phone Listings)
 $router->add("/phones/all", ["controller" => "phones", "action" => "viewAll", "middleware" => "auth"]);
 $router->add("/phones/add", ["controller" => "phones", "action" => "addNewPhone", "middleware" => "auth"]);
-$router->add("/phones/create", ["controller" => "phones", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/phones/create", ["controller" => "phones", "action" => "create", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/phones/one/{id:\d+}", ["controller" => "phones", "action" => "viewone", "middleware" => "auth"]);
 $router->add("/phones/edit/{id:\d+}", ["controller" => "phones", "action" => "editPhone", "middleware" => "auth"]);
 $router->add("/phones/update/{id:\d+}", ["controller" => "phones", "action" => "updatePhone", "method" => "post", "middleware" => "auth"]);
