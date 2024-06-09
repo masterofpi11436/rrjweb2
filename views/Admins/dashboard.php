@@ -23,3 +23,11 @@
 <form action="/names/all">
     <button>Names</button>
 </form>
+
+<form action="/programs/contractors/all">
+    <button>Contractors</button>
+</form>
+
+<form action="/programs/volunteers/all">
+    <button>Volunteers</button>
+</form>

@@ -92,26 +92,26 @@ $router->add("/cells/reportall", ["controller" => "cells", "action" => "reportAl
 // *************************************************************************************************************************************************//
 
 // Admin Pages (Contractor Listings)
-$router->add("/contractors/all", ["controller" => "contractors", "action" => "viewAll", "middleware" => "auth"]);
-$router->add("/contractors/add", ["controller" => "contractors", "action" => "addNewCell", "middleware" => "auth"]);
-$router->add("/contractors/create", ["controller" => "contractors", "action" => "create", "method" => "post", "middleware" => "auth"]);
-$router->add("/contractors/one/{id:\d+}", ["controller" => "contractors", "action" => "viewone", "middleware" => "auth"]);
-$router->add("/contractors/edit/{id:\d+}", ["controller" => "contractors", "action" => "editCell", "middleware" => "auth"]);
-$router->add("/contractors/update/{id:\d+}", ["controller" => "contractors", "action" => "updateCell", "method" => "post", "middleware" => "auth"]);
-$router->add("/contractors/delete/{id:\d+}", ["controller" => "contractors", "action" => "deleteCell", "middleware" => "auth"]);
-$router->add("/contractors/destroy/{id:\d+}", ["controller" => "contractors", "action" => "destroyCell", "method" => "post", "middleware" => "auth"]);
+$router->add("/programs/contractors/all", ["controller" => "contractors", "action" => "viewAll", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/add", ["controller" => "contractors", "action" => "addNewCell", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/create", ["controller" => "contractors", "action" => "create", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/one/{id:\d+}", ["controller" => "contractors", "action" => "viewone", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/edit/{id:\d+}", ["controller" => "contractors", "action" => "editCell", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/update/{id:\d+}", ["controller" => "contractors", "action" => "updateCell", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/delete/{id:\d+}", ["controller" => "contractors", "action" => "deleteCell", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/destroy/{id:\d+}", ["controller" => "contractors", "action" => "destroyCell", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
 
 // *************************************************************************************************************************************************//
 
 // Admin Pages (Contractor Listings)
-$router->add("/volunteers/all", ["controller" => "volunteers", "action" => "viewAll", "middleware" => "auth"]);
-$router->add("/volunteers/add", ["controller" => "volunteers", "action" => "addNewCell", "middleware" => "auth"]);
-$router->add("/volunteers/create", ["controller" => "volunteers", "action" => "create", "method" => "post", "middleware" => "auth"]);
-$router->add("/volunteers/one/{id:\d+}", ["controller" => "volunteers", "action" => "viewone", "middleware" => "auth"]);
-$router->add("/volunteers/edit/{id:\d+}", ["controller" => "volunteers", "action" => "editCell", "middleware" => "auth"]);
-$router->add("/volunteers/update/{id:\d+}", ["controller" => "volunteers", "action" => "updateCell", "method" => "post", "middleware" => "auth"]);
-$router->add("/volunteers/delete/{id:\d+}", ["controller" => "volunteers", "action" => "deleteCell", "middleware" => "auth"]);
-$router->add("/volunteers/destroy/{id:\d+}", ["controller" => "volunteers", "action" => "destroyCell", "method" => "post", "middleware" => "auth"]);
+$router->add("/programs/volunteers/all", ["controller" => "volunteers", "action" => "viewAll", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/add", ["controller" => "volunteers", "action" => "addNewCell", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/create", ["controller" => "volunteers", "action" => "create", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/one/{id:\d+}", ["controller" => "volunteers", "action" => "viewone", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/edit/{id:\d+}", ["controller" => "volunteers", "action" => "editCell", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/update/{id:\d+}", ["controller" => "volunteers", "action" => "updateCell", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/delete/{id:\d+}", ["controller" => "volunteers", "action" => "deleteCell", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/destroy/{id:\d+}", ["controller" => "volunteers", "action" => "destroyCell", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
 
 // Blanket Route
 // $router->add("/{controller}/{action}");
