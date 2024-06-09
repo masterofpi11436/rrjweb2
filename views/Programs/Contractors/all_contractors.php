@@ -1,8 +1,8 @@
-<form action="/contractors/add">
+<form action="/programs/contractors/add">
     <button>Add New Extension</button>
 </form>
 
-<form method="get" action="/contractors/all">
+<form method="get" action="/programs/contractors/all">
     <input type="text" name="search" placeholder="Search Contractor" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
@@ -22,7 +22,7 @@
                     <td><?= htmlspecialchars($contractor['last_name'] ?? '') ?></td>
                     <td><?= htmlspecialchars($contractor['first_name'] ?? '') ?></td>
                     <td>
-                        <a href="/contractors/one/<?= htmlspecialchars($contractor['id']) ?>">View</a>
+                        <a href="/programs/contractors/one/<?= htmlspecialchars($contractor['id']) ?>">View</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

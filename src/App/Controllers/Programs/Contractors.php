@@ -35,7 +35,7 @@ class Contractors extends Controller
         // Assign this model's id to the $contractor variable to the 
         $contractor = $this->model->getOne($id);
 
-        // Verify if the phone was found
+        // Verify if the contractor was found
         if ($contractor === false) {
 
             throw new PageNotFoundException("No Information Found");
@@ -96,7 +96,7 @@ class Contractors extends Controller
     /**
      * Renders the form to add a new contractor.
      */
-    public function addNewcontractor()
+    public function addNewContractor()
     {
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Contractor", "heading" => "Add Contractor"]));

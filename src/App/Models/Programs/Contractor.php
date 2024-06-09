@@ -31,7 +31,7 @@ class Contractor extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE last_namne LIKE :search OR first_name LIKE :search";
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE last_name LIKE :search OR first_name LIKE :search";
         $stmt = $conn->prepare($sql);
 
         $searchTerm = '%' . $search . '%';

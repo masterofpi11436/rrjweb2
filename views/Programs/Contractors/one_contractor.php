@@ -1,8 +1,8 @@
-<form action="/contractors/all">
+<form action="/programs/contractors/all">
     <button>Home</button>
 </form>
 
-<form action="/contractors/edit/<?= htmlspecialchars($contractor['id']) ?>">
+<form action="/programs/contractors/edit/<?= htmlspecialchars($contractor['id']) ?>">
     <button>Edit Phone</button>
 </form>
 

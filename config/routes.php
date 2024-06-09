@@ -23,10 +23,10 @@ $router->add("/names/viewall", ["controller" => "names", "action" => "viewall", 
 $router->add("/admins/dashboard", ["controller" => "admins", "action" => "dashboard", "middleware" => "auth"]);
 $router->add("/admins/all", ["controller" => "admins", "action" => "viewall", "middleware" => "auth"]);
 $router->add("/admins/add", ["controller" => "admins", "action" => "addNewUser", "middleware" => "auth"]);
-$router->add("/admins/create", ["controller" => "admins", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/admins/create", ["controller" => "admins", "action" => "create", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/admins/one/{id:\d+}", ["controller" => "admins", "action" => "viewone", "middleware" => "auth"]);
 $router->add("/admins/edit/{id:\d+}", ["controller" => "admins", "action" => "editUser", "middleware" => "auth"]);
-$router->add("/admins/update/{id:\d+}", ["controller" => "admins", "action" => "updateUser", "method" => "post", "middleware" => "auth"]);
+$router->add("/admins/update/{id:\d+}", ["controller" => "admins", "action" => "updateUser", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/admins/delete/{id:\d+}", ["controller" => "admins", "action" => "deleteUser", "middleware" => "auth"]);
 $router->add("/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyUser", "method" => "post", "middleware" => "auth"]);
 
@@ -35,10 +35,10 @@ $router->add("/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => 
 // Admin Pages (Tablet)
 $router->add("/tablets/all", ["controller" => "tablets", "action" => "viewall", "middleware" => "auth"]);
 $router->add("/tablets/add", ["controller" => "tablets", "action" => "addNewTablet", "middleware" => "auth"]);
-$router->add("/tablets/create", ["controller" => "tablets", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/tablets/create", ["controller" => "tablets", "action" => "create", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/tablets/one/{id:\d+}", ["controller" => "tablets", "action" => "viewone", "middleware" => "auth"]);
 $router->add("/tablets/edit/{id:\d+}", ["controller" => "tablets", "action" => "editTablet", "middleware" => "auth"]);
-$router->add("/tablets/update/{id:\d+}", ["controller" => "tablets", "action" => "updateTablet", "method" => "post", "middleware" => "auth"]);
+$router->add("/tablets/update/{id:\d+}", ["controller" => "tablets", "action" => "updateTablet", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/tablets/delete/{id:\d+}", ["controller" => "tablets", "action" => "deleteTablet", "middleware" => "auth"]);
 $router->add("/tablets/destroy/{id:\d+}", ["controller" => "tablets", "action" => "destroyTablet", "method" => "post", "middleware" => "auth"]);
 
@@ -53,7 +53,7 @@ $router->add("/phones/add", ["controller" => "phones", "action" => "addNewPhone"
 $router->add("/phones/create", ["controller" => "phones", "action" => "create", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/phones/one/{id:\d+}", ["controller" => "phones", "action" => "viewone", "middleware" => "auth"]);
 $router->add("/phones/edit/{id:\d+}", ["controller" => "phones", "action" => "editPhone", "middleware" => "auth"]);
-$router->add("/phones/update/{id:\d+}", ["controller" => "phones", "action" => "updatePhone", "method" => "post", "middleware" => "auth"]);
+$router->add("/phones/update/{id:\d+}", ["controller" => "phones", "action" => "updatePhone", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/phones/delete/{id:\d+}", ["controller" => "phones", "action" => "deletePhone", "middleware" => "auth"]);
 $router->add("/phones/destroy/{id:\d+}", ["controller" => "phones", "action" => "destroyPhone", "method" => "post", "middleware" => "auth"]);
 
@@ -64,10 +64,10 @@ $router->add("/phones/reportall", ["controller" => "phones", "action" => "report
 // Admin Pages (Mailroom Listings)
 $router->add("/mailrooms/all", ["controller" => "mailrooms", "action" => "viewAll", "middleware" => "auth"]);
 $router->add("/mailrooms/add", ["controller" => "mailrooms", "action" => "addNewName", "middleware" => "auth"]);
-$router->add("/mailrooms/create", ["controller" => "mailrooms", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/mailrooms/create", ["controller" => "mailrooms", "action" => "create", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/mailrooms/one/{id:\d+}", ["controller" => "mailrooms", "action" => "viewone", "middleware" => "auth"]);
 $router->add("/mailrooms/edit/{id:\d+}", ["controller" => "mailrooms", "action" => "editName", "middleware" => "auth"]);
-$router->add("/mailrooms/update/{id:\d+}", ["controller" => "mailrooms", "action" => "updateName", "method" => "post", "middleware" => "auth"]);
+$router->add("/mailrooms/update/{id:\d+}", ["controller" => "mailrooms", "action" => "updateName", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/mailrooms/delete/{id:\d+}", ["controller" => "mailrooms", "action" => "deleteName", "middleware" => "auth"]);
 $router->add("/mailrooms/destroy/{id:\d+}", ["controller" => "mailrooms", "action" => "destroyName", "method" => "post", "middleware" => "auth"]);
 
@@ -79,10 +79,10 @@ $router->add("/mailrooms/reportall", ["controller" => "mailrooms", "action" => "
 // Admin Pages (Cell Listings)
 $router->add("/cells/all", ["controller" => "cells", "action" => "viewAll", "middleware" => "auth"]);
 $router->add("/cells/add", ["controller" => "cells", "action" => "addNewCell", "middleware" => "auth"]);
-$router->add("/cells/create", ["controller" => "cells", "action" => "create", "method" => "post", "middleware" => "auth"]);
+$router->add("/cells/create", ["controller" => "cells", "action" => "create", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/cells/one/{id:\d+}", ["controller" => "cells", "action" => "viewone", "middleware" => "auth"]);
 $router->add("/cells/edit/{id:\d+}", ["controller" => "cells", "action" => "editCell", "middleware" => "auth"]);
-$router->add("/cells/update/{id:\d+}", ["controller" => "cells", "action" => "updateCell", "method" => "post", "middleware" => "auth"]);
+$router->add("/cells/update/{id:\d+}", ["controller" => "cells", "action" => "updateCell", "method" => "post", "middleware" => "auth|trim"]);
 $router->add("/cells/delete/{id:\d+}", ["controller" => "cells", "action" => "deleteCell", "middleware" => "auth"]);
 $router->add("/cells/destroy/{id:\d+}", ["controller" => "cells", "action" => "destroyCell", "method" => "post", "middleware" => "auth"]);
 
@@ -93,25 +93,25 @@ $router->add("/cells/reportall", ["controller" => "cells", "action" => "reportAl
 
 // Admin Pages (Contractor Listings)
 $router->add("/programs/contractors/all", ["controller" => "contractors", "action" => "viewAll", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/contractors/add", ["controller" => "contractors", "action" => "addNewCell", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/contractors/create", ["controller" => "contractors", "action" => "create", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/add", ["controller" => "contractors", "action" => "addNewContractor", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/create", ["controller" => "contractors", "action" => "create", "method" => "post", "middleware" => "auth|trim", "namespace" => "Programs"]);
 $router->add("/programs/contractors/one/{id:\d+}", ["controller" => "contractors", "action" => "viewone", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/contractors/edit/{id:\d+}", ["controller" => "contractors", "action" => "editCell", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/contractors/update/{id:\d+}", ["controller" => "contractors", "action" => "updateCell", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/contractors/delete/{id:\d+}", ["controller" => "contractors", "action" => "deleteCell", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/contractors/destroy/{id:\d+}", ["controller" => "contractors", "action" => "destroyCell", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/edit/{id:\d+}", ["controller" => "contractors", "action" => "editContractor", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/update/{id:\d+}", ["controller" => "contractors", "action" => "updateContractor", "method" => "post", "middleware" => "auth|trim", "namespace" => "Programs"]);
+$router->add("/programs/contractors/delete/{id:\d+}", ["controller" => "contractors", "action" => "deleteContractor", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/contractors/destroy/{id:\d+}", ["controller" => "contractors", "action" => "destroyContractor", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
 
 // *************************************************************************************************************************************************//
 
 // Admin Pages (Contractor Listings)
 $router->add("/programs/volunteers/all", ["controller" => "volunteers", "action" => "viewAll", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/volunteers/add", ["controller" => "volunteers", "action" => "addNewCell", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/volunteers/create", ["controller" => "volunteers", "action" => "create", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/add", ["controller" => "volunteers", "action" => "addNewVolunteer", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/create", ["controller" => "volunteers", "action" => "create", "method" => "post", "middleware" => "auth|trim", "namespace" => "Programs"]);
 $router->add("/programs/volunteers/one/{id:\d+}", ["controller" => "volunteers", "action" => "viewone", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/volunteers/edit/{id:\d+}", ["controller" => "volunteers", "action" => "editCell", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/volunteers/update/{id:\d+}", ["controller" => "volunteers", "action" => "updateCell", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/volunteers/delete/{id:\d+}", ["controller" => "volunteers", "action" => "deleteCell", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/volunteers/destroy/{id:\d+}", ["controller" => "volunteers", "action" => "destroyCell", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/edit/{id:\d+}", ["controller" => "volunteers", "action" => "editVolunteer", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/update/{id:\d+}", ["controller" => "volunteers", "action" => "updateVolunteer", "method" => "post", "middleware" => "auth|trim", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/delete/{id:\d+}", ["controller" => "volunteers", "action" => "deleteVolunteer", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/volunteers/destroy/{id:\d+}", ["controller" => "volunteers", "action" => "destroyVolunteer", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
 
 // Blanket Route
 // $router->add("/{controller}/{action}");
