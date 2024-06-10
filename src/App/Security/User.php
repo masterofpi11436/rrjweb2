@@ -39,4 +39,18 @@ class User extends Model
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Find the user by id
+    public function findById(int $id): array|bool
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE id = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

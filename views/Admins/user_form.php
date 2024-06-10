@@ -43,6 +43,7 @@
             <option value="2" <?= isset($user) && $user['role_id'] == 2 ? 'selected' : '' ?>>Tablet</option>
             <option value="3" <?= isset($user) && $user['role_id'] == 3 ? 'selected' : '' ?>>Phone</option>
             <option value="4" <?= isset($user) && $user['role_id'] == 4 ? 'selected' : '' ?>>Mailroom</option>
+            <option value="4" <?= isset($user) && $user['role_id'] == 5 ? 'selected' : '' ?>>Program</option>
             <!-- Add more roles as needed -->
         </select>
     </div>

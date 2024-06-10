@@ -8,6 +8,7 @@ use Framework\Request;
 use Framework\Response;
 use Framework\RequestHandlerInterface;
 use Framework\MiddlewareInterface;
+use App\Security\User;
 
 class UserAuthorization implements MiddlewareInterface
 {
@@ -16,7 +17,7 @@ class UserAuthorization implements MiddlewareInterface
      *
      * @param Response $response The response instance.
      */
-    public function __construct(private Response $response){}
+    public function __construct(private Response $response, private User $userModel){}
 
     /**
      * Process the request and authorize the user.
@@ -27,20 +28,29 @@ class UserAuthorization implements MiddlewareInterface
      */
     public function process(Request $request, RequestHandlerInterface $next): Response
     {
-        // Start the session if it is not already started
+        // Check if the user is logged in
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Check if the user is logged in
         if (!isset($_SESSION['user_id'])) {
-            // Redirect to the login page if not logged in
             $this->response->redirect('/login');
             return $this->response;
         }
 
-        // Get user role id from session
+        $userId = $_SESSION['user_id'];
         $roleId = $_SESSION['role_id'] ?? null;
+
+        if (!isset($_SESSION['user_first_name']) || !isset($_SESSION['user_last_name'])) {
+            $user = $this->userModel->findById($userId);
+            if ($user) {
+                $_SESSION['user_first_name'] = $user['first_name'];
+                $_SESSION['user_last_name'] = $user['last_name'];
+            } else {
+                $this->response->redirect('/login');
+                return $this->response;
+            }
+        }
 
         // Check if the user has permission to access the requested route
         $route = $request->uri;
@@ -48,8 +58,6 @@ class UserAuthorization implements MiddlewareInterface
             // Proceed to the next middleware or controller if access is allowed
             return $next->handle($request);
         } else {
-            // Log the access denial
-            error_log("Access denied for role ID $roleId to route: $route. Redirecting to login page.");
             $this->response->redirect('/login');
             return $this->response;
         }
@@ -66,8 +74,6 @@ class UserAuthorization implements MiddlewareInterface
         ];
 
         if ($roleId === null) {
-            // Log the missing role ID
-            error_log("Role ID is null for user trying to access: $route");
             return false;
         }
 
