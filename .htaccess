@@ -1,2 +1,6 @@
 RewriteEngine On
+
+# Redirect from old path to new path
+RewriteRule ^Phone_Directory/view_table\.php$ /phones/directory [R=301,L]
+
 RewriteRule (.*) public/$1
