@@ -58,7 +58,7 @@ $router->add("/phones/delete/{id:\d+}", ["controller" => "phones", "action" => "
 $router->add("/phones/destroy/{id:\d+}", ["controller" => "phones", "action" => "destroyPhone", "method" => "post", "middleware" => "auth"]);
 
 // Report Views (Phone Listings)
-$router->add("/phones/reportall", ["controller" => "phones", "action" => "reportAll"]);
+$router->add("/phones/directory", ["controller" => "phones", "action" => "reportAll"]);
 
 // *************************************************************************************************************************************************//
 // Admin Pages (Mailroom Listings)
