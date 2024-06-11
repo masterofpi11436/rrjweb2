@@ -10,6 +10,10 @@
     <h1>ERROR 404</h1>
     <h1>The page you are looking for does not exist.</h1>
     <a href="/login">Login Page</a>
-    <a href="/tablets/reportall">Reports Page</a>
+	<div>
+		<form action="/phones/directory">
+			<button>Back</button>
+		</form>
+	</div>	
 </body>
 </html>

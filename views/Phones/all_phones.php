@@ -15,7 +15,7 @@
                 <th>Name</th>
                 <th>Title</th>
                 <th>Section</th>
-                <th>Extendion</th>
+                <th>Extension</th>
                 <th>Edit</th>
             </tr>
         </thead>

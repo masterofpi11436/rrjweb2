@@ -1,4 +1,4 @@
-<form method="get" action="/phones/reportall">
+<form method="get" action="/phones/directory">
     <input type="text" name="search" placeholder="Search by Name, Department, or Extension" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
@@ -11,7 +11,7 @@
                 <th>Name</th>
                 <th>Title</th>
                 <th>Section</th>
-                <th>Extendion</th>
+                <th>Extension</th>
             </tr>
         </thead>
         <tbody>
