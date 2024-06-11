@@ -17,7 +17,7 @@
 </form>
 
 <form action="/cells/all">
-    <button>Cells</button>
+    <button>Employee Contacts</button>
 </form>
 
 <form action="/names/all">
