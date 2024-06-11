@@ -27,11 +27,38 @@ class Phone extends Model
         }
     }
 
-    public function searchPhones(string $search): array
+    public function getAll(string $sort = 'name', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE section LIKE :search OR name LIKE :search OR title LIKE :search OR extension LIKE :search";
+        // Validate the sorting parameters
+        $validColumns = ['name', 'title', 'section', 'extension'];
+        if (!in_array($sort, $validColumns)) {
+            $sort = 'name'; // Default to 'name' if an invalid column is provided
+        }
+        $order = ($order === 'desc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'
+
+        $sql = "SELECT * FROM {$this->getTableName()} ORDER BY {$sort} {$order}";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function searchPhones(string $search, string $sort = 'name', string $order = 'asc'): array
+    {
+        $conn = $this->db->getConn();
+
+        // Validate the sorting parameters
+        $validColumns = ['name', 'title', 'section', 'extension'];
+        if (!in_array($sort, $validColumns)) {
+            $sort = 'name'; // Default to 'name' if an invalid column is provided
+        }
+        $order = ($order === 'desc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'
+
+        $sql = "SELECT * FROM {$this->getTableName()} 
+                WHERE section LIKE :search OR name LIKE :search OR title LIKE :search OR extension LIKE :search 
+                ORDER BY {$sort} {$order}";
         $stmt = $conn->prepare($sql);
 
         $searchTerm = '%' . $search . '%';
@@ -40,5 +67,4 @@ class Phone extends Model
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 }

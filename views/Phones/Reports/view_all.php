@@ -8,10 +8,23 @@
     <table border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px; border-collapse:collapse;">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Title</th>
-                <th>Section</th>
-                <th>Extension</th>
+                <?php
+                $search = htmlspecialchars($_GET['search'] ?? '');
+                $currentOrder = $_GET['order'] ?? 'asc';
+                $newOrder = ($currentOrder === 'asc') ? 'desc' : 'asc';
+                ?>
+                <th>
+                    <a href="?search=<?= $search ?>&sort=name&order=<?= $newOrder ?>">Name</a>
+                </th>
+                <th>
+                    <a href="?search=<?= $search ?>&sort=title&order=<?= $newOrder ?>">Title</a>
+                </th>
+                <th>
+                    <a href="?search=<?= $search ?>&sort=section&order=<?= $newOrder ?>">Section</a>
+                </th>
+                <th>
+                    <a href="?search=<?= $search ?>&sort=extension&order=<?= $newOrder ?>">Extension</a>
+                </th>
             </tr>
         </thead>
         <tbody>
