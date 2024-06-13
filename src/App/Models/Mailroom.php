@@ -11,7 +11,7 @@ use PDO;
 class Mailroom extends Model
 {
     // Override the phone name if the class name and table name does not match
-    // protected $phone = "phone";
+    // protected $table = "phone";
 
     // Validate the inamte number and last name fields to allow minumum information to look up person.
     protected function validateForm(array $data): void

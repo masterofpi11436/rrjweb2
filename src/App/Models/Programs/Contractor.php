@@ -11,21 +11,21 @@ use PDO;
 class Contractor extends Model
 {
     // Override the phone name if the class name and table name does not match
-    // protected $phone = "phone";
+    protected $table = "program";
 
     // Validate the inamte number and last name fields to allow minumum information to look up person.
-    protected function validateForm(array $data): void
-    {
-        if (empty($data["last_name"])) {
+    // protected function validateForm(array $data): void
+    // {
+    //     if (empty($data["last_name"])) {
 
-            $this->addError("last_name", "Last name is required!");
-        }
+    //         $this->addError("last_name", "Last name is required!");
+    //     }
 
-        if (empty($data["first_name"])) {
+    //     if (empty($data["first_name"])) {
 
-            $this->addError("first_name", "First name is required!");
-        }
-    }
+    //         $this->addError("first_name", "First name is required!");
+    //     }
+    // }
 
     public function searchContractors(string $search): array
     {

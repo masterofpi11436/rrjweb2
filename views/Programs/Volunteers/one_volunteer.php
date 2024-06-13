@@ -1,8 +1,8 @@
-<form action="/volunteers/all">
+<form action="/programs/volunteers/all">
     <button>Home</button>
 </form>
 
-<form action="/volunteers/edit/<?= htmlspecialchars($volunteer['id']) ?>">
+<form action="/programs/volunteers/edit/<?= htmlspecialchars($volunteer['id']) ?>">
     <button>Edit Phone</button>
 </form>
 

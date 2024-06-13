@@ -60,7 +60,7 @@ class Contractors extends Controller
         }
 
         // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Contractors Extensions", "heading" => "All Contractors"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Contractors", "heading" => "All Contractors"]));
 
         // Render the all contractors view
         $this->response->appendBody($this->viewer->render("Programs/Contractors/all_contractors.php", ["contractors" => $contractors]));
@@ -82,7 +82,7 @@ class Contractors extends Controller
         $contractor = $this->getContractorID($id);
 
         // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Showing One Listing", "heading" => "Showing One Listing"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Showing One", "heading" => "Contractor Details"]));
 
         // Render the one contractor view
         $this->response->appendBody($this->viewer->render("Programs/Contractors/one_contractor.php", ["contractor" => $contractor]));
@@ -117,10 +117,54 @@ class Contractors extends Controller
     {
         // Get the form data
         $data = [
-            "name" => $this->request->post["name"],
-            "title" => empty($this->request->post["title"]) ? null : $this->request->post["title"],
-            "section" => empty($this->request->post["section"]) ? null : $this->request->post["section"],
-            "extension" => $this->request->post["extension"]
+            "last_name" => $this->request->post["last_name"],
+            "first_name" => $this->request->post["first_name"],
+            "group_name" => $this->request->post["group_name"],
+            "address" => $this->request->post["address"],
+            "city" => $this->request->post["city"],
+            "state" => $this->request->post["state"],
+            "zip" => $this->request->post["zip"],
+            "home_phone" => $this->request->post["home_phone"],
+            "cell_number" => $this->request->post["cell_number"],
+            "birthdate" => $this->request->post["birthdate"],
+            "date_hired" => $this->request->post["date_hired"],
+            "schedule" => $this->request->post["schedule"],
+            "signature" => $this->request->post["signature"],
+            "church_locator" => $this->request->post["church_locator"],
+            "work_phone" => $this->request->post["work_phone"],
+            "experience_training" => $this->request->post["experience_training"],
+            "degree_type" => $this->request->post["degree_type"],
+            "email" => $this->request->post["email"],
+            "race" => $this->request->post["race"],
+            "sex" => $this->request->post["sex"],
+            "ssn" => $this->request->post["ssn"],
+            "document_status" => $this->request->post["document_status"],
+            "church_address" => $this->request->post["church_address"],
+            "church_leader" => $this->request->post["church_leader"],
+            "church_phone" => $this->request->post["church_phone"],
+            "specific_skill_education" => $this->request->post["specific_skill_education"],
+            "category_name" => $this->request->post["category_name"],
+            "quarter_meeting_attended" => $this->request->post["quarter_meeting_attended"],
+            "vol_dinner_rsvp" => $this->request->post["vol_dinner_rsvp"],
+            "dinner_guest" => $this->request->post["dinner_guest"],
+            "attended_quarterly_meeting" => $this->request->post["attended_quarterly_meeting"],
+            "active_inactive_terminated" => $this->request->post["active_inactive_terminated"],
+            "activity_status" => $this->request->post["activity_status"],
+            "ministry_group" => $this->request->post["ministry_group"],
+            "chaplain_assistant" => $this->request->post["chaplain_assistant"],
+            "on_call_schedule" => $this->request->post["on_call_schedule"],
+            "on_call_status" => $this->request->post["on_call_status"],
+            "birth_month" => $this->request->post["birth_month"],
+            "minisitry_orientation" => $this->request->post["minisitry_orientation"],
+            "volume_manual_number" => $this->request->post["volume_manual_number"],
+            "prea_training" => $this->request->post["prea_training"],
+            "main" => $this->request->post["main"],
+            "hu6" => $this->request->post["hu6"],
+            "denomination" => $this->request->post["denomination"],
+            "devices_approved" => $this->request->post["devices_approved"],
+            "termination_date" => $this->request->post["termination_date"],
+            "termination_reason" => $this->request->post["termination_reason"],
+            "is_volunteer" => false
         ];
 
         // Attempt to insert the new contractor record
@@ -170,10 +214,53 @@ class Contractors extends Controller
         $contractor = $this->getContractorID($id);
 
         // Get the form data and set empty fields to null
-        $contractor["name"] = $this->request->post["name"];
-        $contractor["title"] = $this->request->post["title"];
-        $contractor["section"] = $this->request->post["section"];
-        $contractor["extension"] = $this->request->post["extension"];
+        $contractor["last_name"] = $this->request->post["last_name"];
+        $contractor["first_name"] = $this->request->post["first_name"];
+        $contractor["group_name"] = $this->request->post["group_name"];
+        $contractor["address"] = $this->request->post["address"];
+        $contractor["city"] = $this->request->post["city"];
+        $contractor["state"] = $this->request->post["state"];
+        $contractor["zip"] = $this->request->post["zip"];
+        $contractor["home_phone"] = $this->request->post["home_phone"];
+        $contractor["cell_number"] = $this->request->post["cell_number"];
+        $contractor["birthdate"] = $this->request->post["birthdate"];
+        $contractor["date_hired"] = $this->request->post["date_hired"];
+        $contractor["schedule"] = $this->request->post["schedule"];
+        $contractor["signature"] = $this->request->post["signature"];
+        $contractor["church_locator"] = $this->request->post["church_locator"];
+        $contractor["work_phone"] = $this->request->post["work_phone"];
+        $contractor["experience_training"] = $this->request->post["experience_training"];
+        $contractor["degree_type"] = $this->request->post["degree_type"];
+        $contractor["email"] = $this->request->post["email"];
+        $contractor["race"] = $this->request->post["race"];
+        $contractor["sex"] = $this->request->post["sex"];
+        $contractor["ssn"] = $this->request->post["ssn"];
+        $contractor["document_status"] = $this->request->post["document_status"];
+        $contractor["church_address"] = $this->request->post["church_address"];
+        $contractor["church_leader"] = $this->request->post["church_leader"];
+        $contractor["church_phone"] = $this->request->post["church_phone"];
+        $contractor["specific_skill_education"] = $this->request->post["specific_skill_education"];
+        $contractor["category_name"] = $this->request->post["category_name"];
+        $contractor["quarter_meeting_attended"] = $this->request->post["quarter_meeting_attended"];
+        $contractor["vol_dinner_rsvp"] = $this->request->post["vol_dinner_rsvp"];
+        $contractor["dinner_guest"] = $this->request->post["dinner_guest"];
+        $contractor["attended_quarterly_meeting"] = $this->request->post["attended_quarterly_meeting"];
+        $contractor["active_inactive_terminated"] = $this->request->post["active_inactive_terminated"];
+        $contractor["activity_status"] = $this->request->post["activity_status"];
+        $contractor["ministry_group"] = $this->request->post["ministry_group"];
+        $contractor["chaplain_assistant"] = $this->request->post["chaplain_assistant"];
+        $contractor["on_call_schedule"] = $this->request->post["on_call_schedule"];
+        $contractor["on_call_status"] = $this->request->post["on_call_status"];
+        $contractor["birth_month"] = $this->request->post["birth_month"];
+        $contractor["minisitry_orientation"] = $this->request->post["minisitry_orientation"];
+        $contractor["volume_manual_number"] = $this->request->post["volume_manual_number"];
+        $contractor["prea_training"] = $this->request->post["prea_training"];
+        $contractor["main"] = $this->request->post["main"];
+        $contractor["hu6"] = $this->request->post["hu6"];
+        $contractor["denomination"] = $this->request->post["denomination"];
+        $contractor["devices_approved"] = $this->request->post["devices_approved"];
+        $contractor["termination_date"] = $this->request->post["termination_date"];
+        $contractor["termination_reason"] = $this->request->post["termination_reason"];
 
         // Attempt to update the contractor record
         if ($this->model->updateRecord($id, $contractor)) {

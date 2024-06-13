@@ -32,7 +32,7 @@
 
     <div>
         <label for="zip">zip:</label>
-        <input type="text" id="zip" name="zip" value="<?= isset($contractor) ? htmlspecialchars($contractor['zip'] ?? '') : '' ?>">
+        <input type="number" id="zip" name="zip" value="<?= isset($contractor) ? htmlspecialchars($contractor['zip'] ?? '') : '' ?>">
     </div>
 
     <div>
@@ -41,18 +41,18 @@
     </div>
 
     <div>
-        <label for="cell_phone">cell_phone:</label>
-        <input type="text" id="cell_phone" name="cell_phone" value="<?= isset($contractor) ? htmlspecialchars($contractor['cell_phone'] ?? '') : '' ?>">
+        <label for="cell_number">cell_phone:</label>
+        <input type="text" id="cell_number" name="cell_number" value="<?= isset($contractor) ? htmlspecialchars($contractor['cell_number'] ?? '') : '' ?>">
     </div>
 
     <div>
         <label for="birthdate">birthdate:</label>
-        <input type="text" id="birthdate" name="birthdate" value="<?= isset($contractor) ? htmlspecialchars($contractor['birthdate'] ?? '') : '' ?>">
+        <input type="date" id="birthdate" name="birthdate" value="<?= isset($contractor) ? htmlspecialchars($contractor['birthdate'] ?? '') : '' ?>">
     </div>
 
     <div>
         <label for="date_hired">date_hired:</label>
-        <input type="text" id="date_hired" name="date_hired" value="<?= isset($contractor) ? htmlspecialchars($contractor['date_hired'] ?? '') : '' ?>">
+        <input type="date" id="date_hired" name="date_hired" value="<?= isset($contractor) ? htmlspecialchars($contractor['date_hired'] ?? '') : '' ?>">
     </div>
 
     <div>
@@ -126,8 +126,8 @@
     </div>
 
     <div>
-        <label for="specific_skills_education">specific_skills_education:</label>
-        <input type="text" id="specific_skills_education" name="specific_skills_education" value="<?= isset($contractor) ? htmlspecialchars($contractor['specific_skills_education'] ?? '') : '' ?>">
+        <label for="specific_skill_education">specific_skill_education:</label>
+        <input type="text" id="specific_skill_education" name="specific_skill_education" value="<?= isset($contractor) ? htmlspecialchars($contractor['specific_skill_education'] ?? '') : '' ?>">
     </div>
 
     <div>
@@ -136,23 +136,32 @@
     </div>
 
     <div>
-        <label for="quarterly_meeting_attended">quarterly_meeting_attended:</label>
-        <input type="text" id="quarterly_meeting_attended" name="quarterly_meeting_attended" value="<?= isset($contractor) ? htmlspecialchars($contractor['quarterly_meeting_attended'] ?? '') : '' ?>">
+        <label for="quarter_meeting_attended">quarter_meeting_attended:</label>
+        <input type="date" id="quarter_meeting_attended" name="quarter_meeting_attended" value="<?= isset($contractor) ? htmlspecialchars($contractor['quarter_meeting_attended'] ?? '') : '' ?>">
     </div>
 
     <div>
-        <label for="volunteer_dinner_rsvp">volunteer_dinner_rsvp:</label>
-        <input type="text" id="volunteer_dinner_rsvp" name="volunteer_dinner_rsvp" value="<?= isset($contractor) ? htmlspecialchars($contractor['volunteer_dinner_rsvp'] ?? '') : '' ?>">
+        <label for="vol_dinner_rsvp">vol_dinner_rsvp:</label>
+        <select id="vol_dinner_rsvp" name="vol_dinner_rsvp">
+            <option value="1" <?= isset($contractor) && $contractor['vol_dinner_rsvp'] == 1 ? 'selected' : '' ?>>Yes</option>
+            <option value="0" <?= isset($contractor) && $contractor['vol_dinner_rsvp'] == 0 ? 'selected' : '' ?>>No</option>
+        </select>
     </div>
 
     <div>
         <label for="dinner_guest">dinner_guest:</label>
-        <input type="text" id="dinner_guest" name="dinner_guest" value="<?= isset($contractor) ? htmlspecialchars($contractor['dinner_guest'] ?? '') : '' ?>">
+        <select id="dinner_guest" name="dinner_guest">
+            <option value="1" <?= isset($contractor) && $contractor['dinner_guest'] == 1 ? 'selected' : '' ?>>Yes</option>
+            <option value="0" <?= isset($contractor) && $contractor['dinner_guest'] == 0 ? 'selected' : '' ?>>No</option>
+        </select>
     </div>
 
     <div>
         <label for="attended_quarterly_meeting">attended_quarterly_meeting:</label>
-        <input type="text" id="attended_quarterly_meeting" name="attended_quarterly_meeting" value="<?= isset($contractor) ? htmlspecialchars($contractor['attended_quarterly_meeting'] ?? '') : '' ?>">
+        <select id="attended_quarterly_meeting" name="attended_quarterly_meeting">
+            <option value="1" <?= isset($contractor) && $contractor['attended_quarterly_meeting'] == 1 ? 'selected' : '' ?>>Yes</option>
+            <option value="0" <?= isset($contractor) && $contractor['attended_quarterly_meeting'] == 0 ? 'selected' : '' ?>>No</option>
+        </select>
     </div>
 
     <div>
@@ -171,38 +180,41 @@
     </div>
 
     <div>
-        <label for="chaplains_assistant">chaplains_assistant:</label>
-        <input type="text" id="chaplains_assistant" name="chaplains_assistant" value="<?= isset($contractor) ? htmlspecialchars($contractor['chaplains_assistant'] ?? '') : '' ?>">
+        <label for="chaplain_assistant">chaplain_assistant:</label>
+        <input type="text" id="chaplain_assistant" name="chaplain_assistant" value="<?= isset($contractor) ? htmlspecialchars($contractor['chaplain_assistant'] ?? '') : '' ?>">
+    </div>
+
+    <div>
+        <label for="on_call_schedule">on_call_schedule:</label>
+        <input type="text" id="on_call_schedule" name="on_call_schedule" value="<?= isset($contractor) ? htmlspecialchars($contractor['on_call_schedule'] ?? '') : '' ?>">
     </div>
 
     <div>
         <label for="on_call_status">on_call_status:</label>
-        <input type="text" id="on_call_status" name="on_call_status" value="<?= isset($contractor) ? htmlspecialchars($contractor['on_call_status'] ?? '') : '' ?>">
+        <select id="on_call_status" name="on_call_status">
+            <option value="1" <?= isset($contractor) && $contractor['on_call_status'] == 1 ? 'selected' : '' ?>>Yes</option>
+            <option value="0" <?= isset($contractor) && $contractor['on_call_status'] == 0 ? 'selected' : '' ?>>No</option>
+        </select>
     </div>
 
     <div>
         <label for="birth_month">birth_month:</label>
-        <input type="text" id="birth_month" name="birth_month" value="<?= isset($contractor) ? htmlspecialchars($contractor['birth_month'] ?? '') : '' ?>">
+        <input type="date" id="birth_month" name="birth_month" value="<?= isset($contractor) ? htmlspecialchars($contractor['birth_month'] ?? '') : '' ?>">
     </div>
 
     <div>
-        <label for="ministry_orientation">ministry_orientation:</label>
-        <input type="text" id="ministry_orientation" name="ministry_orientation" value="<?= isset($contractor) ? htmlspecialchars($contractor['ministry_orientation'] ?? '') : '' ?>">
+        <label for="minisitry_orientation">minisitry_orientation:</label>
+        <input type="date" id="minisitry_orientation" name="minisitry_orientation" value="<?= isset($contractor) ? htmlspecialchars($contractor['minisitry_orientation'] ?? '') : '' ?>">
     </div>
 
     <div>
-        <label for="vol_manual_number">vol_manual_number:</label>
-        <input type="text" id="vol_manual_number" name="vol_manual_number" value="<?= isset($contractor) ? htmlspecialchars($contractor['vol_manual_number'] ?? '') : '' ?>">
+        <label for="volume_manual_number">volume_manual_number:</label>
+        <input type="number" id="volume_manual_number" name="volume_manual_number" value="<?= isset($contractor) ? htmlspecialchars($contractor['volume_manual_number'] ?? '') : '' ?>">
     </div>
 
     <div>
         <label for="prea_training">prea_training:</label>
-        <input type="text" id="prea_training" name="prea_training" value="<?= isset($contractor) ? htmlspecialchars($contractor['prea_training'] ?? '') : '' ?>">
-    </div>
-
-    <div>
-        <label for="main">main:</label>
-        <input type="text" id="main" name="main" value="<?= isset($contractor) ? htmlspecialchars($contractor['main'] ?? '') : '' ?>">
+        <input type="date" id="prea_training" name="prea_training" value="<?= isset($contractor) ? htmlspecialchars($contractor['prea_training'] ?? '') : '' ?>">
     </div>
 
     <div>
@@ -227,7 +239,7 @@
 
     <div>
         <label for="termination_date">termination_date:</label>
-        <input type="text" id="termination_date" name="termination_date" value="<?= isset($contractor) ? htmlspecialchars($contractor['termination_date'] ?? '') : '' ?>">
+        <input type="date" id="termination_date" name="termination_date" value="<?= isset($contractor) ? htmlspecialchars($contractor['termination_date'] ?? '') : '' ?>">
     </div>
 
     <div>

@@ -11,7 +11,7 @@ use PDO;
 class Cell extends Model
 {
     // Override the cell name if the class name and table name does not match
-    // protected $cell = "cell";
+    // protected $table = "cell";
 
     // Validate the inamte number and last name fields to allow minumum information to look up person.
     // protected function validateForm(array $data): void

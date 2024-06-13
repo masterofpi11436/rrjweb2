@@ -1,8 +1,8 @@
-<form action="/volunteers/add">
+<form action="/programs/volunteers/add">
     <button>Add New volunteerolunteer</button>
 </form>
 
-<form method="get" action="/volunteers/all">
+<form method="get" action="/programs/volunteers/all">
     <input type="text" name="search" placeholder="Search Last Name or First Name" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
