@@ -1,0 +1,47 @@
+LastName
+FirstName
+GroupName
+Address
+City
+State
+ZipCode (int)
+HomePhone
+CellNumber
+Birthdate (date)
+DateHired (date)
+Schedule
+Signature
+Church Locator
+WorkPhone
+Experience/Training
+DegreeType
+Email Address
+Race
+Sex
+SocialSecurity Number
+Document Status
+ChurchAddress
+ChurchLeader
+Church Phone
+SpecificSkillEducation
+CategoryName
+QuarterMeetingAttended (Date)
+VOL DINNER RSVP (bool)
+DINNER GUEST (bool)
+AttendedQuarterMeeting (bool)
+Active/Inactive
+Activity Status
+MinistryGroup
+CHAPLAIN'S ASSISTANT
+ON CALL SCHEDULE
+ON CALL STATUS (bool)
+BirthMonth
+MinsitryOrientation (date)
+VolManual# (int)
+PREATRAINING (date)
+MAIN
+HU6
+Denomination
+Devices Approved
+TerminationDate (Contractor)
+TerminationReason (Contractor)
