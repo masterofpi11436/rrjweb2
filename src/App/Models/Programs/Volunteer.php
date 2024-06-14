@@ -10,7 +10,7 @@ use PDO;
 
 class Volunteer extends Model
 {
-    // Override the phone name if the class name and table name does not match
+    // Override the table name if the class name and table name does not match
     protected $table = "program";
 
     // Validate the inamte number and last name fields to allow minumum information to look up person.
@@ -45,7 +45,7 @@ class Volunteer extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE is_volunteer = 1 ORDER BY last_name ASC";
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE is_volunteer = 1 AND active_inactive_terminated = 'active' ORDER BY last_name ASC";
 
         $stmt = $conn->query($sql);
 

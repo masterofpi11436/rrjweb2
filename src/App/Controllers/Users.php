@@ -53,7 +53,7 @@ class Users extends Controller
                 // Redirect based on role
                 switch ($user['role_id']) {
                     case 1:
-                        return $this->redirect('/admins/dashboard'); // Admin dashboard or relevant page
+                        return $this->redirect('/admins/dashboard');
                     case 2:
                         return $this->redirect('/tablets/all');
                     case 3:

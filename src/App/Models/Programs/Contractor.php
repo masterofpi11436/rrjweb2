@@ -10,7 +10,7 @@ use PDO;
 
 class Contractor extends Model
 {
-    // Override the phone name if the class name and table name does not match
+    // Override the table name if the class name and table name does not match
     protected $table = "program";
 
     // Validate the inamte number and last name fields to allow minumum information to look up person.
