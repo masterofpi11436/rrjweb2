@@ -14,24 +14,24 @@ class Volunteer extends Model
     protected $table = "program";
 
     // Validate the inamte number and last name fields to allow minumum information to look up person.
-    protected function validateForm(array $data): void
-    {
-        if (empty($data["last_name"])) {
+    // protected function validateForm(array $data): void
+    // {
+    //     if (empty($data["last_name"])) {
 
-            $this->addError("last_name", "Last name is required!");
-        }
+    //         $this->addError("last_name", "Last name is required!");
+    //     }
 
-        if (empty($data["first_name"])) {
+    //     if (empty($data["first_name"])) {
 
-            $this->addError("first_name", "First name is required!");
-        }
-    }
+    //         $this->addError("first_name", "First name is required!");
+    //     }
+    // }
 
     public function searchVolunteers(string $search): array
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE last_namne LIKE :search OR first_name LIKE :search";
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE last_name LIKE :search OR first_name LIKE :search";
         $stmt = $conn->prepare($sql);
 
         $searchTerm = '%' . $search . '%';
@@ -39,6 +39,32 @@ class Volunteer extends Model
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAll()
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE is_volunteer = 1 ORDER BY last_name ASC";
+
+        $stmt = $conn->query($sql);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOne(string $id): array|bool
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE id = :id AND is_volunteer = 1";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 }

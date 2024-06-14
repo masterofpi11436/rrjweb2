@@ -170,7 +170,7 @@ class Contractors extends Controller
         // Attempt to insert the new contractor record
         if ($this->model->insertRecord($data)) {
             // Redirect to the newly created contractor's page
-            return $this->redirect("/contractors/one/{$this->model->getInsertID()}");
+            return $this->redirect("/programs/contractors/one/{$this->model->getInsertID()}");
         } else {
             // Render the form again with error messages
             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Contractor Listing", "heading" => "Add Contractor Listing"]));
@@ -266,7 +266,7 @@ class Contractors extends Controller
         if ($this->model->updateRecord($id, $contractor)) {
 
             // Redirect to the newly created tablet's page
-            return $this->redirect("/contractors/one/{$id}");
+            return $this->redirect("/programs/contractors/one/{$id}");
         } else {
 
             // Render the form again with error messages if update fails
@@ -311,7 +311,7 @@ class Contractors extends Controller
 
         $this->model->deleteRecord($id);
 
-        return $this->redirect("/contractors/all");
+        return $this->redirect("/programs/contractors/all");
     }
 
     /********************************************************************************************************************************* */

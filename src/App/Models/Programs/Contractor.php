@@ -41,4 +41,30 @@ class Contractor extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getAll()
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE is_volunteer = 0 ORDER BY last_name ASC";
+
+        $stmt = $conn->query($sql);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOne(string $id): array|bool
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE id = :id AND is_volunteer = 0";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }

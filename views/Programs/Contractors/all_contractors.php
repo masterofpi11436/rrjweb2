@@ -1,5 +1,5 @@
 <form action="/programs/contractors/add">
-    <button>Add New Extension</button>
+    <button>Add New Contractor</button>
 </form>
 
 <form method="get" action="/programs/contractors/all">

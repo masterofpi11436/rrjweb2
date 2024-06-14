@@ -13,6 +13,6 @@
     </tr>
     <tr>
         <th>First Name</th>
-        <td><?= htmlspecialchars($volunteer["last_name"] ?? '') ?></td>
+        <td><?= htmlspecialchars($volunteer["first_name"] ?? '') ?></td>
     </tr>
 </table>

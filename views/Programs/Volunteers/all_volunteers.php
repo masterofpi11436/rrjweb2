@@ -1,9 +1,9 @@
 <form action="/programs/volunteers/add">
-    <button>Add New volunteerolunteer</button>
+    <button>Add New volunteer</button>
 </form>
 
 <form method="get" action="/programs/volunteers/all">
-    <input type="text" name="search" placeholder="Search Last Name or First Name" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+    <input type="text" name="search" placeholder="Search by Last Name or First Name" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
 </form>
 
@@ -23,7 +23,7 @@
                     <td><?= htmlspecialchars($volunteer['last_name'] ?? '') ?></td>
                     <td><?= htmlspecialchars($volunteer['first_name'] ?? '') ?></td>
                     <td>
-                        <a href="/volunteers/one/<?= htmlspecialchars($volunteer['id']) ?>">View</a>
+                        <a href="/programs/volunteers/one/<?= htmlspecialchars($volunteer['id']) ?>">View</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -3,7 +3,7 @@
 </form>
 
 <form action="/programs/contractors/edit/<?= htmlspecialchars($contractor['id']) ?>">
-    <button>Edit Phone</button>
+    <button>Edit Contractor</button>
 </form>
 
 <table>

@@ -170,7 +170,7 @@ class Volunteers extends Controller
         // Attempt to insert the new volunteer record
         if ($this->model->insertRecord($data)) {
             // Redirect to the newly created volunteer's page
-            return $this->redirect("/volunteers/one/{$this->model->getInsertID()}");
+            return $this->redirect("/programs/volunteers/one/{$this->model->getInsertID()}");
         } else {
             // Render the form again with error messages
             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Volunteer", "heading" => "Add Volunteer"]));
@@ -192,7 +192,7 @@ class Volunteers extends Controller
         $volunteer = $this->getVolunteerID($id);
 
         // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Number", "heading" => "Edit Number"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Number", "heading" => "Edit Volunteer"]));
 
         // Render the edit volunteer view
         $this->response->appendBody($this->viewer->render("Programs/Volunteers/edit_volunteer.php", ["volunteer" => $volunteer]));
@@ -261,13 +261,12 @@ class Volunteers extends Controller
         $volunteer["devices_approved"] = $this->request->post["devices_approved"];
         $volunteer["termination_date"] = $this->request->post["termination_date"];
         $volunteer["termination_reason"] = $this->request->post["termination_reason"];
-        $volunteer["is_volunteer"] = $this->request->post["is_volunteer"];
 
         // Attempt to update the phone record
         if ($this->model->updateRecord($id, $volunteer)) {
 
             // Redirect to the newly created tablet's page
-            return $this->redirect("/volunteers/one/{$id}");
+            return $this->redirect("/programs/volunteers/one/{$id}");
         } else {
 
             // Render the form again with error messages if update fails
@@ -312,7 +311,7 @@ class Volunteers extends Controller
 
         $this->model->deleteRecord($id);
 
-        return $this->redirect("/volunteers/all");
+        return $this->redirect("/programs/volunteers/all");
     }
 
     /********************************************************************************************************************************* */
