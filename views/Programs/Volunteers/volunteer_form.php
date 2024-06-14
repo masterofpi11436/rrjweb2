@@ -243,16 +243,6 @@
     </div>
 
     <div>
-        <label for="termination_date">Termination Date:</label>
-        <input type="date" id="termination_date" name="termination_date" value="<?= isset($volunteer) ? htmlspecialchars($volunteer['termination_date'] ?? '') : '' ?>">
-    </div>
-
-    <div>
-        <label for="termination_reason">Termination Reason:</label>
-        <input type="text" id="termination_reason" name="termination_reason" value="<?= isset($volunteer) ? htmlspecialchars($volunteer['termination_reason'] ?? '') : '' ?>">
-    </div>
-
-    <div>
         <button>Save</button>
     </div>
 </div>

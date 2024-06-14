@@ -162,8 +162,8 @@ class Volunteers extends Controller
             "hu6" => $this->request->post["hu6"],
             "denomination" => $this->request->post["denomination"],
             "devices_approved" => $this->request->post["devices_approved"],
-            "termination_date" => $this->request->post["termination_date"],
-            "termination_reason" => $this->request->post["termination_reason"],
+            "termination_date" => null,
+            "termination_reason" => null,
             "is_volunteer" => true
         ];
 
