@@ -289,7 +289,7 @@ class Volunteers extends Controller
         $volunteer = $this->getVolunteerID($id);
 
         // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Delete Listing", "heading" => "Delete Listing"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Delete Volunteer", "heading" => "Delete Volunteer"]));
 
         // Render the new volunteer form
         $this->response->appendBody($this->viewer->render("Programs/Volunteers/delete_volunteer.php", ["volunteer" => $volunteer]));

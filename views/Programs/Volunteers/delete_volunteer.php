@@ -2,7 +2,7 @@
 
 <form method="post" action="/programs/volunteers/destroy/<?= htmlspecialchars($volunteer['id']) ?>">
 
-    <h2>Are you sure you want to delete the <?= htmlspecialchars($volunteer['last_name']) ?>?</h2>
+    <h2>Are you sure you want to delete <?= htmlspecialchars($volunteer['last_name']) ?>, <?= htmlspecialchars($volunteer['first_name']) ?>?</h2>
     <button type="submit">Delete Volunteer</button>
 
 </form>

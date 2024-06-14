@@ -60,6 +60,8 @@ class Users extends Controller
                         return $this->redirect('/phones/all');
                     case 4:
                         return $this->redirect('/mailrooms/all');
+                    case 5:
+                        return $this->redirect('/programs/volunteers/all');
                     default:
                         return $this->redirect('/login'); // Default fallback
                 }

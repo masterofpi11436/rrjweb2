@@ -30,5 +30,5 @@
         </tbody>
     </table>
 <?php else: ?>
-    <p>No Extension Found.</p>
+    <p>No Volunteer Found.</p>
 <?php endif; ?>

@@ -3,7 +3,7 @@
 </form>
 
 <form action="/programs/volunteers/delete/<?= htmlspecialchars($volunteer['id']) ?>">
-    <button>Delete Extension</button>
+    <button>Delete Volunteer</button>
 </form>
 
 <form method="post" action="/programs/volunteers/update/<?= htmlspecialchars($volunteer['id']) ?>">
