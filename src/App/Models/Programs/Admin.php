@@ -11,7 +11,7 @@ use PDO;
 class Admin extends Model
 {
     // Override the table name if the class name and table name does not match
-    // protected $table = "tablet";
+    protected $table = "user";
 
     // Validate the inamte number and last name fields to allow minumum information to look up person.
     protected function validateForm(array $data): void

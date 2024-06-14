@@ -67,7 +67,7 @@ class Admins extends Controller
 
         if ($search) {
             // Perform search query
-            $admins = $this->model->searchAdmins($search);
+            $admins = $this->model->searchAdminssWithRoles($search);
         } else {
             // Retrieve all records if no search query
             $admins = $this->model->getAll();
