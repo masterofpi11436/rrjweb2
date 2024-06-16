@@ -3,5 +3,5 @@
 </form>
 
 <form method="post" action="/programs/admins/create">
-    <?php require "contractor_form.php"; ?>
+    <?php require "admin_form.php"; ?>
 </form>

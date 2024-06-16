@@ -26,7 +26,7 @@ class Admins extends Controller
     public function dashboard(): Response
     {
         // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Dashboard", "heading" => "Admin Dashboard"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Dashboard", "heading" => "Programs Admin Dashboard"]));
 
         // Render the dashboard console
         $this->response->appendBody($this->viewer->render("Programs/Admins/dashboard.php"));

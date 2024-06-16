@@ -94,13 +94,13 @@ $router->add("/cells/reportall", ["controller" => "cells", "action" => "reportAl
 // Admin Pages (Program's Admin Listings)
 $router->add("/programs/dashboard", ["controller" => "admins", "action" => "dashboard", "middleware" => "auth", "namespace" => "Programs"]);
 $router->add("/programs/admins/all", ["controller" => "admins", "action" => "viewAll", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/admins/add", ["controller" => "admins", "action" => "addNewUser", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/admins/add", ["controller" => "admins", "action" => "addNewAdmin", "middleware" => "auth", "namespace" => "Programs"]);
 $router->add("/programs/admins/create", ["controller" => "admins", "action" => "create", "method" => "post", "middleware" => "auth|trim", "namespace" => "Programs"]);
 $router->add("/programs/admins/one/{id:\d+}", ["controller" => "admins", "action" => "viewone", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/admins/edit/{id:\d+}", ["controller" => "admins", "action" => "editaUser", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/admins/update/{id:\d+}", ["controller" => "admins", "action" => "updateUser", "method" => "post", "middleware" => "auth|trim", "namespace" => "Programs"]);
-$router->add("/programs/admins/delete/{id:\d+}", ["controller" => "admins", "action" => "deleteUser", "middleware" => "auth", "namespace" => "Programs"]);
-$router->add("/programs/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyUser", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/admins/edit/{id:\d+}", ["controller" => "admins", "action" => "editaAdmin", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/admins/update/{id:\d+}", ["controller" => "admins", "action" => "updateAdmin", "method" => "post", "middleware" => "auth|trim", "namespace" => "Programs"]);
+$router->add("/programs/admins/delete/{id:\d+}", ["controller" => "admins", "action" => "deleteAdmin", "middleware" => "auth", "namespace" => "Programs"]);
+$router->add("/programs/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyAdmin", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
 
 // *************************************************************************************************************************************************//
 
