@@ -31,7 +31,7 @@ class Volunteer extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE last_name LIKE :search OR first_name LIKE :search";
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE (last_name LIKE :search OR first_name LIKE :search) AND is_volunteer = 1";
         $stmt = $conn->prepare($sql);
 
         $searchTerm = '%' . $search . '%';

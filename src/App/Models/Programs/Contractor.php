@@ -31,7 +31,7 @@ class Contractor extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE last_name LIKE :search OR first_name LIKE :search";
+        $sql = "SELECT * FROM {$this->table} WHERE (last_name LIKE :search OR first_name LIKE :search) AND is_volunteer = 0";
         $stmt = $conn->prepare($sql);
 
         $searchTerm = '%' . $search . '%';
@@ -41,11 +41,11 @@ class Contractor extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getAll()
+    public function getAllContractors()
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE is_volunteer = 0 ORDER BY last_name ASC";
+        $sql = "SELECT * FROM {$this->table} WHERE is_volunteer = 0 ORDER BY last_name ASC";
 
         $stmt = $conn->query($sql);
 

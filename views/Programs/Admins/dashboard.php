@@ -3,7 +3,7 @@
     <button>Manage Users</button>
 </form>
 
-<h2>Manage individual Applications</h2>
+<h2>Manage Individual Applications</h2>
 
 <form action="/programs/contractors/all">
     <button>Contractors</button>

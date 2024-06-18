@@ -259,8 +259,6 @@ class Volunteers extends Controller
         $volunteer["hu6"] = $this->request->post["hu6"];
         $volunteer["denomination"] = $this->request->post["denomination"];
         $volunteer["devices_approved"] = $this->request->post["devices_approved"];
-        $volunteer["termination_date"] = $this->request->post["termination_date"];
-        $volunteer["termination_reason"] = $this->request->post["termination_reason"];
 
         // Attempt to update the phone record
         if ($this->model->updateRecord($id, $volunteer)) {

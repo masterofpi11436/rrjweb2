@@ -70,7 +70,7 @@ class Admins extends Controller
             $admins = $this->model->searchAdminssWithRoles($search);
         } else {
             // Retrieve all records if no search query
-            $admins = $this->model->getAll();
+            $admins = $this->model->getAdminsWithRoles();
         }
 
         // Render the header
@@ -131,10 +131,15 @@ class Admins extends Controller
     {
         // Get the form data
         $data = [
-            "last_name" => $this->request->post["last_name"],
             "first_name" => $this->request->post["first_name"],
-            "group_name" => $this->request->post["group_name"]
+            "last_name" => $this->request->post["last_name"],
+            "email" => $this->request->post["email"],
+            "password" => $this->request->post["password"],
+            "role_id" => $this->request->post["role_id"]
         ];
+
+        // Hash the password
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         // Attempt to insert the new admin record
         if ($this->model->insertRecord($data)) {
@@ -183,9 +188,10 @@ class Admins extends Controller
         $admin = $this->getAdminID($id);
 
         // Get the form data and set empty fields to null
-        $admin["last_name"] = $this->request->post["last_name"];
         $admin["first_name"] = $this->request->post["first_name"];
-        $admin["group_name"] = $this->request->post["group_name"];
+        $admin["last_name"] = $this->request->post["last_name"];
+        $admin["email"] = $this->request->post["email"];
+        $admin["role_id"] = $this->request->post["role_id"];
 
         // Attempt to update the admin record
         if ($this->model->updateRecord($id, $admin)) {

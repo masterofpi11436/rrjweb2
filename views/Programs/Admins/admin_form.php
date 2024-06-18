@@ -40,8 +40,8 @@
         <label for="role_id">Role:</label>
         <select id="role_id" name="role_id">
             <option value="5" <?= isset($admin) && $admin['role_id'] == 5 ? 'selected' : '' ?>>Administrator</option>
-            <option value="5" <?= isset($admin) && $admin['role_id'] == 6 ? 'selected' : '' ?>>Contractor Database</option>
-            <option value="5" <?= isset($admin) && $admin['role_id'] == 7 ? 'selected' : '' ?>>Volunteer Database</option>
+            <option value="6" <?= isset($admin) && $admin['role_id'] == 6 ? 'selected' : '' ?>>Contractor Database</option>
+            <option value="7" <?= isset($admin) && $admin['role_id'] == 7 ? 'selected' : '' ?>>Volunteer Database</option>
             <!-- Add more roles as needed -->
         </select>
     </div>

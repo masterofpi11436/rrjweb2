@@ -1,11 +1,11 @@
-<form action="/programs/admins/one/<?= htmlspecialchars($contractor["id"]) ?>">
+<form action="/programs/admins/one/<?= htmlspecialchars($admin["id"]) ?>">
     <button>Cancel</button>
 </form>
 
-<form action="/programs/admins/delete/<?= htmlspecialchars($contractor['id']) ?>">
-    <button>Delete Contractor</button>
+<form action="/programs/admins/delete/<?= htmlspecialchars($admin['id']) ?>">
+    <button>Delete Contractor Admin</button>
 </form>
 
-<form method="post" action="/programs/admins/update/<?= htmlspecialchars($contractor['id']) ?>">
-    <?php require "contractor_form.php"; ?>
+<form method="post" action="/programs/admins/update/<?= htmlspecialchars($admin['id']) ?>">
+    <?php require "admin_form.php"; ?>
 </form>

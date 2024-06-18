@@ -56,7 +56,7 @@ class Contractors extends Controller
             $contractors = $this->model->searchContractors($search);
         } else {
             // Retrieve all records if no search query
-            $contractors = $this->model->getAll();
+            $contractors = $this->model->getAllContractors();
         }
 
         // Render the header
