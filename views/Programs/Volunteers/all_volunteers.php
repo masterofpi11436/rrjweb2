@@ -1,3 +1,11 @@
+<?php if (isset($_SESSION['role_id']) && $_SESSION['role_id'] == 5 && $_SERVER["REQUEST_URI"] !== "/programs/dashboard?" && $_SERVER["REQUEST_URI"] !== "/programs/dashboard"): // Check if the user is an administrator and not on the dashboard ?>
+    <div class="admin-back-button-container">
+        <form action="/programs/dashboard">
+            <button>Back to Dashboard</button>
+        </form>
+    </div>
+<?php endif; ?>
+
 <form action="/programs/volunteers/add">
     <button>Add New volunteer</button>
 </form>

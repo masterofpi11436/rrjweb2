@@ -1,3 +1,7 @@
+<form action="/programs/dashboard">
+    <button>Back to Dashboard</button>
+</form>
+
 <form action="/programs/admins/add">
     <button>Add New User</button>
 </form>
