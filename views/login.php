@@ -1,3 +1,11 @@
+<?php 
+
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+if (strpos($userAgent, 'Edge') !== false) {
+    echo "For the best experience, please use a different browser.";
+}
+?>
 <form method="post" action="/login/auth">
 
     <label for="email">Email:</label>

@@ -37,7 +37,7 @@
 
     <div>
         <label for="home_phone">Home Phone Number:</label>
-        <input type="home_phone" id="home_phone" name="home_phone" value="<?= isset($contractor) ? htmlspecialchars($contractor['home_phone'] ?? '') : '' ?>">
+        <input type="text" id="home_phone" name="home_phone" value="<?= isset($contractor) ? htmlspecialchars($contractor['home_phone'] ?? '') : '' ?>">
     </div>
 
     <div>
@@ -141,7 +141,7 @@
     </div>
 
     <div>
-        <label for="vol_dinner_rsvp">contractor Dinner RSVP?</label>
+        <label for="vol_dinner_rsvp">Contractor Dinner RSVP?</label>
         <select id="vol_dinner_rsvp" name="vol_dinner_rsvp">
             <option value="1" <?= isset($contractor) && $contractor['vol_dinner_rsvp'] == 1 ? 'selected' : '' ?>>Yes</option>
             <option value="0" <?= isset($contractor) && $contractor['vol_dinner_rsvp'] == 0 ? 'selected' : '' ?> selected>No</option>

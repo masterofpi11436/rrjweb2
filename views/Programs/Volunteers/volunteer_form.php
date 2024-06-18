@@ -1,5 +1,8 @@
 <div class="form-container">
 
+<fieldset>
+    <legend>Personal Information</legend>    
+</fieldset>
     <div>
         <label for="last_name">Last Name:</label>
         <input type="text" id="last_name" name="last_name" value="<?= isset($volunteer) ? htmlspecialchars($volunteer['last_name'] ?? '') : '' ?>">
@@ -37,7 +40,7 @@
 
     <div>
         <label for="home_phone">Home Phone Number:</label>
-        <input type="home_phone" id="home_phone" name="home_phone" value="<?= isset($volunteer) ? htmlspecialchars($volunteer['home_phone'] ?? '') : '' ?>">
+        <input type="text" id="home_phone" name="home_phone" value="<?= isset($volunteer) ? htmlspecialchars($volunteer['home_phone'] ?? '') : '' ?>">
     </div>
 
     <div>
