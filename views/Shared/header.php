@@ -18,7 +18,7 @@
 <div>
 
     <?php if (isset($_SESSION['user_first_name']) && isset($_SESSION['user_last_name'])): ?>
-        <h3>Welcome: <?= htmlspecialchars($_SESSION['user_last_name'] . ' ' . $_SESSION['user_first_name']); ?>!</h3>
+        <h3>Welcome: <?= htmlspecialchars($_SESSION['user_last_name'] . ', ' . $_SESSION['user_first_name']); ?>!</h3>
     <?php endif; ?>
 
     <?php if (isset($_SESSION['user_id'])): ?>
