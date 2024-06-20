@@ -32,11 +32,42 @@ class Tablet extends Model
         }
     }
 
-    public function searchTablets(string $search): array
+    public function getAll(string $sort = 'last_name', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE inmate_number LIKE :search OR first_name LIKE :search OR last_name LIKE :search ORDER BY last_name";
+        // Validate the sorting parameters
+        $validColumns = ['inmate_number', 'last_name', 'first_name'];
+        
+        if (!in_array($sort, $validColumns)) {
+            $sort = 'last_name'; // Default to 'last_name' if an invalid column is provided
+        }
+
+        $order = ($order === 'desc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'
+
+        $sql = "SELECT * FROM {$this->getTableName()} ORDER BY {$sort} {$order}";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function searchTablets(string $search, string $sort = 'last_name', string $order = 'asc'): array
+    {
+        $conn = $this->db->getConn();
+
+        // Validate the sorting parameters
+        $validColumns = ['inmate_number', 'last_name', 'first_name'];
+        if (!in_array($sort, $validColumns)) {
+            $sort = 'last_name'; // Default to 'name' if an invalid column is provided
+        }
+
+        $order = ($order === 'desc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'
+
+        $sql = "SELECT * FROM {$this->getTableName()} 
+                WHERE inmate_number LIKE :search OR first_name LIKE :search OR last_name LIKE :search 
+                ORDER BY {$sort} {$order}";
         $stmt = $conn->prepare($sql);
 
         $searchTerm = '%' . $search . '%';
@@ -45,5 +76,4 @@ class Tablet extends Model
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 }

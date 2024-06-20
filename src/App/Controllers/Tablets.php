@@ -49,14 +49,17 @@ class Tablets extends Controller
      */
     public function viewAll(): Response
     {
+        // Get the search and sort parameters
         $search = $this->request->get['search'] ?? '';
+        $sort = $this->request->get['sort'] ?? 'last_name';
+        $order = $this->request->get['order'] ?? 'asc';
 
         if ($search) {
             // Perform search query
-            $tablets = $this->model->searchTablets($search);
+            $tablets = $this->model->searchTablets($search, $sort, $order);
         } else {
             // Retrieve all records if no search query
-            $tablets = $this->model->getAll();
+            $tablets = $this->model->getAll($sort, $order);
         }
 
         // Render the header
@@ -70,6 +73,7 @@ class Tablets extends Controller
 
         return $this->response;
     }
+
 
     /**
      * Displays a single tablet by ID.

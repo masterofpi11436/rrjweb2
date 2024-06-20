@@ -49,14 +49,17 @@ class Phones extends Controller
      */
     public function viewAll(): Response
     {
+        // Get the search and sort parameters
         $search = $this->request->get['search'] ?? '';
+        $sort = $this->request->get['sort'] ?? 'name';
+        $order = $this->request->get['order'] ?? 'asc';
 
         if ($search) {
             // Perform search query
-            $phones = $this->model->searchPhones($search);
+            $phones = $this->model->searchPhones($search, $sort, $order);
         } else {
             // Retrieve all records if no search query
-            $phones = $this->model->getAll();
+            $phones = $this->model->getAll($sort, $order);
         }
 
         // Render the header

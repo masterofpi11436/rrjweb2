@@ -30,4 +30,3 @@
         <?php endforeach; ?>
     </tbody>
 </table>
-

@@ -54,6 +54,7 @@ class Phone extends Model
         if (!in_array($sort, $validColumns)) {
             $sort = 'name'; // Default to 'name' if an invalid column is provided
         }
+        
         $order = ($order === 'desc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'
 
         $sql = "SELECT * FROM {$this->getTableName()} 
