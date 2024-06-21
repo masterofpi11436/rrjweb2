@@ -11,6 +11,10 @@
                     content.style.display = "block";
                 }
             });
+
+            // Ensure fields are collapsed by default
+            var content = coll[i].nextElementSibling;
+            content.style.display = "none";
         }
     });
 </script>
