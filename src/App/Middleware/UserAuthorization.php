@@ -33,10 +33,23 @@ class UserAuthorization implements MiddlewareInterface
             session_start();
         }
 
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['last_activity'])) {
+            
+            $_SESSION['last_activity'] = time();
+
+        }
+        // Session duration
+        $sessionDuration = 3600;
+
+        if (!isset($_SESSION['user_id']) || time() - $_SESSION['last_activity'] > $sessionDuration) {
+            session_unset();
+            session_destroy();
             $this->response->redirect('/login');
             return $this->response;
         }
+
+        // Update the last activity time stamp
+        $_SESSION['last_activity'] = time();
 
         $userId = $_SESSION['user_id'];
         $roleId = $_SESSION['role_id'] ?? null;
