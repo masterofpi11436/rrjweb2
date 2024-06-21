@@ -84,8 +84,8 @@ class UserAuthorization implements MiddlewareInterface
             3 => ['/phones/.*'], // Role ID 3: Access to phone-related routes
             4 => ['/mailrooms/.*'], // Role ID 4: Access to OPR and Mailroom-related routes
             5 => ['/programs/.*'], // Role ID 5: Access to programs-related routes
-            6 => ['/programs/contractors/.*'], // Role ID 5: Access to programs-related routes
-            7 => ['/programs/volunteers/.*'], // Role ID 5: Access to programs-related routes
+            6 => ['/programs/contractors/.*'], // Role ID 6: Access to the program's contractor-related routes
+            7 => ['/programs/volunteers/.*'], // Role ID 7: Access to the program's volunteer-related routes
         ];
 
         if ($roleId === null) {
