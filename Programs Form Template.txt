@@ -1,0 +1,62 @@
+
+PERSONAL INFORMATION
+
+	LastName
+	FirstName
+	Address
+	City
+	State
+	ZipCode (int)
+	HomePhone
+	CellNumber
+	Birthdate (date)
+	Email Address
+	Race
+	Sex
+	SocialSecurity Number
+	BirthMonth
+
+WORK STATUS
+	
+	Active/Inactive
+	Activity Status
+	TerminationDate (Contractor)
+	TerminationReason (Contractor)
+
+WORK INFORMATION
+
+	DateHired (date)
+	Schedule
+	ON CALL SCHEDULE
+	ON CALL STATUS (bool)
+	Devices Approved	
+	MAIN
+	HU6
+	AttendedQuarterMeeting (bool)
+	QuarterMeetingAttended (Date)
+	VOL DINNER RSVP (bool)
+	DINNER GUEST (bool)
+	Signature
+	Document Status
+	WorkPhone
+
+TRAINING AND EDUCATION
+
+	PREATRAINING (date)
+	Experience/Training
+	SpecificSkillEducation
+	DegreeType
+
+CHURCH INFORMATION
+
+	GroupName
+	ChurchAddress
+	ChurchLeader
+	Church Phone
+	MinistryGroup
+	CHAPLAIN'S ASSISTANT
+	MinsitryOrientation (date)
+	Denomination
+	CategoryName
+	VolManual# (int)
+	Church Locator
