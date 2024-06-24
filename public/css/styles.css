@@ -85,7 +85,8 @@ header {
 
 /* Styles for collapsible sections */
 .collapsible {
-    background-color: #171f28;
+    background-color: #3b3b3b;
+    color: #444;
     cursor: pointer;
     padding: 10px;
     width: 100%;
@@ -95,6 +96,18 @@ header {
     font-size: 15px;
     border-radius: 5px;
     margin-bottom: 10px;
+    position: relative;
+}
+
+.collapsible::after {
+    content: "\25BC"; /* Down arrow */
+    font-size: 13px;
+    position: absolute;
+    right: 10px;
+}
+
+.collapsible.active::after {
+    content: "\25B2"; /* Up arrow */
 }
 
 .content {
