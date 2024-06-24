@@ -6,6 +6,10 @@ header {
     padding: 10px 20px;
 }
 
+body {
+    color: white;
+}
+
 /* Style for the search input field */
 .search-input {
     width: 430px; /* Adjust the width as needed */
