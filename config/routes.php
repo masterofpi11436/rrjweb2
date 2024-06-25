@@ -126,6 +126,18 @@ $router->add("/programs/volunteers/update/{id:\d+}", ["controller" => "volunteer
 $router->add("/programs/volunteers/delete/{id:\d+}", ["controller" => "volunteers", "action" => "deleteVolunteer", "middleware" => "auth", "namespace" => "Programs"]);
 $router->add("/programs/volunteers/destroy/{id:\d+}", ["controller" => "volunteers", "action" => "destroyVolunteer", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
 
+// *************************************************************************************************************************************************//
+
+// Admin Pages (Warehouse Supply Request Items)
+$router->add("/warehouse/items/all", ["controller" => "items", "action" => "viewAll", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/items/add", ["controller" => "items", "action" => "addNewItem", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/items/create", ["controller" => "items", "action" => "create", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
+$router->add("/warehouse/items/one/{id:\d+}", ["controller" => "items", "action" => "viewone", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/items/edit/{id:\d+}", ["controller" => "items", "action" => "editItem", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/items/update/{id:\d+}", ["controller" => "items", "action" => "updateItem", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
+$router->add("/warehouse/items/delete/{id:\d+}", ["controller" => "items", "action" => "deleteItem", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/items/destroy/{id:\d+}", ["controller" => "items", "action" => "destroyItem", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
+
 // Blanket Route
 // $router->add("/{controller}/{action}");
 // $router->add("/{controller}/{action}/{id:\d+}");

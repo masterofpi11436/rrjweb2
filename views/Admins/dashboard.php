@@ -27,3 +27,7 @@
 <form action="/programs/dashboard">
     <button>Programs</button>
 </form>
+
+<form action="/warehouse/items/all">
+    <button>Warehouse Items</button>
+</form>

@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
     <link rel="stylesheet" href="/public/css/styles.css">
     <script src="/public/JavaScript/script.js"></script>
-    <script src="/public/JavaScript/verify.js"></script>
     <title><?= $title ?></title>
 </head>
 <body>
