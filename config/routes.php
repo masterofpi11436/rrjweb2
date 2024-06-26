@@ -151,6 +151,17 @@ $router->add("/warehouse/items/update/{id:\d+}", ["controller" => "items", "acti
 $router->add("/warehouse/items/delete/{id:\d+}", ["controller" => "items", "action" => "deleteItem", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/items/destroy/{id:\d+}", ["controller" => "items", "action" => "destroyItem", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
 
+// *************************************************************************************************************************************************//
+
+// Admin Pages (Warehouse Supply Request Items)
+$router->add("/warehouse/sections/all", ["controller" => "sections", "action" => "viewAll", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/sections/add", ["controller" => "sections", "action" => "addNewSection", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/sections/create", ["controller" => "sections", "action" => "create", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
+$router->add("/warehouse/sections/one/{id:\d+}", ["controller" => "sections", "action" => "viewone", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/sections/edit/{id:\d+}", ["controller" => "sections", "action" => "editSection", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/sections/update/{id:\d+}", ["controller" => "sections", "action" => "updateSection", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
+$router->add("/warehouse/sections/delete/{id:\d+}", ["controller" => "sections", "action" => "deleteSection", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/sections/destroy/{id:\d+}", ["controller" => "sections", "action" => "destroySection", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
 // Blanket Route
 // $router->add("/{controller}/{action}");
 // $router->add("/{controller}/{action}/{id:\d+}");

@@ -5,3 +5,7 @@
 <form action="/warehouse/items/all">
     <button>Warehouse Items</button>
 </form>
+
+<form action="/warehouse/sections/all">
+    <button>Warehouse Items</button>
+</form>
