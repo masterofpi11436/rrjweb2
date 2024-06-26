@@ -28,6 +28,6 @@
     <button>Programs</button>
 </form>
 
-<form action="/warehouse/items/all">
-    <button>Warehouse Items</button>
+<form action="/warehouse/dashboard">
+    <button>Warehouse Dashboard</button>
 </form>

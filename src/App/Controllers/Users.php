@@ -67,7 +67,7 @@ class Users extends Controller
                     case 7:
                         return $this->redirect('/programs/volunteers/all');
                     case 8:
-                        return $this->redirect('/warehouse/items/all');
+                        return $this->redirect('/warehouse/dashboard');
                     default:
                         return $this->redirect('/login'); // Default fallback
                 }

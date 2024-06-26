@@ -128,6 +128,19 @@ $router->add("/programs/volunteers/destroy/{id:\d+}", ["controller" => "voluntee
 
 // *************************************************************************************************************************************************//
 
+// Admin Pages (Warehouse Administration Pages)
+$router->add("/warehouse/dashboard", ["controller" => "admins", "action" => "dashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/admins/all", ["controller" => "admins", "action" => "viewAll", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/admins/add", ["controller" => "admins", "action" => "addNewAdmin", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/admins/create", ["controller" => "admins", "action" => "create", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
+$router->add("/warehouse/admins/one/{id:\d+}", ["controller" => "admins", "action" => "viewone", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/admins/edit/{id:\d+}", ["controller" => "admins", "action" => "editAdmin", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/admins/update/{id:\d+}", ["controller" => "admins", "action" => "updateAdmin", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
+$router->add("/warehouse/admins/delete/{id:\d+}", ["controller" => "admins", "action" => "deleteAdmin", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyAdmin", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
+
+// *************************************************************************************************************************************************//
+
 // Admin Pages (Warehouse Supply Request Items)
 $router->add("/warehouse/items/all", ["controller" => "items", "action" => "viewAll", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/items/add", ["controller" => "items", "action" => "addNewItem", "middleware" => "auth", "namespace" => "Warehouse"]);

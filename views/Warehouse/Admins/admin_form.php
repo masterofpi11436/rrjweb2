@@ -2,7 +2,7 @@
     
     <div>
         <label for="first_name">First Name:</label>
-        <input type="text" id="first_name" name="first_name" value="<?= isset($user) ? htmlspecialchars($user['first_name'] ?? '') : '' ?>">
+        <input type="text" id="first_name" name="first_name" value="<?= isset($admin) ? htmlspecialchars($admin['first_name'] ?? '') : '' ?>">
     </div>
 
     <?php if (isset($errorMessage["first_name"])): ?>
@@ -11,7 +11,7 @@
 
     <div>
         <label for="last_name">Last Name:</label>
-        <input type="text" id="last_name" name="last_name" value="<?= isset($user) ? htmlspecialchars($user['last_name'] ?? '') : '' ?>">
+        <input type="text" id="last_name" name="last_name" value="<?= isset($admin) ? htmlspecialchars($admin['last_name'] ?? '') : '' ?>">
     </div>
 
     <?php if (isset($errorMessage["last_name"])): ?>
@@ -20,7 +20,7 @@
 
     <div>
         <label for="email">Email:</label>
-        <input type="text" id="email" name="email" value="<?= isset($user) ? htmlspecialchars($user['email'] ?? '') : '' ?>">
+        <input type="text" id="email" name="email" value="<?= isset($admin) ? htmlspecialchars($admin['email'] ?? '') : '' ?>">
     </div>
 
     <?php if (isset($errorMessage["email"])): ?>
@@ -39,12 +39,9 @@
     <div>
         <label for="role_id">Role:</label>
         <select id="role_id" name="role_id">
-            <option value="1" <?= isset($user) && $user['role_id'] == 1 ? 'selected' : '' ?>>Admin</option>
-            <option value="2" <?= isset($user) && $user['role_id'] == 2 ? 'selected' : '' ?>>Tablet</option>
-            <option value="3" <?= isset($user) && $user['role_id'] == 3 ? 'selected' : '' ?>>Phone</option>
-            <option value="4" <?= isset($user) && $user['role_id'] == 4 ? 'selected' : '' ?>>Mailroom</option>
-            <option value="5" <?= isset($user) && $user['role_id'] == 5 ? 'selected' : '' ?>>Program</option>
-            <option value="8" <?= isset($user) && $user['role_id'] == 8 ? 'selected' : '' ?>>Warehouse Manager</option>
+            <option value="8" <?= isset($admin) && $admin['role_id'] == 8 ? 'selected' : '' ?>>Warehouse Manager</option>
+            <option value="9" <?= isset($admin) && $admin['role_id'] == 9 ? 'selected' : '' ?>>Supervisor</option>
+            <option value="10" <?= isset($admin) && $admin['role_id'] == 10 ? 'selected' : '' ?>>User</option>
             <!-- Add more roles as needed -->
         </select>
     </div>
