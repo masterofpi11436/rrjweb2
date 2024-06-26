@@ -1,3 +1,7 @@
+<form action="/warehouse/dashboard">
+    <button>Back to Dashboard</button>
+</form>
+
 <form action="/warehouse/sections/add">
     <button>Add New Section</button>
 </form>
