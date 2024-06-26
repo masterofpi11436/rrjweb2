@@ -6,6 +6,10 @@
     <button>Warehouse Items</button>
 </form>
 
+<form action="/warehouse/itemtype/all">
+    <button>Warehouse Item Types</button>
+</form>
+
 <form action="/warehouse/sections/all">
-    <button>Warehouse Items</button>
+    <button>Warehouse Sections</button>
 </form>

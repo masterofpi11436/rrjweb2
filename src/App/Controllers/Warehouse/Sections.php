@@ -119,7 +119,6 @@ class Sections extends Controller
         if ($this->model->insertRecord($data)) {
             return $this->redirect("/warehouse/sections/one/{$this->model->getInsertID()}");
         } else {
-            $sectionTypes = $this->model->getSectionTypes();
 
             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Section", "heading" => "Add Section"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Sections/add_section.php", ["errorMessage" => $this->model->getErrors(), "section" => $data]));

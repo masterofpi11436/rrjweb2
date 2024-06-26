@@ -153,7 +153,19 @@ $router->add("/warehouse/items/destroy/{id:\d+}", ["controller" => "items", "act
 
 // *************************************************************************************************************************************************//
 
-// Admin Pages (Warehouse Supply Request Items)
+// Admin Pages (Warehouse Supply Request Item Type CRUD)
+$router->add("/warehouse/itemtype/all", ["controller" => "itemtypes", "action" => "viewAll", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/itemtype/add", ["controller" => "itemtypes", "action" => "addNewItemType", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/itemtype/create", ["controller" => "itemtypes", "action" => "create", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
+$router->add("/warehouse/itemtype/one/{id:\d+}", ["controller" => "itemtypes", "action" => "viewone", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/itemtype/edit/{id:\d+}", ["controller" => "itemtypes", "action" => "editItemType", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/itemtype/update/{id:\d+}", ["controller" => "itemtypes", "action" => "updateItemType", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
+$router->add("/warehouse/itemtype/delete/{id:\d+}", ["controller" => "itemtypes", "action" => "deleteItemType", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/itemtype/destroy/{id:\d+}", ["controller" => "itemtypes", "action" => "destroyItemType", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
+
+// *************************************************************************************************************************************************//
+
+// Admin Pages (Warehouse Supply Request Section CRUD)
 $router->add("/warehouse/sections/all", ["controller" => "sections", "action" => "viewAll", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/sections/add", ["controller" => "sections", "action" => "addNewSection", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/sections/create", ["controller" => "sections", "action" => "create", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
@@ -162,6 +174,7 @@ $router->add("/warehouse/sections/edit/{id:\d+}", ["controller" => "sections", "
 $router->add("/warehouse/sections/update/{id:\d+}", ["controller" => "sections", "action" => "updateSection", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
 $router->add("/warehouse/sections/delete/{id:\d+}", ["controller" => "sections", "action" => "deleteSection", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/sections/destroy/{id:\d+}", ["controller" => "sections", "action" => "destroySection", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
+
 // Blanket Route
 // $router->add("/{controller}/{action}");
 // $router->add("/{controller}/{action}/{id:\d+}");

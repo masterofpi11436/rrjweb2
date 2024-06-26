@@ -1,0 +1,45 @@
+<?php
+
+// Enforce type checking
+declare(strict_types=1);
+
+namespace App\Models\Warehouse;
+
+use Framework\Model;
+use PDO;
+
+class ItemType extends Model
+{
+    // Override the table name if the class name and table name does not match
+    protected $table = "item_type";
+
+    // Validate the inamte number and last name fields to allow minumum information to look up person.
+    // protected function validateForm(array $data): void
+    // {
+    //     if (empty($data["last_name"])) {
+
+    //         $this->addError("last_name", "Last name is required!");
+    //     }
+
+    //     if (empty($data["first_name"])) {
+
+    //         $this->addError("first_name", "First name is required!");
+    //     }
+    // }
+
+    public function searchItemTypes(string $search, string $sort = 'name', string $order = 'asc'): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()}
+                WHERE name LIKE :search";
+
+        $stmt = $conn->prepare($sql);
+
+        $searchTerm = '%' . $search . '%';
+        $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
