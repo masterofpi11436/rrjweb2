@@ -8,6 +8,10 @@
 
     <button>Log In</button>
 
+</form><br>
+
+<form action="/forgot">
+    <button>Forgot Password</button>
 </form>
 
 <?php if (isset($errorMessage)): ?>

@@ -28,7 +28,7 @@ class Users extends Controller
     {
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
 
-        $this->response->appendBody($this->viewer->render("login.php"));
+        $this->response->appendBody($this->viewer->render("Logins/login.php"));
 
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -78,7 +78,7 @@ class Users extends Controller
         $errorMessage = 'Incorrect email or password. Please try again.';
 
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
-        $this->response->appendBody($this->viewer->render("login.php", ["errorMessage" => $errorMessage]));
+        $this->response->appendBody($this->viewer->render("Logins/login.php", ["errorMessage" => $errorMessage]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;
@@ -92,5 +92,15 @@ class Users extends Controller
 
         // Redirect to the login page or home page
         return $this->redirect('/login');
+    }
+
+    // Page to verify email of user if password is forgotten
+    public function forgotPassword(): Response
+    {
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Forgot Password", "heading" => "Verify Your Email"]));
+        $this->response->appendBody($this->viewer->render("Logins/forgot.php", ["title" => "Forgot Password"]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
     }
 }
