@@ -1,0 +1,188 @@
+/* edge.css */
+
+/* Set the font color to white for all elements */
+body {
+    color: white;
+}
+
+/* Flexbox layout for header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+button {
+    color: white;
+}
+
+/* Style for the search input field */
+.search-input {
+    color: white;
+    width: 430px; /* Adjust the width as needed */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+.search-inpuit::placeholder {
+    color: white;
+}
+
+/* Form container styles */
+.form-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Form element spacing */
+.form-container div {
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+
+/* Label styles */
+.form-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: white; /* Ensure labels are white */
+}
+
+/* Input styles */
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: white; /* Input text color */
+}
+
+/* Placeholder styles with vendor prefixes for other inputs */
+.form-container input[type="text"]::-webkit-input-placeholder,
+.form-container input[type="number"]::-webkit-input-placeholder,
+.form-container input[type="date"]::-webkit-input-placeholder {
+    color: white; /* Change this to the desired placeholder color */
+}
+
+.form-container input[type="text"]:-moz-placeholder,
+.form-container input[type="number"]:-moz-placeholder,
+.form-container input[type="date"]:-moz-placeholder {
+    color: white; /* Change this to the desired placeholder color */
+}
+
+.form-container input[type="text"]::-moz-placeholder,
+.form-container input[type="number"]::-moz-placeholder,
+.form-container input[type="date"]::-moz-placeholder {
+    color: white; /* Change this to the desired placeholder color */
+}
+
+.form-container input[type="text"]:-ms-input-placeholder,
+.form-container input[type="number"]:-ms-input-placeholder,
+.form-container input[type="date"]:-ms-input-placeholder {
+    color: white; /* Change this to the desired placeholder color */
+}
+
+/* Checkbox styles */
+.form-container input[type="checkbox"] {
+    margin-left: 10px;
+}
+
+/* Textarea styles */
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+    color: black; /* Textarea text color */
+}
+
+/* Placeholder styles with vendor prefixes for textarea */
+.form-container textarea::-webkit-input-placeholder {
+    color: blue; /* Change this to the desired placeholder color */
+}
+
+.form-container textarea:-moz-placeholder {
+    color: blue; /* Change this to the desired placeholder color */
+}
+
+.form-container textarea::-moz-placeholder {
+    color: blue; /* Change this to the desired placeholder color */
+}
+
+.form-container textarea:-ms-input-placeholder {
+    color: blue; /* Change this to the desired placeholder color */
+}
+
+/* Button styles */
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Form section grouping */
+.form-section {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Form section titles */
+.form-section h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    color: white; /* Ensure section titles are white */
+}
+
+/* Collapsible section styles */
+.collapsible {
+    background-color: #3b3b3b;
+    color: white; /* Ensure collapsible headers are white */
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.collapsible::after {
+    content: "\25BC"; /* Down arrow */
+    font-size: 13px;
+    position: absolute;
+    right: 10px;
+}
+
+.collapsible.active::after {
+    content: "\25B2"; /* Up arrow */
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
