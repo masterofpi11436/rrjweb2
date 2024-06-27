@@ -12,6 +12,9 @@ if (session_status() == PHP_SESSION_NONE) {
 
 define("ROOT_PATH", dirname(__DIR__));
 
+// Composer's autoloader
+require ROOT_PATH . '/vendor/autoload.php';
+
 // Autoload the required classes
 spl_autoload_register(function($class) {
 
