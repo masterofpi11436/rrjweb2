@@ -45,6 +45,10 @@
     </tr>
     <tr>
         <th>Notes</th>
-        <td><?= htmlspecialchars($tablet["note"]) ?></td>
+        <td><?= $tablet["note"] ?></td>
+    </tr>
+    <tr>
+        <th>Date Created</th>
+        <td><?= $tablet["created_at"] ?></td>
     </tr>
 </table>

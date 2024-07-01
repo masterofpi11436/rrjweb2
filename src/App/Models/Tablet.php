@@ -32,18 +32,18 @@ class Tablet extends Model
         }
     }
 
-    public function getAll(string $sort = 'last_name', string $order = 'asc'): array
+    public function getAll(string $sort = 'created_at', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();
 
         // Validate the sorting parameters
-        $validColumns = ['inmate_number', 'last_name', 'first_name'];
+        $validColumns = ['inmate_number', 'last_name', 'first_name', 'created_at'];
         
         if (!in_array($sort, $validColumns)) {
-            $sort = 'last_name'; // Default to 'last_name' if an invalid column is provided
+            $sort = 'created_at'; // Default to 'created_at' if an invalid column is provided
         }
 
-        $order = ($order === 'desc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'
+        $order = ($order === 'asc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'
 
         $sql = "SELECT * FROM {$this->getTableName()} ORDER BY {$sort} {$order}";
         $stmt = $conn->prepare($sql);
@@ -53,14 +53,14 @@ class Tablet extends Model
     }
 
 
-    public function searchTablets(string $search, string $sort = 'last_name', string $order = 'asc'): array
+    public function searchTablets(string $search, string $sort = 'created_at', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();
 
         // Validate the sorting parameters
-        $validColumns = ['inmate_number', 'last_name', 'first_name'];
+        $validColumns = ['inmate_number', 'last_name', 'first_name', 'created_at'];
         if (!in_array($sort, $validColumns)) {
-            $sort = 'last_name'; // Default to 'name' if an invalid column is provided
+            $sort = 'created_at'; // Default to 'name' if an invalid column is provided
         }
 
         $order = ($order === 'desc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'

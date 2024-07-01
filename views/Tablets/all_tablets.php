@@ -27,6 +27,9 @@
                     <a href="?search=<?= $search ?>&sort=first_name&order=<?= $newOrder ?>">First Name/Initial</a>
                 </th>
                 <th>Notes</th>
+                <th>
+                    <a href="?search=<?= $search ?>&sort=created_at&order=<?= $newOrder ?>">Created Date</a>
+                </th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -37,6 +40,7 @@
                     <td><?= htmlspecialchars($tablet['last_name']) ?></td>
                     <td><?= htmlspecialchars($tablet['first_name']) ?></td>
                     <td><?= htmlspecialchars($tablet['note']) ?></td>
+                    <td><?= ($tablet['created_at']) ?></td>
                     <td>
                         <a href="/tablets/one/<?= htmlspecialchars($tablet['id']) ?>">View</a>
                     </td>

@@ -11,21 +11,23 @@
             <th>Charged By Inmate Accounts</th>
             <th>Payment Status</th>
             <td>Notes</td>
+            <td>Created</td>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($tablets as $tablet): ?>
         <tr>
-            <td><?php echo $tablet['inmate_number']; ?></td>
-            <td><?php echo $tablet['last_name']; ?></td>
-            <td><?php echo $tablet['first_name']; ?></td>
+            <td><?=  $tablet['inmate_number']; ?></td>
+            <td><?=  $tablet['last_name']; ?></td>
+            <td><?=  $tablet['first_name']; ?></td>
             <td><?= empty($tablet["middle_name"]) ? 'None' : htmlspecialchars($tablet["middle_name"]) ?></td>            
             <td><?= empty($tablet["date_found"]) ? 'No date' : htmlspecialchars($tablet["date_found"]) ?></td>
             <td><?= $tablet["is_reported"] ? 'Reported' : 'Not Reported' ?></td>
             <td><?= $tablet["is_filed"] ? 'Filed' : 'Not Filed' ?></td>
             <td><?= $tablet["is_charged"] ? 'Charged' : 'Not Charged' ?></td>
             <td><?= $tablet["is_paid"] ? 'Account Paid' : 'Owes $300 for Tablet' ?></td>
-            <td><?php echo $tablet['note']; ?></td>
+            <td><?= $tablet['note']; ?></td>
+            <td><?= $tablet['created_at']; ?></td>
         </tr>
         <?php endforeach; ?>
     </tbody>
