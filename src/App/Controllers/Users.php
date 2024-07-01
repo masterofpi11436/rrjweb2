@@ -10,6 +10,7 @@ use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
 use Framework\Response;
+use Framework\Mailer;
 
 /**
  * Controller for handling user-related actions.
@@ -99,6 +100,32 @@ class Users extends Controller
     {
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Forgot Password", "heading" => "Verify Your Email"]));
         $this->response->appendBody($this->viewer->render("Logins/forgot.php", ["title" => "Forgot Password"]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
+    // Verify user and submit an email to them
+    public function verifyUser(): Response
+    {
+        $email = $this->request->post["email"];
+
+        if (empty($email)) {
+            $errorMessage = "Email is required";
+        } else {
+
+            $user = $this->model->findByEmail($email);
+
+            if ($user) {
+                $mail->send($user);
+                return $this->redirect("/success");
+            } else {
+                $errorMessage = "No account is found with that email, please verify your email is correct";
+            }
+        }
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Forgot Password", "heading" => "Verify Your Email"]));
+        $this->response->appendBody($this->viewer->render("Logins/forgot.php", ["title" => "Forgot Password", "errorMessage" => $errorMessage ?? null, "successMessage" => $successMessage ?? null,]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;
