@@ -108,24 +108,41 @@ class Users extends Controller
     // Verify user and submit an email to them
     public function verifyUser(): Response
     {
-        $email = $this->request->post["email"];
+        $email = $this->request->post["email"] ?? '';
+        $errorMessage = "";
 
         if (empty($email)) {
             $errorMessage = "Email is required";
         } else {
-
             $user = $this->model->findByEmail($email);
 
             if ($user) {
-                $mail->send($user);
+                // $mail->send($user);
                 return $this->redirect("/success");
             } else {
                 $errorMessage = "No account is found with that email, please verify your email is correct";
             }
         }
 
+        // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Forgot Password", "heading" => "Verify Your Email"]));
-        $this->response->appendBody($this->viewer->render("Logins/forgot.php", ["title" => "Forgot Password", "errorMessage" => $errorMessage ?? null, "successMessage" => $successMessage ?? null,]));
+
+        // Render the forgot password view with error message
+        $this->response->appendBody($this->viewer->render("Logins/forgot.php", ["errorMessage" => $errorMessage]));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }     
+
+    // Success page if the user was found and an email was sent
+    public function success(): Response
+    {
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
+
+        $this->response->appendBody($this->viewer->render("Logins/success.php"));
+
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;

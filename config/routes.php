@@ -11,7 +11,8 @@ $router->add("/login", ["controller" => "users", "action" => "login"]);
 $router->add("/login/auth", ["controller" => "users", "action" => "auth", "method" => "post"]);
 $router->add('/logout', ["controller" => "users", "action" => "logout"]);
 $router->add('/forgot', ["controller" => "users", "action" => "forgotPassword"]);
-$router->add('/success', ["controller" => "users", "action" => "verifyUser"]);
+$router->add('/verify', ["controller" => "users", "action" => "verifyUser"]);
+$router->add('/success', ["controller" => "users", "action" => "success"]);
 
 // *************************************************************************************************************************************************//
 
