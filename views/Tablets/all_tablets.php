@@ -31,6 +31,9 @@
                     <a href="?search=<?= $search ?>&sort=created_at&order=<?= $newOrder ?>">Created Date</a>
                 </th>
                 <th>Actions</th>
+                <th>
+                    <a href="?search=<?= $search ?>&sort=is_reported&order=<?= $newOrder ?>">101 Report</a>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -44,6 +47,7 @@
                     <td>
                         <a href="/tablets/one/<?= htmlspecialchars($tablet['id']) ?>">View</a>
                     </td>
+                    <td><?= htmlspecialchars($tablet["is_reported"] ? 'Reported' : 'Not Reported') ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

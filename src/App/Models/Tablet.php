@@ -37,7 +37,7 @@ class Tablet extends Model
         $conn = $this->db->getConn();
 
         // Validate the sorting parameters
-        $validColumns = ['inmate_number', 'last_name', 'first_name', 'created_at'];
+        $validColumns = ['inmate_number', 'last_name', 'first_name', 'created_at', 'is_reported'];
         
         if (!in_array($sort, $validColumns)) {
             $sort = 'created_at'; // Default to 'created_at' if an invalid column is provided
@@ -58,7 +58,7 @@ class Tablet extends Model
         $conn = $this->db->getConn();
 
         // Validate the sorting parameters
-        $validColumns = ['inmate_number', 'last_name', 'first_name', 'created_at'];
+        $validColumns = ['inmate_number', 'last_name', 'first_name', 'created_at', 'is_reported'];
         if (!in_array($sort, $validColumns)) {
             $sort = 'created_at'; // Default to 'name' if an invalid column is provided
         }
