@@ -1,17 +1,18 @@
+<div style="display: flex; justify-content: center;">
 <table>
     <thead>
         <tr>
-            <th>Inmate ID</th>
-            <th>Last Name</th>
-            <th>First Name</th>
-            <th>Middle Name</th>            
-            <th>Date Tablet Found</th>
-            <th>101 Incident Report</th>
-            <th>Filed With Inmate Accounts</th>
-            <th>Charged By Inmate Accounts</th>
-            <th>Payment Status</th>
-            <td>Notes</td>
-            <td>Created</td>
+            <th style="width: 100px;">Inmate ID</th>
+            <th style="width: 100px;">Last Name</th>
+            <th style="width: 100px;">First Name</th>
+            <th style="width: 100px;">Middle Name</th>            
+            <th style="width: 100px;">Date Tablet Found</th>
+            <th style="width: 100px;">101 Incident Report</th>
+            <th style="width: 100px;">Filed With Inmate Accounts</th>
+            <th style="width: 100px;">Charged By Inmate Accounts</th>
+            <th style="width: 150px;">Payment Status</th>
+            <td style="width: 100px;">Notes</td>
+            <td style="width: 100px;">Created</td>
         </tr>
     </thead>
     <tbody>
@@ -20,7 +21,7 @@
             <td><?=  $tablet['inmate_number']; ?></td>
             <td><?=  $tablet['last_name']; ?></td>
             <td><?=  $tablet['first_name']; ?></td>
-            <td><?= empty($tablet["middle_name"]) ? 'None' : htmlspecialchars($tablet["middle_name"]) ?></td>            
+            <td><?= empty($tablet["middle_name"]) ? 'None' : htmlspecialchars($tablet["middle_name"]) ?></td>
             <td><?= empty($tablet["date_found"]) ? 'No date' : htmlspecialchars($tablet["date_found"]) ?></td>
             <td><?= $tablet["is_reported"] ? 'Reported' : 'Not Reported' ?></td>
             <td><?= $tablet["is_filed"] ? 'Filed' : 'Not Filed' ?></td>
@@ -32,3 +33,4 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+</div>
