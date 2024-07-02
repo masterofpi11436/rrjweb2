@@ -22,7 +22,7 @@ class Users extends Controller
      *
      * @param User $model The user model
      */
-    public function __construct(private User $model){}
+    public function __construct(private User $model, private Mailer $mailer){}
 
     // Log in Page
     public function login(): Response
@@ -117,24 +117,34 @@ class Users extends Controller
             $user = $this->model->findByEmail($email);
 
             if ($user) {
-                // $mail->send($user);
-                return $this->redirect("/success");
+
+                //create a token here
+
+                // Reset page sent as a link
+                $resetLink = "http://rrjweb2/new";
+
+                // Save the token to the database (not shown here)
+                // ...
+
+                // Send the email using the Mailer class
+                $sendResult = $this->mailer->sendNewPass($email, $resetLink);
+
+                if ($sendResult === true) {
+                    return $this->redirect("/success");
+                } else {
+                    $errorMessage = $sendResult; // Display the error message from the Mailer
+                }
             } else {
                 $errorMessage = "No account is found with that email, please verify your email is correct";
             }
         }
 
-        // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Forgot Password", "heading" => "Verify Your Email"]));
-
-        // Render the forgot password view with error message
         $this->response->appendBody($this->viewer->render("Logins/forgot.php", ["errorMessage" => $errorMessage]));
-
-        // Render the footer
-        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
 
         return $this->response;
-    }     
+    }
 
     // Success page if the user was found and an email was sent
     public function success(): Response
@@ -142,6 +152,18 @@ class Users extends Controller
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
 
         $this->response->appendBody($this->viewer->render("Logins/success.php"));
+
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
+    // Page to allow the user to reset their password
+    public function newPass(): Response
+    {
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
+
+        $this->response->appendBody($this->viewer->render("Logins/newpass.php"));
 
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 

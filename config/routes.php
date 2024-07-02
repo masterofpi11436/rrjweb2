@@ -13,6 +13,7 @@ $router->add('/logout', ["controller" => "users", "action" => "logout"]);
 $router->add('/forgot', ["controller" => "users", "action" => "forgotPassword"]);
 $router->add('/verify', ["controller" => "users", "action" => "verifyUser"]);
 $router->add('/success', ["controller" => "users", "action" => "success"]);
+$router->add('/new', ["controller" => "users", "action" => "newPass"]);
 
 // *************************************************************************************************************************************************//
 

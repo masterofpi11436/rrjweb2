@@ -30,20 +30,19 @@ class Mailer
     }
 
     /**
-     * Send an email.
+     * Send a password reset email.
      *
      * @param string $to Recipient's email address
-     * @param string $subject Subject of the email
-     * @param string $body Body of the email (can be HTML)
-     * @param string|null $from Optional: Sender's email address, defaults to SMTP_USER
-     * @param string|null $fromName Optional: Sender's name, defaults to 'Mailer'
+     * @param string $resetLink Password reset link
      * @return bool|string Returns true on success, error message on failure
      */
-    public function send($to, $subject, $body, $from = null, $fromName = null) {
+    public function sendNewPass($to, $resetLink) {
         try {
-            // Set the sender's email address and name
-            $from = $from ?? $_ENV['SMTP_USER']; // Default to SMTP_USER if $from is not provided
-            $fromName = $fromName ?? 'Mailer'; // Default to 'Mailer' if $fromName is not provided
+            $from = 'mark.tuggle01@gmail.com'; // Specific sender's email address
+            $fromName = 'Password Reset Service'; // Sender's name
+            $subject = 'Password Reset Request';
+            $body = "Hello,<br><br>Please click the following link to reset your password:<br><a href=\"$resetLink\">Reset Password</a><br><br>If you did not request a password reset,
+                     please notify MIU at extension 6035.";
 
             // Set the sender's address
             $this->mail->setFrom($from, $fromName);

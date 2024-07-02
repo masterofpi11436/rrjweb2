@@ -57,6 +57,12 @@ class Container
             // Check if the type is not declared
             if ($type === null) {
 
+                // Manually handle the case for PHPMailer
+                if ($parameter->getName() === 'exceptions') {
+                    $dependencies[] = true;
+                    continue;
+                }
+
                 throw new InvalidArgumentException("Constructor parameter '{$parameter->getName()}' in the class $class has no type declaration");
             }
 
