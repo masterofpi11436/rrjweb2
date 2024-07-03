@@ -27,6 +27,18 @@ class Item extends Model
     //     }
     // }
 
+    public function getItemById(int $id): array|bool
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function searchItems(string $search, string $sort = 'name', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();
@@ -45,6 +57,20 @@ class Item extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // All Items for the User and Supervisor pages
+    public function getAllItems()
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM item";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // All Items for the Admin pages
     public function getAll(string $sort = 'name', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();

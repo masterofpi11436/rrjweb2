@@ -4,7 +4,8 @@ return [
     "message" => \App\Middleware\ChangeResponseExample::class,
     "trim" => \App\Middleware\ChangeRequestExample::class,
     "deny" => \App\Middleware\RedirectExample::class,
-    "auth" => \App\Middleware\UserAuthorization::class
+    "auth" => \App\Middleware\UserAuthorization::class,
+    "store_wsr_info" => \App\Middleware\StoreWSRInfo::class
 ];
 
 // "message" appends a message
