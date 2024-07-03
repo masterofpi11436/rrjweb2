@@ -69,6 +69,10 @@ class Users extends Controller
                         return $this->redirect('/programs/volunteers/all');
                     case 8:
                         return $this->redirect('/warehouse/dashboard');
+                    case 9:
+                        return $this->redirect('/warehouse/dashboard');
+                    case 10:
+                        return $this->redirect('/warehouse/dashboard');
                     default:
                         return $this->redirect('/login'); // Default fallback
                 }
@@ -121,7 +125,7 @@ class Users extends Controller
                 //create a token here
 
                 // Reset page sent as a link
-                $resetLink = "http://rrjweb2/new";
+                $resetLink = "http://localhost/new";
 
                 // Save the token to the database (not shown here)
                 // ...

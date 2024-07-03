@@ -179,6 +179,11 @@ $router->add("/warehouse/sections/update/{id:\d+}", ["controller" => "sections",
 $router->add("/warehouse/sections/delete/{id:\d+}", ["controller" => "sections", "action" => "deleteSection", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/sections/destroy/{id:\d+}", ["controller" => "sections", "action" => "destroySection", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
 
+// *************************************************************************************************************************************************//
+
+// WSR User Pages
+
+
 // Blanket Route
 // $router->add("/{controller}/{action}");
 // $router->add("/{controller}/{action}/{id:\d+}");
