@@ -70,9 +70,9 @@ class Users extends Controller
                     case 8:
                         return $this->redirect('/warehouse/dashboard');
                     case 9:
-                        return $this->redirect('/warehouse/dashboard');
+                        return $this->redirect('/warehouse/supervisors/section');
                     case 10:
-                        return $this->redirect('/warehouse/dashboard');
+                        return $this->redirect('/warehouse/users/section');
                     default:
                         return $this->redirect('/login'); // Default fallback
                 }
