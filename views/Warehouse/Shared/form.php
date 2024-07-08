@@ -35,7 +35,17 @@
                     <input type="checkbox" name="items[]" value="<?= htmlspecialchars($item["id"]); ?>" <?= in_array($item['id'], array_column($selectedItems, 'id')) ? 'checked' : ''; ?>>
                 </td>
                 <td>
-                    <input type="number" name="quantity[<?= htmlspecialchars($item["id"]); ?>]" min="0" value="<?= htmlspecialchars($selectedItems[array_search($item['id'], array_column($selectedItems, 'id'))]['quantity'] ?? '0'); ?>">
+                    <?php
+                        $itemId = $item['id'];
+                        $quantity = 0;
+                        foreach ($selectedItems as $selectedItem) {
+                            if ($selectedItem['id'] == $itemId) {
+                                $quantity = $selectedItem['quantity'];
+                                break;
+                            }
+                        }
+                    ?>
+                    <input type="number" name="quantity[<?= htmlspecialchars($itemId); ?>]" min="0" value="<?= htmlspecialchars($quantity); ?>">
                 </td>
             </tr>
         <?php endforeach; ?>

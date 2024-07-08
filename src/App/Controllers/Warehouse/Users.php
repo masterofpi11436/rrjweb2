@@ -63,7 +63,7 @@ class Users extends Controller
                                                                                 "heading" => "WSR Supplies"]));
 
         // Render the all items view
-        $this->response->appendBody($this->viewer->render("Warehouse/Shared/items.php", ["items" => $items,
+        $this->response->appendBody($this->viewer->render("Warehouse/Shared/form.php", ["items" => $items,
                                                                                          "itemTypes" => $itemTypes,
                                                                                          "selectedItems" => $selectedItems]));
 

@@ -186,6 +186,12 @@ $router->add("/warehouse/users/section", ["controller" => "users", "action" => "
 $router->add("/warehouse/users/items", ["controller" => "users", "action" => "items", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/users/verify", ["controller" => "users", "action" => "verify", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 
+// WSR Supervisor Pages
+$router->add("/warehouse/supervisors/dashboard", ["controller" => "supervisors", "action" => "dashboard", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/section", ["controller" => "supervisors", "action" => "section", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/approvedeny", ["controller" => "supervisors", "action" => "approveDeny", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+
+
 // Blanket Route
 // $router->add("/{controller}/{action}");
 // $router->add("/{controller}/{action}/{id:\d+}");
