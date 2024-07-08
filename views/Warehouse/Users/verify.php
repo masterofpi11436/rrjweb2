@@ -15,6 +15,10 @@
         <?php endforeach; ?>
     </table>
 
+    <form action="/warehouse/users/items" method="post">
+        <button type="submit">Go Back</button>
+    </form>
+
     <form action="/submit_request" method="post">
         <button type="submit">Submit Request</button>
     </form>

@@ -39,23 +39,35 @@ class Item extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function searchItems(string $search, string $sort = 'name', string $order = 'asc'): array
+    public function searchItems(string $search = '', string $itemType = '', string $sort = 'name', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();
 
         $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image
                 FROM item
                 JOIN item_type ON item.item_type = item_type.id
-                WHERE item.name LIKE :search OR item_type.type LIKE :search";
+                WHERE (item.name LIKE :search OR item_type.type LIKE :search)";
+
+        if ($itemType) {
+            $sql .= " AND item.item_type = :itemType";
+        }
+
+        $sql .= " ORDER BY {$sort} {$order}";
 
         $stmt = $conn->prepare($sql);
 
         $searchTerm = '%' . $search . '%';
         $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
+        
+        if ($itemType) {
+            $stmt->bindParam(':itemType', $itemType, PDO::PARAM_STR);
+        }
+
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     // All Items for the User and Supervisor pages
     public function getAllItems()
