@@ -1,5 +1,4 @@
-<form>
-
+<form action="/warehouse/supervisors/items">
     <label for="section">Select Section:</label>
         <select name="section" id="section">
             <?php foreach ($sections as $section): ?>
