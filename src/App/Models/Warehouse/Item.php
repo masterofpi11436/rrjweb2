@@ -62,7 +62,9 @@ class Item extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM item";
+        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image
+                FROM item
+                JOIN item_type ON item.item_type = item_type.id";
         
         $stmt = $conn->prepare($sql);
         $stmt->execute();
