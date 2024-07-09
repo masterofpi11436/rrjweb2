@@ -44,9 +44,9 @@ class Users extends Controller
         $itemType = $this->request->get['item_type'] ?? '';
         $sort = $this->request->get['sort'] ?? 'name';
         $order = $this->request->get['order'] ?? 'asc';
-
+    
         $itemTypes = $this->itemModel->getItemTypes();
-
+    
         if ($search || $itemType) {
             // Perform search query
             $items = $this->itemModel->searchItems($search, $itemType, $sort, $order);
@@ -54,26 +54,40 @@ class Users extends Controller
             // Retrieve all records if no search query
             $items = $this->itemModel->getAllItems($sort, $order);
         }
-
+    
         // Get previously selected items and quantities from the session
         $selectedItems = $_SESSION['selected_items'] ?? [];
-        
+    
+        // Handle form submission to add item to the cart
+        if ($this->request->method === 'POST' && isset($this->request->post['item_id']) && isset($this->request->post['quantity'])) {
+            $itemId = (int)$this->request->post['item_id'];
+            $quantity = (int)$this->request->post['quantity'];
+    
+            $item = $this->itemModel->getItemById($itemId);
+            $item['quantity'] = $quantity;
+            $selectedItems[$itemId] = $item;
+    
+            // Update the session with the selected items
+            $_SESSION['selected_items'] = $selectedItems;
+        }
+    
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "WSR",
                                                                                 "heading" => "WSR Supplies"]));
-
+    
         // Render the all items view
-        $this->response->appendBody($this->viewer->render("Warehouse/Users/form.php", ["items" => $items,
-                                                                                         "itemTypes" => $itemTypes,
-                                                                                         "selectedItems" => $selectedItems]));
-
+        $this->response->appendBody($this->viewer->render("Warehouse/Users/form.php", [
+            "items" => $items, 
+            "itemTypes" => $itemTypes, 
+            "selectedItems" => $selectedItems
+        ]));
+    
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-
+    
         return $this->response;
     }
-
-
+    
     // Ask the user to verify the cart to submit to the supervisor
     public function verify(): Response
     {
