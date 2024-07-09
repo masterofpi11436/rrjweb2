@@ -1,4 +1,4 @@
-<form method="get" action="/warehouse/suervisors/items">
+<form method="get" action="/warehouse/supervisors/items">
     <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     
     <select name="item_type">
@@ -10,45 +10,34 @@
         <?php endforeach; ?>
     </select>
 
-    <?php foreach ($selectedItems as $item): ?>
-        <input type="hidden" name="items[]" value="<?= htmlspecialchars($item['id']); ?>">
-        <input type="hidden" name="quantity[<?= htmlspecialchars($item['id']); ?>]" value="<?= htmlspecialchars($item['quantity']); ?>">
-    <?php endforeach; ?>
-
     <button type="submit">Search</button>
 </form>
 
-<form action="/warehouse/suervisors/verify" method="post">
-    <h2>Select Items to add to Request</h2>
-    <table>
+<h2>Select Items to add to Request</h2>
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Item Type</th>
+        <th>Quantity</th>
+        <th>Action</th>
+    </tr>
+    <?php foreach ($items as $item): ?>
         <tr>
-            <th>Item</th>
-            <th>Item Type</th>
-            <th>Select</th>
-            <th>Quantity</th>
+            <td><?= htmlspecialchars($item['name']); ?></td>
+            <td><?= htmlspecialchars($item['item_type']); ?></td>
+            <td>
+                <form action="/warehouse/supervisors/items" method="post">
+                    <input type="hidden" name="item_id" value="<?= htmlspecialchars($item['id']); ?>">
+                    <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($selectedItems[$item['id']]['quantity'] ?? 0); ?>">
+            </td>
+            <td>
+                <button type="submit">Add/Update Cart</button>
+                </form>
+            </td>
         </tr>
-        <?php foreach ($items as $item): ?>
-            <tr>
-                <td><?= htmlspecialchars($item['name']); ?></td>
-                <td><?= htmlspecialchars($item['item_type']); ?></td>
-                <td>
-                    <input type="checkbox" name="items[]" value="<?= htmlspecialchars($item["id"]); ?>" <?= in_array($item['id'], array_column($selectedItems, 'id')) ? 'checked' : ''; ?>>
-                </td>
-                <td>
-                    <?php
-                        $itemId = $item['id'];
-                        $quantity = 0;
-                        foreach ($selectedItems as $selectedItem) {
-                            if ($selectedItem['id'] == $itemId) {
-                                $quantity = $selectedItem['quantity'];
-                                break;
-                            }
-                        }
-                    ?>
-                    <input type="number" name="quantity[<?= htmlspecialchars($itemId); ?>]" min="0" value="<?= htmlspecialchars($quantity); ?>">
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-    <button type="submit">Submit</button>
+    <?php endforeach; ?>
+</table>
+
+<form action="/warehouse/supervisors/verify">
+    <button>Checkout</button>
 </form>
