@@ -29,6 +29,7 @@
                 <th>
                     <a href="?search=<?= $search ?>&sort=extension&order=<?= $newOrder ?>">Extension</a>
                 </th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
                     <td><?= htmlspecialchars($phone['title'] ?? '') ?></td>
                     <td><?= htmlspecialchars($phone['section'] ?? '') ?></td>
                     <td><?= htmlspecialchars($phone['extension'] ?? '') ?></td>
+                    <td><a href="/phones/one/<?= htmlspecialchars($phone['id']) ?>">Details</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
