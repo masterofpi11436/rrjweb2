@@ -7,6 +7,7 @@ namespace App\Controllers\Warehouse;
 
 use App\Models\Warehouse\User;
 use App\Models\Warehouse\Item;
+use App\Models\Warehouse\Order;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -17,7 +18,7 @@ use Framework\Response;
  */
 class Users extends Controller
 {
-    public function __construct(private User $userModel, private Item $itemModel){}
+    public function __construct(private User $userModel, private Item $itemModel, private Order $orderModel){}
 
     // Supervisor name section seelction
     public function info(): Response
@@ -102,6 +103,32 @@ class Users extends Controller
         $this->response->appendBody($this->viewer->render("Warehouse/Users/verify.php", ['supervisor' => $supervisor,
                                                                                          'section' => $section,
                                                                                          'items' => $items]));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
+    public function submit(): Response
+    {
+        try {
+            $this->orderModel->submitUserOrder();
+            return $this->redirect('/warehouse/users/success');
+        } catch (Exception $e) {
+            $this->response->setBody('Failed to submit order: ' . $e->getMessage());
+            return $this->response;
+        }
+    }
+
+    public function success(): Response
+    {
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Next Steps",
+                                                                                "heading" => "Next Steps"]));
+
+        // Render the all items view
+        $this->response->appendBody($this->viewer->render("Warehouse/Users/success.php"));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));

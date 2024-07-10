@@ -19,7 +19,7 @@
         <button type="submit">Go Back</button>
     </form>
 
-    <form action="/submit_request" method="post">
+    <form action="/warehouse/users/submit" method="post">
         <button type="submit">Submit Request</button>
     </form>
 <?php else: ?>
