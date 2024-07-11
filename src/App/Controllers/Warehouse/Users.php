@@ -12,6 +12,7 @@ use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
 use Framework\Response;
+use Exception;
 
 /**
  * Controller for handling warehouse user-related actions.

@@ -194,7 +194,8 @@ $router->add("/warehouse/supervisors/approvedeny", ["controller" => "supervisors
 $router->add("/warehouse/supervisors/section", ["controller" => "supervisors", "action" => "section", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/items", ["controller" => "supervisors", "action" => "items", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/verify", ["controller" => "supervisors", "action" => "verify", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
-
+$router->add("/warehouse/supervisors/submit", ["controller" => "supervisors", "action" => "submit", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/success", ["controller" => "supervisors", "action" => "success", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 
 
 // Blanket Route

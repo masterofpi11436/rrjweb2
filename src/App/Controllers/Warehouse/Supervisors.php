@@ -7,17 +7,19 @@ namespace App\Controllers\Warehouse;
 
 use App\Models\Warehouse\User;
 use App\Models\Warehouse\Item;
+use App\Models\Warehouse\Order;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
 use Framework\Response;
+use Exception;
 
 /**
  * Controller for handling warehouse user-related actions.
  */
 class Supervisors extends Controller
 {
-    public function __construct(private User $userModel, private Item $itemModel){}
+    public function __construct(private User $userModel, private Item $itemModel, private Order $orderModel){}
 
     // Supervisor name section seelction
     public function dashboard(): Response
@@ -109,6 +111,32 @@ class Supervisors extends Controller
 
         // Render the verification view
         $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/verify.php", ['section' => $section, 'items' => $items]));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
+    public function submit(): Response
+    {
+        try {
+            $this->orderModel->submitSupervisorOrder();
+            return $this->redirect('/warehouse/supervisors/success');
+        } catch (Exception $e) {
+            $this->response->setBody('Failed to submit order: ' . $e->getMessage());
+            return $this->response;
+        }
+    }
+
+    public function success(): Response
+    {
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Next Steps",
+                                                                                "heading" => "Next Steps"]));
+
+        // Render the all items view
+        $this->response->appendBody($this->viewer->render("Warehouse/Users/success.php"));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
