@@ -123,7 +123,7 @@ class Supervisors extends Controller
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "View Requests",
                                                                                "heading" => "Approve or Deny Requests"]));
 
-        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/approve_deny.php", ["sections" => $sections]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/approve_deny.php"));
 
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
