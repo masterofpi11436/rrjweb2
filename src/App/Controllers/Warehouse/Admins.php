@@ -193,6 +193,15 @@ class Admins extends Controller
         $admin["email"] = $this->request->post["email"];
         $admin["role_id"] = $this->request->post["role_id"];
 
+        // Check if password field is not empty before hashing and updating
+        if (!empty($this->request->post["password"])) {
+            $admin["password"] = $this->request->post["password"];
+            $admin['password'] = password_hash($admin['password'], PASSWORD_DEFAULT);
+        } else {
+            // Unset password key to prevent updating it
+            unset($admin['password']);
+        }
+        
         // Attempt to update the admin record
         if ($this->model->updateRecord($id, $admin)) {
 
