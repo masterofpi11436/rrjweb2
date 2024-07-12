@@ -181,12 +181,19 @@ $router->add("/warehouse/sections/destroy/{id:\d+}", ["controller" => "sections"
 
 // *************************************************************************************************************************************************//
 
+// Warehouse Supervisor pages
+$router->add("/warehouse/warehousesupervisors/dashboard", ["controller" => "warehousesupervisors", "action" => "dashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
+
+// *************************************************************************************************************************************************//
+
 // WSR User Pages
 $router->add("/warehouse/users/section", ["controller" => "users", "action" => "info", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/users/items", ["controller" => "users", "action" => "items", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/users/verify", ["controller" => "users", "action" => "verify", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/users/submit", ["controller" => "users", "action" => "submit", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/users/success", ["controller" => "users", "action" => "success", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+
+// *************************************************************************************************************************************************//
 
 // WSR Supervisor Pages
 $router->add("/warehouse/supervisors/dashboard", ["controller" => "supervisors", "action" => "dashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
