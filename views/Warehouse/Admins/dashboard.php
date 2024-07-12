@@ -13,3 +13,7 @@
 <form action="/warehouse/sections/all">
     <button>Warehouse Sections</button>
 </form>
+
+<form action="/warehouse/admins/history">
+    <button>History</button>
+</form>

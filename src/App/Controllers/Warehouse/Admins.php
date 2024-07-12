@@ -253,4 +253,26 @@ class Admins extends Controller
 
         return $this->redirect("/warehouse/admins/all");
     }
+
+    /*********************************************************************************************************************************** */
+    // Order Request Pages
+
+
+
+    /*********************************************************************************************************************************** */
+    // History Pages
+
+    // Main History Page
+    public function history(): Response
+    {
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "History", "heading" => "History"]));
+
+        // Render the new admin form
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/main.php"));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
 }

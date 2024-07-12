@@ -40,7 +40,7 @@ class Admin extends Model
 
         $sql = "SELECT user.*, role.name as role_name FROM user
                 LEFT JOIN role ON user.role_id = role.id
-                WHERE (first_name LIKE :search OR last_name LIKE :search OR email LIKE :search) AND (role_id = 8 || role_id = 9 || role_id = 10)";
+                WHERE (first_name LIKE :search OR last_name LIKE :search OR email LIKE :search) AND (role_id = 8 || role_id = 9 || role_id = 10 || role_id = 11)";
 
         $stmt = $conn->prepare($sql);
 
@@ -58,7 +58,7 @@ class Admin extends Model
 
         $sql = "SELECT user.*, role.name as role_name FROM user
                 LEFT JOIN role ON user.role_id = role.id
-                WHERE role_id = 8 || role_id = 9 || role_id = 10";
+                WHERE role_id = 8 || role_id = 9 || role_id = 10 || role_id = 11";
         
         $stmt = $conn->prepare($sql);
         $stmt->execute();
@@ -73,7 +73,7 @@ class Admin extends Model
 
         $sql = "SELECT user.*, role.name as role_name FROM user
                 LEFT JOIN role ON user.role_id = role.id
-                WHERE role_id = 8 || role_id = 9 || role_id = 10";
+                WHERE role_id = 8 || role_id = 9 || role_id = 10 || role_id = 11";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(":userId", $adminId, PDO::PARAM_INT);
         $stmt->execute();

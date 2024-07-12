@@ -3,7 +3,7 @@
 </form>
 
 <form action="/warehouse/admins/edit/<?= htmlspecialchars($admin['id']) ?>">
-    <button>Edit Contractor</button>
+    <button>Edit User</button>
 </form>
 
 <table>

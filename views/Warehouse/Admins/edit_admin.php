@@ -3,7 +3,7 @@
 </form>
 
 <form action="/warehouse/admins/delete/<?= htmlspecialchars($admin['id']) ?>">
-    <button>Delete Contractor Admin</button>
+    <button>Delete User</button>
 </form>
 
 <form method="post" action="/warehouse/admins/update/<?= htmlspecialchars($admin['id']) ?>">
