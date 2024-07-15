@@ -87,4 +87,34 @@ class Order extends Model
             throw new Exception("Incomplete order data.");
         }
     }
+
+    // Get Orders with the last name of the user and supervisor as well as the section name
+    public function getAllPendingOrders()
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    o.id AS order_id,
+                    u1.last_name AS user_last_name,
+                    u2.last_name AS supervisor_last_name,
+                    s.name AS section_name,
+                    o.items,
+                    o.status,
+                    o.created_at,
+                    o.approved_at,
+                    o.approved_by
+                FROM 
+                    orders o
+                JOIN 
+                    section s ON o.section_id = s.id
+                JOIN 
+                    user u1 ON o.user_id = u1.id
+                JOIN 
+                    user u2 ON o.supervisor_id = u2.id;";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
