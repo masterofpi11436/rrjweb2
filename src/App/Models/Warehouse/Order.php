@@ -107,8 +107,8 @@ class Order extends Model
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
                 JOIN user u2 ON o.supervisor_id = u2.id
-                ORDER BY o.created_at DESC
-                WHERE status = 'pending warehouse approval';";
+                WHERE status = 'pending warehouse approval'
+                ORDER BY o.created_at DESC;";
 
         $stmt = $conn->prepare($sql);
         $stmt->execute();
