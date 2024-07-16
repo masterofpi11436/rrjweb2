@@ -28,7 +28,7 @@ class Order extends Model
 
                 $itemsJson = json_encode($items);
 
-                $stmt = $conn->prepare("INSERT INTO `{$this->table}` (user_id, supervisor_id, section_id, items, status) VALUES (:user_id, :supervisor_id, :section_id, :items, 'pending')");
+                $stmt = $conn->prepare("INSERT INTO `{$this->table}` (user_id, supervisor_id, section_id, items, status) VALUES (:user_id, :supervisor_id, :section_id, :items, 'pending supervisor approval')");
 
                 $stmt->bindValue(':user_id', $userId, PDO::PARAM_INT);
                 $stmt->bindValue(':supervisor_id', $supervisorId, PDO::PARAM_INT);
@@ -65,7 +65,7 @@ class Order extends Model
 
                 $itemsJson = json_encode($items);
 
-                $stmt = $conn->prepare("INSERT INTO `{$this->table}` (user_id, supervisor_id, section_id, items, status) VALUES (:user_id, :supervisor_id, :section_id, :items, 'pending')");
+                $stmt = $conn->prepare("INSERT INTO `{$this->table}` (user_id, supervisor_id, section_id, items, status) VALUES (:user_id, :supervisor_id, :section_id, :items, 'pending warehouse approval')");
 
                 $stmt->bindValue(':user_id', $supervisorId, PDO::PARAM_INT); // Both user_id and supervisor_id are the supervisor's ID
                 $stmt->bindValue(':supervisor_id', $supervisorId, PDO::PARAM_INT);
@@ -94,7 +94,7 @@ class Order extends Model
         $conn = $this->db->getConn();
 
         $sql = "SELECT 
-                    o.id AS order_id,
+                    o.id,
                     u1.last_name AS user_last_name,
                     u2.last_name AS supervisor_last_name,
                     s.name AS section_name,
@@ -106,11 +106,47 @@ class Order extends Model
                 FROM orders o
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
-                JOIN user u2 ON o.supervisor_id = u2.id;";
+                JOIN user u2 ON o.supervisor_id = u2.id
+                ORDER BY o.created_at DESC
+                WHERE status = 'pending warehouse approval';";
 
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Get the order by the ID
+    public function getOrderByID(string $id): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    o.id,
+                    u1.last_name AS user_last_name,
+                    u2.last_name AS supervisor_last_name,
+                    s.name AS section_name,
+                    o.items,
+                    o.status,
+                    o.created_at,
+                    o.approved_at,
+                    o.approved_by
+                FROM orders o
+                JOIN section s ON o.section_id = s.id
+                JOIN user u1 ON o.user_id = u1.id
+                JOIN user u2 ON o.supervisor_id = u2.id
+                WHERE o.id = :id";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($data) {
+            $data['items'] = json_decode($data['items'], true);
+        } else {
+            throw new Exception("Order not found.");
+        }
+
+        return $data;
     }
 }

@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Controllers\Warehouse;
 
 use App\Models\Warehouse\Admin;
+use App\Models\Warehouse\Order;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -21,15 +22,17 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model){}
+    public function __construct(private Admin $model, private Order $orderModel){}
 
     public function dashboard(): Response
     {
+        $orders = $this->orderModel->getAllPendingOrders();
+
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Dashboard", "heading" => "WSR Admin Dashboard"]));
 
         // Render the dashboard console
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/dashboard.php"));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/dashboard.php", ["orders" => $orders]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
@@ -257,6 +260,42 @@ class Admins extends Controller
     /*********************************************************************************************************************************** */
     // Order Request Pages
 
+    /**
+     * Retrieves the admin by ID.
+     *
+     * @param string $id The admin ID
+     * @return array The admin data
+     * @throws PageNotFoundException If the admin is not found
+     */
+    private function getOrderID(string $id): array
+    {
+        // Assign this model's id to the $admin variable to the 
+        $admin = $this->orderModel->getOne($id);
+
+        // Verify if the admin was found
+        if ($admin === false) {
+
+            throw new PageNotFoundException("No Information Found");
+        }
+
+        return $admin;
+    }
+
+    // One Order
+    public function viewOrder(string $id): Response
+    {
+        $order = $this->orderModel->getOrderByID($id);
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "One Order", "heading" => "One Order"]));
+
+        // Render the new admin form
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/approve.php", ["order" => $order]));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
 
 
     /*********************************************************************************************************************************** */
