@@ -103,14 +103,10 @@ class Order extends Model
                     o.created_at,
                     o.approved_at,
                     o.approved_by
-                FROM 
-                    orders o
-                JOIN 
-                    section s ON o.section_id = s.id
-                JOIN 
-                    user u1 ON o.user_id = u1.id
-                JOIN 
-                    user u2 ON o.supervisor_id = u2.id;";
+                FROM orders o
+                JOIN section s ON o.section_id = s.id
+                JOIN user u1 ON o.user_id = u1.id
+                JOIN user u2 ON o.supervisor_id = u2.id;";
 
         $stmt = $conn->prepare($sql);
         $stmt->execute();
