@@ -7,6 +7,7 @@ namespace App\Controllers\Warehouse;
 
 use App\Models\Warehouse\Admin;
 use App\Models\Warehouse\Order;
+use App\Models\Warehouse\Section;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -22,11 +23,11 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model, private Order $orderModel){}
+    public function __construct(private Admin $model, private Order $orderModel, private Section $sectionModel){}
 
     public function dashboard(): Response
     {
-        $orders = $this->orderModel->getAllPendingOrders();
+        $orders = $this->orderModel->getAllWarehousePendingOrders();
 
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Dashboard", "heading" => "WSR Admin Dashboard"]));
@@ -289,12 +290,22 @@ class Admins extends Controller
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "One Order", "heading" => "One Order"]));
 
         // Render the new admin form
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/approve.php", ["order" => $order]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/approve_deny.php", ["order" => $order]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;
+    }
+
+    // Order is approved
+    public function approve (string $id): Response
+    {
+        $order = $this->orderModel->getOne($id);
+
+        $this->orderModel->approveOrder($id);
+
+        return $this->redirect("/warehouse/dashboard");
     }
 
 
@@ -304,13 +315,34 @@ class Admins extends Controller
     // Main History Page
     public function history(): Response
     {
+        $sections = $this->sectionModel->getAll();
+
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "History", "heading" => "History"]));
 
         // Render the new admin form
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/main.php"));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/main.php", ["sections" => $sections]));
 
         // Render the footer
-        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+
+        return $this->response;
+    }
+
+    public function section(string $id): Response
+    {
+        $section = $this->sectionModel->getOne($id);
+
+        if (!$section) {
+            throw new PageNotFoundException("Section not found.");
+        }
+
+        $orders = $this->orderModel->getOrdersBySectionAndIsApproved((int)$id, 'approved');
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Section History", "heading" => "Section History"]));
+
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/section.php", ["section" => $section, "orders" => $orders]));
+
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
 
         return $this->response;
     }

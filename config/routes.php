@@ -145,9 +145,12 @@ $router->add("/warehouse/admins/destroy/{id:\d+}", ["controller" => "admins", "a
 
 // Approve/Deny Page
 $router->add("/warehouse/managers/one/{id:\d+}", ["controller" => "admins", "action" => "viewOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/approve/{id:\d+}", ["controller" => "admins", "action" => "approve", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/deny/{id:\d+}", ["controller" => "admins", "action" => "deny", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // History Pages
 $router->add("/warehouse/admins/history", ["controller" => "admins", "action" => "history", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/admins/history/{action}/{id:\d+}", ["controller" => "admins", "action" => "section", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // *************************************************************************************************************************************************//
 

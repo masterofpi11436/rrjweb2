@@ -20,31 +20,22 @@
 
 <h1>Current Requests</h1>
 
+<?php if (!empty($orders)): ?>
 <table>
     <thead>
         <tr>
-            <th>User</th>
             <th>Supervisor</th>
             <th>Section</th>
-            <th>Items</th>
-            <th>Status</th>
             <th>Date Created</th>
-            <th>Date Approved</th>
-            <th>Approved By</th>
             <th>View Order</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach($orders as $order): ?>
             <tr>
-                <td><?= $order['user_last_name'] ?></td>
                 <td><?= $order['supervisor_last_name'] ?></td>
                 <td><?= $order['section_name'] ?></td>
-                <td><?= $order['items'] ?></td>
-                <td><?= $order['status'] ?></td>
                 <td><?= $order['created_at'] ?></td>
-                <td><?= $order['approved_at'] ?></td>
-                <td><?= $order['approved_by'] ?></td>
                 <td>
                     <form action="/warehouse/managers/one/<?= $order['id'] ?>">
                         <button>View</button>
@@ -54,3 +45,6 @@
         <?php endforeach; ?>
     </tbody>
 </table>
+<?php else: ?>
+    <p>All caught up on orders.</p>
+<?php endif; ?>

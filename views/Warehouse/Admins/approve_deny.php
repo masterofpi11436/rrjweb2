@@ -3,8 +3,14 @@
 </form>
 
 <button>Print</button><br>
-<button>Approve</button>
-<button>Deny</button>
+<form action="/warehouse/managers/approve/<?= $order['id'] ?>">
+    <button>Approve</button>
+</form>
+
+<form action="/warehouse/managers/deny">
+    <button>Deny</button>
+</form>
+
 
 <h2>Section: <?php echo htmlspecialchars($order['section_name']); ?></h2>
 <h2>Supervisor: <?php echo htmlspecialchars($order['supervisor_last_name']); ?></h2>

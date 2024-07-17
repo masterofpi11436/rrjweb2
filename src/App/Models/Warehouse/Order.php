@@ -89,7 +89,7 @@ class Order extends Model
     }
 
     // Get Orders with the last name of the user and supervisor as well as the section name
-    public function getAllPendingOrders()
+    public function getAllWarehousePendingOrders(): array
     {
         $conn = $this->db->getConn();
 
@@ -108,6 +108,34 @@ class Order extends Model
                 JOIN user u1 ON o.user_id = u1.id
                 JOIN user u2 ON o.supervisor_id = u2.id
                 WHERE status = 'pending warehouse approval'
+                ORDER BY o.created_at DESC;";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Orders that have already been approved
+    public function orderBySectionID(string $id)
+    {
+        $conn = $this->db->getConn();
+
+        $sql =  "SELECT 
+                    o.id,
+                    u1.last_name AS user_last_name,
+                    u2.last_name AS supervisor_last_name,
+                    s.name AS section_name,
+                    o.items,
+                    o.status,
+                    o.created_at,
+                    o.approved_at,
+                    o.approved_by
+                FROM orders o
+                JOIN section s ON o.section_id = s.id
+                JOIN user u1 ON o.user_id = u1.id
+                JOIN user u2 ON o.supervisor_id = u2.id
+                WHERE s.id = $id
                 ORDER BY o.created_at DESC;";
 
         $stmt = $conn->prepare($sql);
@@ -148,5 +176,66 @@ class Order extends Model
         }
 
         return $data;
+    }
+
+    // Set the status of order to approved
+    public function approveOrder(string $id)
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "UPDATE orders
+                SET status = 'approved'
+                WHERE id = :id";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        return $stmt->execute();
+    }
+
+    // Set the status of order to denied
+    public function denyOrder(string $id)
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "UPDATE orders
+                SET status = 'denied'
+                WHERE id = :id";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        return $stmt->execute();
+    }
+
+    public function getOrdersBySectionAndIsApproved(int $sectionId, string $status): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    o.id,
+                    u1.last_name AS user_last_name,
+                    u2.last_name AS supervisor_last_name,
+                    s.name AS section_name,
+                    o.items,
+                    o.status,
+                    o.created_at,
+                    o.approved_at,
+                    o.approved_by
+                FROM orders o
+                JOIN section s ON o.section_id = s.id
+                JOIN user u1 ON o.user_id = u1.id
+                JOIN user u2 ON o.supervisor_id = u2.id
+                WHERE o.section_id = :section_id AND o.status = :status
+                ORDER BY o.created_at DESC;";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':section_id', $sectionId, PDO::PARAM_INT);
+        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
