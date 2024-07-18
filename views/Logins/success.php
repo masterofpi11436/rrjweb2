@@ -1,2 +1,2 @@
-<h2>An email with a link has been sent to you to reset your password. Please check your email and follow the instructions</h2>
-<h3>You may close this page.</h3>
+<h1>Please check your email, a link has been sent for you to reset your password</h1>
+<h2>Please close this window!</h2>

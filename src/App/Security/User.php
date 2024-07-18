@@ -10,6 +10,8 @@ use PDO;
 
 class User extends Model
 {
+    protected array $errors = [];
+
     // Validate login data
     public function validateLogin(array $data): bool
     {
@@ -91,5 +93,37 @@ class User extends Model
         $stmt->bindValue(":password", $hashedPassword, PDO::PARAM_STR);
         $stmt->bindValue(":id", $userId, PDO::PARAM_INT);
         $stmt->execute();
+    }
+
+    public function validateForm(array $data): void
+    {
+        $this->errors = []; // Reset errors
+
+        if (empty($data["new_password"])) {
+            $this->addError("new_password", "New password is required.");
+        }
+
+        if (empty($data["confirm_password"])) {
+            $this->addError("confirm_password", "Confirm password is required.");
+        }
+
+        if (!empty($data["new_password"]) && !empty($data["confirm_password"]) && $data["new_password"] !== $data["confirm_password"]) {
+            $this->addError("confirm_password", "Passwords do not match.");
+        }
+    }
+
+    public function addError(string $field, string $message): void
+    {
+        $this->errors[$field] = $message;
+    }
+
+    public function hasErrors(): bool
+    {
+        return !empty($this->errors);
+    }
+
+    public function getErrors(): array
+    {
+        return $this->errors;
     }
 }
