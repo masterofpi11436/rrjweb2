@@ -111,7 +111,6 @@ class Users extends Controller
         return $this->response;
     }
 
-    // Verify user and submit an email to them
     public function verifyUser(): Response
     {
         $email = $this->request->post["email"] ?? '';
@@ -123,22 +122,18 @@ class Users extends Controller
             $user = $this->model->findByEmail($email);
 
             if ($user) {
+                $token = bin2hex(random_bytes(50));
+                $expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-                //create a token here
+                $this->model->storeResetToken($user['id'], $token, $expiry);
 
-                // Reset page sent as a link
-                $resetLink = "http://localhost/new";
-
-                // Save the token to the database (not shown here)
-                // ...
-
-                // Send the email using the Mailer class
+                $resetLink = "http://localhost/reset-password?token=$token";
                 $sendResult = $this->mailer->sendNewPass($email, $resetLink);
 
                 if ($sendResult === true) {
                     return $this->redirect("/success");
                 } else {
-                    $errorMessage = $sendResult; // Display the error message from the Mailer
+                    $errorMessage = $sendResult;
                 }
             } else {
                 $errorMessage = "No account is found with that email, please verify your email is correct";
@@ -167,11 +162,48 @@ class Users extends Controller
     // Page to allow the user to reset their password
     public function newPass(): Response
     {
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
-
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Password"]));
         $this->response->appendBody($this->viewer->render("Logins/newpass.php"));
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
 
-        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+        return $this->response;
+    }
+
+    public function resetPassword(): Response
+    {
+        $token = $this->request->post["token"] ?? '';
+        $newPassword = $this->request->post["new_password"] ?? '';
+        $confirmPassword = $this->request->post["confirm_password"] ?? '';
+        $errorMessage = "";
+
+        if (empty($token) || empty($newPassword) || empty($confirmPassword)) {
+            $errorMessage = "All fields are required.";
+        } elseif ($newPassword !== $confirmPassword) {
+            $errorMessage = "Passwords do not match.";
+        } else {
+            $user = $this->model->findByToken($token);
+
+            if ($user && $user['token_expiry'] >= date('Y-m-d H:i:s')) {
+                $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+                $this->model->updatePassword($user['id'], $hashedPassword);
+                return $this->redirect("/login");
+            } else {
+                $errorMessage = "Invalid or expired token.";
+            }
+        }
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Password"]));
+        $this->response->appendBody($this->viewer->render("Logins/newpass.php", ["errorMessage" => $errorMessage]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+
+        return $this->response;
+    }
+
+    public function backToLogin(): Response
+    {
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Password"]));
+        $this->response->appendBody($this->viewer->render("Logins/backToLogin.php"));
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
 
         return $this->response;
     }

@@ -14,6 +14,8 @@ $router->add('/forgot', ["controller" => "users", "action" => "forgotPassword"])
 $router->add('/verify', ["controller" => "users", "action" => "verifyUser"]);
 $router->add('/success', ["controller" => "users", "action" => "success"]);
 $router->add('/new', ["controller" => "users", "action" => "newPass"]);
+$router->add('/reset-password', ["controller" => "users", "action" => "resetPassword"]);
+
 
 // *************************************************************************************************************************************************//
 

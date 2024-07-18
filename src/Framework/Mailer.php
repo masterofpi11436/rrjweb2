@@ -38,7 +38,7 @@ class Mailer
      */
     public function sendNewPass($to, $resetLink) {
         try {
-            $from = 'mark.tuggle01@gmail.com'; // Specific sender's email address
+            $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
             $fromName = 'Password Reset Service'; // Sender's name
             $subject = 'Password Reset Request';
             $body = "Hello,<br><br>Please click the following link to reset your password:<br><a href=\"$resetLink\">Reset Password</a><br><br>If you did not request a password reset,

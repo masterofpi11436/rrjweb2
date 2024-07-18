@@ -1,9 +1,6 @@
-<h2>Page to Reset the user's password</h2>
-
-<form action="">
-    <label for="password">Password</label>
-    <input type="text" id="password" name="password" value="password">
-
-    <label for="password2">Verify Password</label>
-    <input type="text" id="password2" name="password2" value="password2">
+<form action="/reset-password" method="post">
+    <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token']); ?>">
+    <input type="password" name="new_password" placeholder="New Password" required>
+    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+    <button type="submit">Reset Password</button>
 </form>
