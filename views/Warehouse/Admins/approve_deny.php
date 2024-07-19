@@ -7,7 +7,7 @@
     <button>Approve</button>
 </form>
 
-<form action="/warehouse/managers/deny">
+<form action="/warehouse/managers/deny/<?= $order['id'] ?>">
     <button>Deny</button>
 </form>
 

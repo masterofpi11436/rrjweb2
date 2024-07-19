@@ -1,3 +1,8 @@
+function goBack() {
+    console.log('goBack function called');
+    window.history.back();
+}
+
 function parseInput(event) {
     const input = document.getElementById('paste-input').value;
     const pattern = /^(\d+)\s+([a-zA-Z]+),\s+([a-zA-Z]+)(?:\s+([a-zA-Z]+))?$/;

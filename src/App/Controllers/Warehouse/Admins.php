@@ -261,27 +261,6 @@ class Admins extends Controller
     /*********************************************************************************************************************************** */
     // Order Request Pages
 
-    /**
-     * Retrieves the admin by ID.
-     *
-     * @param string $id The admin ID
-     * @return array The admin data
-     * @throws PageNotFoundException If the admin is not found
-     */
-    private function getOrderID(string $id): array
-    {
-        // Assign this model's id to the $admin variable to the 
-        $admin = $this->orderModel->getOne($id);
-
-        // Verify if the admin was found
-        if ($admin === false) {
-
-            throw new PageNotFoundException("No Information Found");
-        }
-
-        return $admin;
-    }
-
     // One Order
     public function viewOrder(string $id): Response
     {
@@ -299,11 +278,21 @@ class Admins extends Controller
     }
 
     // Order is approved
-    public function approve (string $id): Response
+    public function approveOrder (string $id): Response
     {
         $order = $this->orderModel->getOne($id);
 
         $this->orderModel->approveOrder($id);
+
+        return $this->redirect("/warehouse/dashboard");
+    }
+
+    // Order is approved
+    public function denyOrder (string $id): Response
+    {
+        $order = $this->orderModel->getOne($id);
+
+        $this->orderModel->denyOrder($id);
 
         return $this->redirect("/warehouse/dashboard");
     }

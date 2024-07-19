@@ -13,6 +13,15 @@
         <li><strong>Refresh the page.</strong> If that does not work, proceed to step 2.</li>
         <li>Check the web address and make sure it is correct. If that does not work, proceed to step 3.</li>
         <li>Call MIU at extension 6035 or 6024.</li>
-    </ol>
+    </ol><br><br>
+    <div>
+        <?php
+        // Get the previous URL from the HTTP referer
+        $previousUrl = $_SERVER['HTTP_REFERER'] ?? '/login';
+        ?>
+        <form action="<?= htmlspecialchars($previousUrl) ?>">
+            <button>Go Back</button>
+        </form>
+    </div>
 </body>
 </html>

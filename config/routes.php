@@ -151,12 +151,18 @@ $router->add("/warehouse/admins/destroy/{id:\d+}", ["controller" => "admins", "a
 
 // Approve/Deny Page
 $router->add("/warehouse/managers/one/{id:\d+}", ["controller" => "admins", "action" => "viewOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
-$router->add("/warehouse/managers/approve/{id:\d+}", ["controller" => "admins", "action" => "approve", "middleware" => "auth", "namespace" => "Warehouse"]);
-$router->add("/warehouse/managers/deny/{id:\d+}", ["controller" => "admins", "action" => "deny", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/approve/{id:\d+}", ["controller" => "admins", "action" => "approveOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/deny/{id:\d+}", ["controller" => "admins", "action" => "denyOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // History Pages
 $router->add("/warehouse/admins/history", ["controller" => "admins", "action" => "history", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/admins/history/{action}/{id:\d+}", ["controller" => "admins", "action" => "section", "middleware" => "auth", "namespace" => "Warehouse"]);
+
+// *************************************************************************************************************************************************//
+
+// Warehouse Supervisor pages
+$router->add("/warehouse/warehousesupervisors/dashboard", ["controller" => "warehousesupervisors", "action" => "dashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/warehousesupervisors/one/{id:\d+}", ["controller" => "warehousesupervisors", "action" => "dashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // *************************************************************************************************************************************************//
 
@@ -193,11 +199,6 @@ $router->add("/warehouse/sections/edit/{id:\d+}", ["controller" => "sections", "
 $router->add("/warehouse/sections/update/{id:\d+}", ["controller" => "sections", "action" => "updateSection", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
 $router->add("/warehouse/sections/delete/{id:\d+}", ["controller" => "sections", "action" => "deleteSection", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/sections/destroy/{id:\d+}", ["controller" => "sections", "action" => "destroySection", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
-
-// *************************************************************************************************************************************************//
-
-// Warehouse Supervisor pages
-$router->add("/warehouse/warehousesupervisors/dashboard", ["controller" => "warehousesupervisors", "action" => "dashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // *************************************************************************************************************************************************//
 

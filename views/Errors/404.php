@@ -9,11 +9,15 @@
 <body>
     <h1>ERROR 404</h1>
     <h1>The page you are looking for does not exist.</h1>
-    <a href="/login">Login Page</a>
-	<div>
-		<form action="/phones/directory">
-			<button>Back</button>
-		</form>
-	</div>	
+    <a href="/login">Login Page</a><br><br>
+    <div>
+        <?php
+        // Get the previous URL from the HTTP referer
+        $previousUrl = $_SERVER['HTTP_REFERER'] ?? '/login';
+        ?>
+        <form action="<?= htmlspecialchars($previousUrl) ?>">
+            <button>Go Back</button>
+        </form>
+    </div>
 </body>
 </html>
