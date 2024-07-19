@@ -159,72 +159,10 @@ class Users extends Controller
         return $this->response;
     }
 
-    // Page to allow the user to reset their password
-    public function newPass(): Response
-    {
-        $token = $_GET['token'] ?? '';
-
-        // Debugging output to check the received token
-        var_dump($token);
-
-        if (empty($token)) {
-            $errorMessage = "Token is required.";
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Password"]));
-            $this->response->appendBody($this->viewer->render("Logins/newpass.php", ["errorMessage" => $errorMessage]));
-            $this->response->appendBody($this->viewer->render("shared/footer.php"));
-        } else {
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Password"]));
-            $this->response->appendBody($this->viewer->render("Logins/newpass.php", ["token" => $token]));
-            $this->response->appendBody($this->viewer->render("shared/footer.php"));
-        }
-
-        return $this->response;
-    }
-
-
+    // Password reset pages
     public function resetPassword(): Response
     {
-        $token = $this->request->post["token"] ?? '';
-        $newPassword = $this->request->post["new_password"] ?? '';
-        $confirmPassword = $this->request->post["confirm_password"] ?? '';
-        $errorMessage = "";
-    
-        // Debugging output to check the received token
-        var_dump($token);
-    
-        // Validate form data
-        $this->model->validateForm([
-            'new_password' => $newPassword,
-            'confirm_password' => $confirmPassword
-        ]);
-    
-        if ($this->model->hasErrors()) {
-            $errors = $this->model->getErrors();
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Password"]));
-            $this->response->appendBody($this->viewer->render("Logins/newpass.php", ["errorMessage" => $errors, "token" => $token]));
-            $this->response->appendBody($this->viewer->render("shared/footer.php"));
-    
-            return $this->response;
-        }
-    
-        $user = $this->model->findByToken($token);
-    
-        // Debugging output to check the retrieved user and token expiry
-        var_dump($user, $user['token_expiry'] ?? null, date('Y-m-d H:i:s'));
-    
-        if ($user && $user['token_expiry'] >= date('Y-m-d H:i:s')) {
-            $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-            $this->model->updatePassword($user['id'], $hashedPassword);
-            return $this->redirect("/login");
-        } else {
-            $errorMessage = "Invalid or expired token.";
-        }
-    
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Password"]));
-        $this->response->appendBody($this->viewer->render("Logins/newpass.php", ["errorMessage" => $errorMessage, "token" => $token]));
-        $this->response->appendBody($this->viewer->render("shared/footer.php"));
-    
-        return $this->response;
+        
     }
     
 }

@@ -8,3 +8,7 @@
 <?php if (!empty($errorMessage)): ?>
     <p><?php echo htmlspecialchars($errorMessage); ?></p>
 <?php endif; ?>
+
+<form action="/login">
+    <button>Cancel</button>
+</form>

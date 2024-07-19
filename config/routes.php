@@ -6,16 +6,19 @@ $router = new Framework\Router;
 // Routing table
 // $router->add("/", ["controller" => "home", "action" => "homepage"]);
 
-// Log in
+// Login authentication and reset pages
 $router->add("/login", ["controller" => "users", "action" => "login"]);
 $router->add("/login/auth", ["controller" => "users", "action" => "auth", "method" => "post"]);
-$router->add('/logout', ["controller" => "users", "action" => "logout"]);
+
+// Reset Pages
 $router->add('/forgot', ["controller" => "users", "action" => "forgotPassword"]);
 $router->add('/verify', ["controller" => "users", "action" => "verifyUser"]);
 $router->add('/success', ["controller" => "users", "action" => "success"]);
-$router->add('/new', ["controller" => "users", "action" => "newPass"]);
-$router->add('/reset-password', ["controller" => "users", "action" => "resetPassword"]);
 
+// New Password Pages
+$router->add('/reset_password', ["controller" => "users", "action" => "resetPassword"]);
+
+$router->add('/logout', ["controller" => "users", "action" => "logout"]);
 
 // *************************************************************************************************************************************************//
 
