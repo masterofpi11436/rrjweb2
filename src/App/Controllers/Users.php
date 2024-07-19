@@ -10,6 +10,7 @@ use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
 use Framework\Response;
+use Framework\Request;
 use Framework\Mailer;
 
 /**
@@ -127,7 +128,7 @@ class Users extends Controller
 
                 $this->model->storeResetToken($user['id'], $token, $expiry);
 
-                $resetLink = "http://rrjweb2/reset-password?token=$token";
+                $resetLink = "http://localhost/reset_password?token=$token";
                 $sendResult = $this->mailer->sendNewPass($email, $resetLink);
 
                 if ($sendResult === true) {
@@ -162,7 +163,51 @@ class Users extends Controller
     // Password reset pages
     public function resetPassword(): Response
     {
-        
+        $token = $this->model->getToken();
+
+        $errorMessage = '';
+
+        if ((strtotime($token['token_expiry'])) <= time()) {
+            $errorMessage = "Time limit has expired for this reset, please go back and reset again";
+        }
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Your Password"]));
+        $this->response->appendBody($this->viewer->render("Logins/reset_password.php", ["token" => $token, "errorMessage" => $errorMessage]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
     }
-    
+
+
+    public function createNewPassword(): Response
+{
+    // Get the form data
+    $data = [
+        "new_password" => $this->request->post["new_password"],
+        "confirm_password" => $this->request->post["confirm_password"],
+        "reset_token" => $this->request->post["reset_token"]
+    ];
+
+    // Validate the form data
+    if ($data['new_password'] !== $data['confirm_password']) {
+        $errorMessage = "Passwords do not match.";
+    } else {
+        $errorMessage = '';
+
+        // Attempt to update the password
+        if ($this->model->updatePassword($data)) {
+            return $this->redirect("/login");
+        } else {
+            $errorMessage = "Failed to update the password.";
+        }
+    }
+
+    // Render the form again with error messages
+    $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Your Password"]));
+    $this->response->appendBody($this->viewer->render("Logins/reset_password.php", ["errorMessage" => $errorMessage, "user" => $data, "token" => ["reset_token" => $data["reset_token"]]]));
+    $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+    return $this->response;
+}
+
 }

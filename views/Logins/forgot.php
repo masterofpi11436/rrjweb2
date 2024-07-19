@@ -1,6 +1,6 @@
 <form action="/verify" method="post">
     <label for="email">Please enter your work email address:</label>
-    <input type="text" id="email" name="email" placeholder="Work Email">
+    <input type="email" id="email" name="email" placeholder="Work Email">
 
     <button>Submit</button>
 </form>

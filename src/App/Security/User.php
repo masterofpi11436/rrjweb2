@@ -68,5 +68,48 @@ class User extends Model
         $stmt->bindValue(":expiry", $expiry, PDO::PARAM_STR);
         $stmt->bindValue(":id", $userId, PDO::PARAM_INT);
         $stmt->execute();
-    }    
+    }
+
+    // Get the token from the query string
+    public function getToken()
+    {
+        $token = $_GET["token"];
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM user WHERE reset_token = :token";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":token", $token, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updatePassword($data)
+    {
+        $conn = $this->db->getConn();
+        $hashedPassword = password_hash($data['new_password'], PASSWORD_DEFAULT);
+
+        // Retrieve the user ID from the reset_token
+        $resetToken = $data['reset_token'];
+        $sql = "SELECT id FROM user WHERE reset_token = :reset_token";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":reset_token", $resetToken, PDO::PARAM_STR);
+        $stmt->execute();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            $userId = $user['id'];
+
+            $sql = "UPDATE user SET reset_token = null, token_expiry = null, password = :password WHERE id = :id";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindValue(":password", $hashedPassword, PDO::PARAM_STR);
+            $stmt->bindValue(":id", $userId, PDO::PARAM_INT);
+
+            return $stmt->execute();
+        } else {
+            return false;
+        }
+    }
+
 }
