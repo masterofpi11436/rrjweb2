@@ -136,7 +136,7 @@ class Supervisors extends Controller
                                                                                 "heading" => "Next Steps"]));
 
         // Render the all items view
-        $this->response->appendBody($this->viewer->render("Warehouse/Users/success.php"));
+        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/success.php"));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));

@@ -335,4 +335,20 @@ class Admins extends Controller
 
         return $this->response;
     }
+
+    /*********************************************************************************************************************************** */
+    // Denied Requests Page
+
+    public function denied(): Response
+    {
+        // $orders = $this->orderModel->getOrdersBySectionAndIsApproved((int)$id, 'denied');
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Denied Requests", "heading" => "Denied Requests"]));
+
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/denied.php"));
+
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+
+        return $this->response;
+    }
 }
