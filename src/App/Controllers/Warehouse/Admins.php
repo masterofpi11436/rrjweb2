@@ -280,18 +280,14 @@ class Admins extends Controller
     // Order is approved
     public function approveOrder (string $id): Response
     {
-        $order = $this->orderModel->getOne($id);
-
         $this->orderModel->approveOrder($id);
-
+        
         return $this->redirect("/warehouse/dashboard");
     }
 
     // Order is approved
     public function denyOrder (string $id): Response
     {
-        $order = $this->orderModel->getOne($id);
-
         $this->orderModel->denyOrder($id);
 
         return $this->redirect("/warehouse/dashboard");
@@ -341,11 +337,11 @@ class Admins extends Controller
 
     public function denied(): Response
     {
-        // $orders = $this->orderModel->getOrdersBySectionAndIsApproved((int)$id, 'denied');
+        $orders = $this->orderModel->getAllDeniedOrders();
 
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Denied Requests", "heading" => "Denied Requests"]));
 
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/denied.php"));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/denied.php", ["orders" => $orders]));
 
         $this->response->appendBody($this->viewer->render("shared/footer.php"));
 

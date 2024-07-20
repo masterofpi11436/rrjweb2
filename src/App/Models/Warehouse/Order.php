@@ -183,12 +183,20 @@ class Order extends Model
     {
         $conn = $this->db->getConn();
 
+        // ID of the Manager approving the order
+        $approvedBy = $_SESSION["user_id"];
+
+        // Time the order was approved
+        $approvedAt = date('Y-m-d H:i:s');
+
         $sql = "UPDATE orders
-                SET status = 'approved'
+                SET status = 'approved', approved_by = :approved_by, approved_at = :approved_at
                 WHERE id = :id";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':approved_by', $approvedBy, PDO::PARAM_INT);
+        $stmt->bindParam(':approved_at', $approvedAt, PDO::PARAM_STR);
         $stmt->execute();
 
         return $stmt->execute();
@@ -199,12 +207,20 @@ class Order extends Model
     {
         $conn = $this->db->getConn();
 
+        // ID of the Manager approving the order
+        $approvedBy = $_SESSION["user_id"];
+
+        // Time the order was approved
+        $approvedAt = date('Y-m-d H:i:s');
+
         $sql = "UPDATE orders
-                SET status = 'denied'
+                SET status = 'denied', approved_by = :approved_by, approved_at = :approved_at
                 WHERE id = :id";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':approved_by', $approvedBy, PDO::PARAM_INT);
+        $stmt->bindParam(':approved_at', $approvedAt, PDO::PARAM_STR);
         $stmt->execute();
 
         return $stmt->execute();
@@ -234,6 +250,36 @@ class Order extends Model
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':section_id', $sectionId, PDO::PARAM_INT);
         $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getAllDeniedOrders()
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                o.id,
+                u1.first_name AS user_first_name,
+                u1.last_name AS user_last_name,
+                u2.first_name AS supervisor_first_name,
+                u2.last_name AS supervisor_last_name,
+                s.name AS section_name,
+                o.items,
+                o.status,
+                o.created_at,
+                o.approved_at,
+                o.approved_by
+            FROM orders o
+            JOIN user u1 ON o.user_id = u1.id
+            JOIN user u2 ON o.supervisor_id = u2.id
+            JOIN section s ON o.section_id = s.id
+            WHERE o.status = 'denied'
+            ORDER BY o.created_at DESC;";
+
+        $stmt = $conn->prepare($sql);
+
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
