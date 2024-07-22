@@ -30,7 +30,7 @@
                         <td><?php echo htmlspecialchars($order['supervisor_last_name']); ?></td>
                         <td><?php echo htmlspecialchars($order['section_name']); ?></td>
                         <td><?php echo htmlspecialchars($order['created_at']); ?></td>
-                        <td><?php echo htmlspecialchars($order['approved_denied_by']); ?></td>
+                        <td><?php echo htmlspecialchars($order['warehouse_last_name']); ?></td>
                         <td><?php echo htmlspecialchars($order['approved_denied_at']); ?></td>
                     </tr>
                 <?php endforeach; ?>

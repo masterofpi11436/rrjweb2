@@ -264,18 +264,21 @@ class Admins extends Controller
     // One Order
     public function viewOrder(string $id): Response
     {
-        $order = $this->orderModel->getOrderByID($id);
-
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "One Order", "heading" => "One Order"]));
-
-        // Render the new admin form
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/approve_deny.php", ["order" => $order]));
-
-        // Render the footer
-        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+        try {
+            $order = $this->orderModel->getOrderByID($id);
+            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "One Order", "heading" => "One Order"]));
+            $this->response->appendBody($this->viewer->render("Warehouse/Admins/approve_deny.php", ["order" => $order]));
+            $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+        } catch (Exception $e) {
+            // Handle exception and show an error message
+            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Error", "heading" => "Error"]));
+            $this->response->appendBody($this->viewer->render("Warehouse/Admins/error.php", ["message" => $e->getMessage()]));
+            $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+        }
 
         return $this->response;
     }
+
 
     // Order is approved
     public function approveOrder (string $id): Response
@@ -330,9 +333,18 @@ class Admins extends Controller
         }
 
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Section History", "heading" => "Section History"]));
-
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/section.php", ["section" => $section, "orders" => $orders]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
 
+        return $this->response;
+    }
+
+    public function one(string $id): Response
+    {
+        $order = $this->orderModel->getOrderByID((string)$id);
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Order Details", "heading" => "Order Details"]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/one.php", ["order" => $order]));
         $this->response->appendBody($this->viewer->render("shared/footer.php"));
 
         return $this->response;

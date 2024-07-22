@@ -153,16 +153,19 @@ class Order extends Model
                     o.id,
                     u1.last_name AS user_last_name,
                     u2.last_name AS supervisor_last_name,
+                    u3.last_name AS warehouse_last_name,
                     s.name AS section_name,
                     o.items,
                     o.status,
                     o.created_at,
                     o.approved_denied_at,
-                    o.approved_denied_by
+                    o.approved_denied_by,
+                    o.section_id  -- Ensure section_id is selected
                 FROM orders o
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
                 JOIN user u2 ON o.supervisor_id = u2.id
+                JOIN user u3 ON o.approved_denied_by = u3.id
                 WHERE o.id = :id";
         
         $stmt = $conn->prepare($sql);
@@ -177,6 +180,7 @@ class Order extends Model
 
         return $data;
     }
+
 
     // Set the status of order to approved
     public function approveOrder(string $id)
@@ -234,6 +238,7 @@ class Order extends Model
                     o.id,
                     u1.last_name AS user_last_name,
                     u2.last_name AS supervisor_last_name,
+                    u3.last_name AS warehouse_last_name,
                     s.name AS section_name,
                     o.items,
                     o.status,
@@ -244,6 +249,7 @@ class Order extends Model
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
                 JOIN user u2 ON o.supervisor_id = u2.id
+                LEFT JOIN user u3 ON o.approved_denied_by = u3.id
                 WHERE o.section_id = :section_id AND o.status = :status
                 ORDER BY o.created_at DESC;";
 
@@ -263,6 +269,7 @@ class Order extends Model
                     o.id,
                     u1.last_name AS user_last_name,
                     u2.last_name AS supervisor_last_name,
+                    u3.last_name AS warehouse_last_name,
                     s.name AS section_name,
                     o.items,
                     o.status,
@@ -273,6 +280,7 @@ class Order extends Model
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
                 JOIN user u2 ON o.supervisor_id = u2.id
+                LEFT JOIN user u3 ON o.approved_denied_by = u3.id
                 WHERE o.section_id = :section_id 
                 AND o.status = :status
                 AND MONTH(o.created_at) = :month
@@ -333,6 +341,7 @@ class Order extends Model
                     o.id,
                     u1.last_name AS user_last_name,
                     u2.last_name AS supervisor_last_name,
+                    u3.last_name AS warehouse_last_name,
                     s.name AS section_name,
                     o.items,
                     o.status,
@@ -343,6 +352,7 @@ class Order extends Model
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
                 JOIN user u2 ON o.supervisor_id = u2.id
+                JOIN user u3 ON o.approved_denied_by = u3.id
                 WHERE o.status = :status";
 
         if ($year) {
