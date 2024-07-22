@@ -4,16 +4,16 @@
 
 <br>
 
-<form action="/warehouse/admins/history">
-    <button>Monthly Reports</button>
-</form>
-
-<form action="/warehouse/admins/history">
-    <button>Current Yearly Report</button>
-</form>
-
 <form action="/warehouse/admins/history/denied">
     <button>Denied Requests</button>
+</form>
+
+<form action="/warehouse/admins/history/monthly">
+    <button>Monthly Report</button>
+</form>
+
+<form action="/warehouse/admins/history/yearly">
+    <button>Yearly Report</button>
 </form>
 
 <h2>Sections</h2>

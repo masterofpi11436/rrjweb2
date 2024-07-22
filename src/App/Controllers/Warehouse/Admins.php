@@ -321,7 +321,13 @@ class Admins extends Controller
             throw new PageNotFoundException("Section not found.");
         }
 
-        $orders = $this->orderModel->getOrdersBySectionAndIsApproved((int)$id, 'approved');
+        $month = $_POST['month'] ?? null;
+
+        if ($month) {
+            $orders = $this->orderModel->getOrdersBySectionAndMonthAndIsApproved((int)$id, $month, 'approved');
+        } else {
+            $orders = $this->orderModel->getOrdersBySectionAndIsApproved((int)$id, 'approved');
+        }
 
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Section History", "heading" => "Section History"]));
 
@@ -329,6 +335,36 @@ class Admins extends Controller
 
         $this->response->appendBody($this->viewer->render("shared/footer.php"));
 
+        return $this->response;
+    }
+
+    public function monthly(): Response
+    {
+        $month = $_POST['month'] ?? null;
+
+        $orders = $this->orderModel->getOrdersByMonthAndIsApproved($month, 'approved');
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Monthly Report", "heading" => "Monthly Report"]));
+
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/monthly.php", ["orders" => $orders, "selectedMonth" => $month]));
+
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+
+        return $this->response;
+    }
+
+    public function yearly(): Response
+    {
+        $year = $_POST['year'] ?? null;
+    
+        $orders = $this->orderModel->getOrdersByYearAndIsApproved($year, 'approved');
+    
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Yearly Report", "heading" => "Yearly Report"]));
+    
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/yearly.php", ["orders" => $orders, "selectedYear" => $year]));
+    
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+    
         return $this->response;
     }
 

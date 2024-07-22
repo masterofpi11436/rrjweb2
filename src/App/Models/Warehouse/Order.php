@@ -101,8 +101,8 @@ class Order extends Model
                     o.items,
                     o.status,
                     o.created_at,
-                    o.approved_at,
-                    o.approved_by
+                    o.approved_denied_at,
+                    o.approved_denied_by
                 FROM orders o
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
@@ -129,8 +129,8 @@ class Order extends Model
                     o.items,
                     o.status,
                     o.created_at,
-                    o.approved_at,
-                    o.approved_by
+                    o.approved_denied_at,
+                    o.approved_denied_by
                 FROM orders o
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
@@ -157,8 +157,8 @@ class Order extends Model
                     o.items,
                     o.status,
                     o.created_at,
-                    o.approved_at,
-                    o.approved_by
+                    o.approved_denied_at,
+                    o.approved_denied_by
                 FROM orders o
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
@@ -190,13 +190,13 @@ class Order extends Model
         $approvedAt = date('Y-m-d H:i:s');
 
         $sql = "UPDATE orders
-                SET status = 'approved', approved_by = :approved_by, approved_at = :approved_at
+                SET status = 'approved', approved_denied_by = :approved_denied_by, approved_denied_at = :approved_denied_at
                 WHERE id = :id";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':approved_by', $approvedBy, PDO::PARAM_INT);
-        $stmt->bindParam(':approved_at', $approvedAt, PDO::PARAM_STR);
+        $stmt->bindParam(':approved_denied_by', $approvedBy, PDO::PARAM_INT);
+        $stmt->bindParam(':approved_denied_at', $approvedAt, PDO::PARAM_STR);
         $stmt->execute();
 
         return $stmt->execute();
@@ -208,19 +208,19 @@ class Order extends Model
         $conn = $this->db->getConn();
 
         // ID of the Manager approving the order
-        $approvedBy = $_SESSION["user_id"];
+        $deniedBy = $_SESSION["user_id"];
 
         // Time the order was approved
-        $approvedAt = date('Y-m-d H:i:s');
+        $deniedAt = date('Y-m-d H:i:s');
 
         $sql = "UPDATE orders
-                SET status = 'denied', approved_by = :approved_by, approved_at = :approved_at
+                SET status = 'denied', approved_denied_by = :approved_denied_by, approved_denied_at = :approved_denied_at
                 WHERE id = :id";
         
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':approved_by', $approvedBy, PDO::PARAM_INT);
-        $stmt->bindParam(':approved_at', $approvedAt, PDO::PARAM_STR);
+        $stmt->bindParam(':approved_denied_by', $approvedBy, PDO::PARAM_INT);
+        $stmt->bindParam(':approved_denied_at', $approvedAt, PDO::PARAM_STR);
         $stmt->execute();
 
         return $stmt->execute();
@@ -238,8 +238,8 @@ class Order extends Model
                     o.items,
                     o.status,
                     o.created_at,
-                    o.approved_at,
-                    o.approved_by
+                    o.approved_denied_at,
+                    o.approved_denied_by
                 FROM orders o
                 JOIN section s ON o.section_id = s.id
                 JOIN user u1 ON o.user_id = u1.id
@@ -250,6 +250,114 @@ class Order extends Model
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':section_id', $sectionId, PDO::PARAM_INT);
         $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOrdersBySectionAndMonthAndIsApproved(int $sectionId, string $month, string $status): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    o.id,
+                    u1.last_name AS user_last_name,
+                    u2.last_name AS supervisor_last_name,
+                    s.name AS section_name,
+                    o.items,
+                    o.status,
+                    o.created_at,
+                    o.approved_denied_at,
+                    o.approved_denied_by
+                FROM orders o
+                JOIN section s ON o.section_id = s.id
+                JOIN user u1 ON o.user_id = u1.id
+                JOIN user u2 ON o.supervisor_id = u2.id
+                WHERE o.section_id = :section_id 
+                AND o.status = :status
+                AND MONTH(o.created_at) = :month
+                ORDER BY o.created_at DESC;";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':section_id', $sectionId, PDO::PARAM_INT);
+        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+        $stmt->bindValue(':month', $month, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOrdersByMonthAndIsApproved(string $month = null, string $status): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    o.id,
+                    u1.last_name AS user_last_name,
+                    u2.last_name AS supervisor_last_name,
+                    s.name AS section_name,
+                    o.items,
+                    o.status,
+                    o.created_at,
+                    o.approved_denied_at,
+                    o.approved_denied_by
+                FROM orders o
+                JOIN section s ON o.section_id = s.id
+                JOIN user u1 ON o.user_id = u1.id
+                JOIN user u2 ON o.supervisor_id = u2.id
+                WHERE o.status = :status";
+
+        if ($month) {
+            $sql .= " AND MONTH(o.created_at) = :month";
+        }
+
+        $sql .= " ORDER BY o.created_at DESC";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+
+        if ($month) {
+            $stmt->bindValue(':month', $month, PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOrdersByYearAndIsApproved(string $year = null, string $status): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    o.id,
+                    u1.last_name AS user_last_name,
+                    u2.last_name AS supervisor_last_name,
+                    s.name AS section_name,
+                    o.items,
+                    o.status,
+                    o.created_at,
+                    o.approved_denied_at,
+                    o.approved_denied_by
+                FROM orders o
+                JOIN section s ON o.section_id = s.id
+                JOIN user u1 ON o.user_id = u1.id
+                JOIN user u2 ON o.supervisor_id = u2.id
+                WHERE o.status = :status";
+
+        if ($year) {
+            $sql .= " AND YEAR(o.created_at) = :year";
+        }
+
+        $sql .= " ORDER BY o.created_at DESC";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
+
+        if ($year) {
+            $stmt->bindValue(':year', $year, PDO::PARAM_INT);
+        }
+
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -269,8 +377,8 @@ class Order extends Model
                 o.items,
                 o.status,
                 o.created_at,
-                o.approved_at,
-                o.approved_by
+                o.approved_denied_at,
+                o.approved_denied_by
             FROM orders o
             JOIN user u1 ON o.user_id = u1.id
             JOIN user u2 ON o.supervisor_id = u2.id
