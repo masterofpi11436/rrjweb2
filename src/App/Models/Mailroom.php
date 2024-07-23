@@ -27,6 +27,18 @@ class Mailroom extends Model
         }
     }
 
+    public function getAll()
+
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM {$this->getTableName()} ORDER BY last_name";
+
+        $stmt = $conn->query($sql);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function searchNames(string $search): array
     {
         $conn = $this->db->getConn();
