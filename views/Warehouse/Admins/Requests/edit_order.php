@@ -1,4 +1,16 @@
-<h1>Edit Order</h1>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Restore scroll position
+        if (sessionStorage.scrollTop !== undefined) {
+            window.scrollTo(0, sessionStorage.scrollTop);
+        }
+
+        // Save scroll position
+        window.addEventListener("beforeunload", function() {
+            sessionStorage.scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        });
+    });
+</script>
 
     <p><strong>Order ID:</strong> <?= htmlspecialchars($order['id']) ?></p>
     <p><strong>User:</strong> <?= htmlspecialchars($order['user_first_name'] . ' ' . $order['user_last_name']) ?></p>
@@ -7,22 +19,7 @@
     <p><strong>Status:</strong> <?= htmlspecialchars($order['status']) ?></p>
     <p><strong>Created At:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
 
-    <form method="get" action="">
-        <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
-        
-        <select name="item_type">
-            <option value="">Select Item Type</option>
-            <?php foreach ($itemTypes as $type): ?>
-                <option value="<?= htmlspecialchars($type['id']); ?>" <?= (isset($_GET['item_type']) && $_GET['item_type'] == $type['id']) ? 'selected' : ''; ?>>
-                    <?= htmlspecialchars($type['type']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-
-        <button type="submit">Search</button>
-    </form>
-
-    <h2>Select Items to add to Request</h2>
+    <h2>Select Items to add to Edit</h2>
     <table>
         <tr>
             <th>Item</th>
@@ -37,6 +34,8 @@
                 <td>
                     <form action="/warehouse/managers/request/update/<?= htmlspecialchars($order['id']); ?>" method="post">
                         <input type="hidden" name="item_id" value="<?= htmlspecialchars($item['id']); ?>">
+                        <input type="hidden" name="search" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+                        <input type="hidden" name="item_type" value="<?= htmlspecialchars($_GET['item_type'] ?? '') ?>">
                         <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($order['items'][$item['id']]['quantity'] ?? 0); ?>">
                 </td>
                 <td>

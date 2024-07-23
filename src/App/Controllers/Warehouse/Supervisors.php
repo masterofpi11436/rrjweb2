@@ -74,8 +74,8 @@ class Supervisors extends Controller
     
         // Handle form submission to add item to the cart
         if ($this->request->method === 'POST' && isset($this->request->post['item_id']) && isset($this->request->post['quantity'])) {
-            $itemId = (int)$this->request->post['item_id'];
-            $quantity = (int)$this->request->post['quantity'];
+            $itemId = $this->request->post['item_id'];
+            $quantity = $this->request->post['quantity'];
     
             $item = $this->itemModel->getItemById($itemId);
             $item['quantity'] = $quantity;
@@ -125,7 +125,7 @@ class Supervisors extends Controller
             $this->orderModel->submitSupervisorOrder();
             
             // Send Email to warehouse manager
-            $this->mailer->sendNewRequestToWarehouse();
+            // $this->mailer->sendNewRequestToWarehouse();
             
             return $this->redirect('/warehouse/supervisors/success');
 
