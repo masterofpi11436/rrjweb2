@@ -62,4 +62,39 @@ class Mailer
             return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
         }
     }
+
+    /**
+     * Send a new request email from the supervisor to the warehouse.
+     *
+     * @param string $to Recipient's email address
+     * @param string $resetLink Password reset link
+     * @return bool|string Returns true on success, error message on failure
+     */
+    public function sendNewRequest() {
+        try {
+            $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
+            $fromName = 'WSR'; // Sender's name
+            $subject = 'New Warehouse Supply Request (Do Not Reply)';
+            $body = "Hello,<br><br>
+                     You have a new supply request.<br><br>
+                     New requests can be viewed on your dashboard";
+
+            // Set the sender's address
+            $this->mail->setFrom($from, $fromName);
+            // Add a recipient
+            $this->mail->addAddress('tugglem@rrjva.org');
+
+            // Content
+            $this->mail->isHTML(true); // Set email format to HTML
+            $this->mail->Subject = $subject; // Set the subject of the email
+            $this->mail->Body = $body; // Set the body of the email
+
+            // Send the email
+            $this->mail->send();
+            return true; // Return true on success
+        } catch (Exception $e) {
+            // Return error message on failure
+            return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
+        }
+    }
 }

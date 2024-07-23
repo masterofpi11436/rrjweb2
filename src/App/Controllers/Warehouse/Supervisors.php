@@ -12,6 +12,7 @@ use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
 use Framework\Response;
+use Framework\Mailer;
 use Exception;
 
 /**
@@ -19,7 +20,7 @@ use Exception;
  */
 class Supervisors extends Controller
 {
-    public function __construct(private User $userModel, private Item $itemModel, private Order $orderModel){}
+    public function __construct(private User $userModel, private Item $itemModel, private Order $orderModel, private Mailer $mailer){}
 
     // Supervisor name section seelction
     public function dashboard(): Response
@@ -122,6 +123,10 @@ class Supervisors extends Controller
     {
         try {
             $this->orderModel->submitSupervisorOrder();
+            
+            // Send Email to warehouse manager
+            $this->mailer->sendNewRequest();
+            
             return $this->redirect('/warehouse/supervisors/success');
         } catch (Exception $e) {
             $this->response->setBody('Failed to submit order: ' . $e->getMessage());
