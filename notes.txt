@@ -27,3 +27,4 @@ APP Wide
 - Make a desktop icon
 - Cart is displayed on right with items and checkout button
 - Images for items
+- On verify pages, annotate which items are 1 for 1 exchange
