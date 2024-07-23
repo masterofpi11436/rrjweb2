@@ -88,318 +88,120 @@ class Order extends Model
         }
     }
 
-    // Get Orders with the last name of the user and supervisor as well as the section name
-    public function getAllWarehousePendingOrders(): array
+    // Get all pending orders
+    public function getAllPendingOrders(): array
     {
         $conn = $this->db->getConn();
 
         $sql = "SELECT 
-                    o.id,
-                    u1.last_name AS user_last_name,
-                    u2.last_name AS supervisor_last_name,
-                    s.name AS section_name,
-                    o.items,
-                    o.status,
-                    o.created_at,
-                    o.approved_denied_at,
-                    o.approved_denied_by
-                FROM orders o
-                JOIN section s ON o.section_id = s.id
-                JOIN user u1 ON o.user_id = u1.id
-                JOIN user u2 ON o.supervisor_id = u2.id
-                WHERE status = 'pending warehouse approval'
-                ORDER BY o.created_at DESC;";
-
+                    orders.id, 
+                    orders.user_id, 
+                    orders.supervisor_id, 
+                    orders.section_id, 
+                    orders.items, 
+                    orders.status, 
+                    orders.created_at, 
+                    orders.approved_denied_at, 
+                    orders.approved_denied_by,
+                    user.first_name AS user_first_name, 
+                    user.last_name AS user_last_name, 
+                    supervisor.first_name AS supervisor_first_name, 
+                    supervisor.last_name AS supervisor_last_name,
+                    section.name AS section_name
+                FROM 
+                    orders
+                JOIN 
+                    user ON orders.user_id = user.id
+                JOIN 
+                    user AS supervisor ON orders.supervisor_id = supervisor.id
+                JOIN 
+                    section ON orders.section_id = section.id
+                WHERE 
+                    orders.status = 'pending warehouse approval'";
+            
         $stmt = $conn->prepare($sql);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // Orders that have already been approved
-    public function orderBySectionID(string $id)
-    {
-        $conn = $this->db->getConn();
-
-        $sql =  "SELECT 
-                    o.id,
-                    u1.last_name AS user_last_name,
-                    u2.last_name AS supervisor_last_name,
-                    s.name AS section_name,
-                    o.items,
-                    o.status,
-                    o.created_at,
-                    o.approved_denied_at,
-                    o.approved_denied_by
-                FROM orders o
-                JOIN section s ON o.section_id = s.id
-                JOIN user u1 ON o.user_id = u1.id
-                JOIN user u2 ON o.supervisor_id = u2.id
-                WHERE s.id = $id
-                ORDER BY o.created_at DESC;";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    // Get the order by the ID
-    public function getOrderByID(string $id): array
-    {
-        $conn = $this->db->getConn();
-
-        $sql = "SELECT 
-                    o.id,
-                    u1.last_name AS user_last_name,
-                    u2.last_name AS supervisor_last_name,
-                    u3.last_name AS warehouse_last_name,
-                    s.name AS section_name,
-                    o.items,
-                    o.status,
-                    o.created_at,
-                    o.approved_denied_at,
-                    o.approved_denied_by,
-                    o.section_id  -- Ensure section_id is selected
-                FROM orders o
-                JOIN section s ON o.section_id = s.id
-                JOIN user u1 ON o.user_id = u1.id
-                JOIN user u2 ON o.supervisor_id = u2.id
-                JOIN user u3 ON o.approved_denied_by = u3.id
-                WHERE o.id = :id";
         
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['id' => $id]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute();
 
-        if ($data) {
-            $data['items'] = json_decode($data['items'], true);
-        } else {
-            throw new Exception("Order not found.");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getPendingOrder(string $id): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    orders.id, 
+                    orders.user_id, 
+                    orders.supervisor_id, 
+                    orders.section_id, 
+                    orders.items, 
+                    orders.status, 
+                    orders.created_at, 
+                    orders.approved_denied_at, 
+                    orders.approved_denied_by,
+                    user.first_name AS user_first_name, 
+                    user.last_name AS user_last_name, 
+                    supervisor.first_name AS supervisor_first_name, 
+                    supervisor.last_name AS supervisor_last_name,
+                    section.name AS section_name
+                FROM 
+                    orders
+                JOIN 
+                    user ON orders.user_id = user.id
+                JOIN 
+                    user AS supervisor ON orders.supervisor_id = supervisor.id
+                JOIN 
+                    section ON orders.section_id = section.id
+                WHERE 
+                    orders.id = :id";
+                
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $order = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($order) {
+            $order['items'] = json_decode($order['items'], true);
         }
 
-        return $data;
+        return $order;
     }
 
-
-    // Set the status of order to approved
-    public function approveOrder(string $id)
+    // Order is approved
+    public function approveOrder(string $id, int $userId): bool
     {
         $conn = $this->db->getConn();
 
-        // ID of the Manager approving the order
-        $approvedBy = $_SESSION["user_id"];
-
-        // Time the order was approved
-        $approvedAt = date('Y-m-d H:i:s');
-
-        $sql = "UPDATE orders
-                SET status = 'approved', approved_denied_by = :approved_denied_by, approved_denied_at = :approved_denied_at
+        $sql = "UPDATE orders 
+                SET status = 'approved', 
+                    approved_denied_by = :userId, 
+                    approved_denied_at = NOW() 
                 WHERE id = :id";
-        
+
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':approved_denied_by', $approvedBy, PDO::PARAM_INT);
-        $stmt->bindParam(':approved_denied_at', $approvedAt, PDO::PARAM_STR);
-        $stmt->execute();
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
 
         return $stmt->execute();
     }
 
-    // Set the status of order to denied
-    public function denyOrder(string $id)
+    // Order is denied
+    public function denyOrder(string $id, int $userId): bool
     {
         $conn = $this->db->getConn();
 
-        // ID of the Manager approving the order
-        $deniedBy = $_SESSION["user_id"];
-
-        // Time the order was approved
-        $deniedAt = date('Y-m-d H:i:s');
-
-        $sql = "UPDATE orders
-                SET status = 'denied', approved_denied_by = :approved_denied_by, approved_denied_at = :approved_denied_at
+        $sql = "UPDATE orders 
+                SET status = 'denied', 
+                    approved_denied_by = :userId, 
+                    approved_denied_at = NOW() 
                 WHERE id = :id";
-        
+
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':approved_denied_by', $approvedBy, PDO::PARAM_INT);
-        $stmt->bindParam(':approved_denied_at', $approvedAt, PDO::PARAM_STR);
-        $stmt->execute();
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
 
         return $stmt->execute();
-    }
-
-    public function getOrdersBySectionAndIsApproved(int $sectionId, string $status): array
-    {
-        $conn = $this->db->getConn();
-
-        $sql = "SELECT 
-                    o.id,
-                    u1.last_name AS user_last_name,
-                    u2.last_name AS supervisor_last_name,
-                    u3.last_name AS warehouse_last_name,
-                    s.name AS section_name,
-                    o.items,
-                    o.status,
-                    o.created_at,
-                    o.approved_denied_at,
-                    o.approved_denied_by
-                FROM orders o
-                JOIN section s ON o.section_id = s.id
-                JOIN user u1 ON o.user_id = u1.id
-                JOIN user u2 ON o.supervisor_id = u2.id
-                LEFT JOIN user u3 ON o.approved_denied_by = u3.id
-                WHERE o.section_id = :section_id AND o.status = :status
-                ORDER BY o.created_at DESC;";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':section_id', $sectionId, PDO::PARAM_INT);
-        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getOrdersBySectionAndMonthAndIsApproved(int $sectionId, string $month, string $status): array
-    {
-        $conn = $this->db->getConn();
-
-        $sql = "SELECT 
-                    o.id,
-                    u1.last_name AS user_last_name,
-                    u2.last_name AS supervisor_last_name,
-                    u3.last_name AS warehouse_last_name,
-                    s.name AS section_name,
-                    o.items,
-                    o.status,
-                    o.created_at,
-                    o.approved_denied_at,
-                    o.approved_denied_by
-                FROM orders o
-                JOIN section s ON o.section_id = s.id
-                JOIN user u1 ON o.user_id = u1.id
-                JOIN user u2 ON o.supervisor_id = u2.id
-                LEFT JOIN user u3 ON o.approved_denied_by = u3.id
-                WHERE o.section_id = :section_id 
-                AND o.status = :status
-                AND MONTH(o.created_at) = :month
-                ORDER BY o.created_at DESC;";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':section_id', $sectionId, PDO::PARAM_INT);
-        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
-        $stmt->bindValue(':month', $month, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getOrdersByMonthAndIsApproved(string $month = null, string $status): array
-    {
-        $conn = $this->db->getConn();
-
-        $sql = "SELECT 
-                    o.id,
-                    u1.last_name AS user_last_name,
-                    u2.last_name AS supervisor_last_name,
-                    s.name AS section_name,
-                    o.items,
-                    o.status,
-                    o.created_at,
-                    o.approved_denied_at,
-                    o.approved_denied_by
-                FROM orders o
-                JOIN section s ON o.section_id = s.id
-                JOIN user u1 ON o.user_id = u1.id
-                JOIN user u2 ON o.supervisor_id = u2.id
-                WHERE o.status = :status";
-
-        if ($month) {
-            $sql .= " AND MONTH(o.created_at) = :month";
-        }
-
-        $sql .= " ORDER BY o.created_at DESC";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
-
-        if ($month) {
-            $stmt->bindValue(':month', $month, PDO::PARAM_INT);
-        }
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getOrdersByYearAndIsApproved(string $year = null, string $status): array
-    {
-        $conn = $this->db->getConn();
-
-        $sql = "SELECT 
-                    o.id,
-                    u1.last_name AS user_last_name,
-                    u2.last_name AS supervisor_last_name,
-                    u3.last_name AS warehouse_last_name,
-                    s.name AS section_name,
-                    o.items,
-                    o.status,
-                    o.created_at,
-                    o.approved_denied_at,
-                    o.approved_denied_by
-                FROM orders o
-                JOIN section s ON o.section_id = s.id
-                JOIN user u1 ON o.user_id = u1.id
-                JOIN user u2 ON o.supervisor_id = u2.id
-                JOIN user u3 ON o.approved_denied_by = u3.id
-                WHERE o.status = :status";
-
-        if ($year) {
-            $sql .= " AND YEAR(o.created_at) = :year";
-        }
-
-        $sql .= " ORDER BY o.created_at DESC";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->bindValue(':status', $status, PDO::PARAM_STR);
-
-        if ($year) {
-            $stmt->bindValue(':year', $year, PDO::PARAM_INT);
-        }
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getAllDeniedOrders()
-    {
-        $conn = $this->db->getConn();
-
-        $sql = "SELECT 
-                o.id,
-                u1.first_name AS user_first_name,
-                u1.last_name AS user_last_name,
-                u2.first_name AS supervisor_first_name,
-                u2.last_name AS supervisor_last_name,
-                s.name AS section_name,
-                o.items,
-                o.status,
-                o.created_at,
-                o.approved_denied_at,
-                o.approved_denied_by
-            FROM orders o
-            JOIN user u1 ON o.user_id = u1.id
-            JOIN user u2 ON o.supervisor_id = u2.id
-            JOIN section s ON o.section_id = s.id
-            WHERE o.status = 'denied'
-            ORDER BY o.created_at DESC;";
-
-        $stmt = $conn->prepare($sql);
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

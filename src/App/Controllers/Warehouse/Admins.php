@@ -23,11 +23,11 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model, private Order $orderModel, private Section $sectionModel){}
+    public function __construct(private Admin $model, private Order $orderModel){}
 
     public function dashboard(): Response
     {
-        $orders = $this->orderModel->getAllWarehousePendingOrders();
+        $orders = $this->orderModel->getAllPendingOrders();
 
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Dashboard", "heading" => "WSR Admin Dashboard"]));
@@ -261,39 +261,81 @@ class Admins extends Controller
     /*********************************************************************************************************************************** */
     // Order Request Pages
 
-    // One Order
-    public function viewOrder(string $id): Response
+    // Get ID of the order
+    private function getOrderID(string $id): array
     {
-        try {
-            $order = $this->orderModel->getOrderByID($id);
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "One Order", "heading" => "One Order"]));
-            $this->response->appendBody($this->viewer->render("Warehouse/Admins/approve_deny.php", ["order" => $order]));
-            $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-        } catch (Exception $e) {
-            // Handle exception and show an error message
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Error", "heading" => "Error"]));
-            $this->response->appendBody($this->viewer->render("Warehouse/Admins/error.php", ["message" => $e->getMessage()]));
-            $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+        // Assign this model's id to the $admin variable to the 
+        $order = $this->orderModel->getOne($id);
+
+        // Verify if the admin was found
+        if ($order === false) {
+
+            throw new PageNotFoundException("No Information Found");
         }
 
+        return $order;
+    }
+
+    // Request for approval
+    public function viewOrder(string $id): Response
+    {
+        $order = $this->orderModel->getPendingOrder($id);
+    
+        if (!$order) {
+            // Handle case where order is not found
+            return $this->response->redirect('/warehouse/admins/dashboard');
+        }
+    
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "View Order", "heading" => "Order Details"]));
+    
+        // Render the order details
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/one.php", ["order" => $order]));
+    
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    
         return $this->response;
     }
 
-
-    // Order is approved
-    public function approveOrder (string $id): Response
+    // Method to get the logged-in user ID (you need to implement this based on your authentication system)
+    private function getLoggedInUserId(): int
     {
-        $this->orderModel->approveOrder($id);
-        
-        return $this->redirect("/warehouse/dashboard");
+        return $_SESSION['user_id'];
+    }
+    
+    // Order is approved
+    public function approveOrder(string $id): Response
+    {
+        // Get the logged-in user ID (this assumes you have a way to get the logged-in user ID)
+        $userId = $this->getLoggedInUserId();
+
+        $success = $this->orderModel->approveOrder($id, $userId);
+
+        if ($success) {
+            // Redirect to a success page or the dashboard
+            return $this->redirect('/warehouse/dashboard');
+        } else {
+            // Handle failure case
+            return $this->redirect('/login');
+        }
     }
 
     // Order is approved
-    public function denyOrder (string $id): Response
+    public function denyOrder(string $id): Response
     {
-        $this->orderModel->denyOrder($id);
+        // Get the logged-in user ID (this assumes you have a way to get the logged-in user ID)
+        $userId = $this->getLoggedInUserId();
 
-        return $this->redirect("/warehouse/dashboard");
+        $success = $this->orderModel->denyOrder($id, $userId);
+
+        if ($success) {
+            // Redirect to a success page or the dashboard
+            return $this->redirect('/warehouse/dashboard');
+        } else {
+            // Handle failure case
+            return $this->redirect('/login');
+        }
     }
 
 
@@ -316,83 +358,4 @@ class Admins extends Controller
         return $this->response;
     }
 
-    public function section(string $id): Response
-    {
-        $section = $this->sectionModel->getOne($id);
-
-        if (!$section) {
-            throw new PageNotFoundException("Section not found.");
-        }
-
-        $month = $_POST['month'] ?? null;
-
-        if ($month) {
-            $orders = $this->orderModel->getOrdersBySectionAndMonthAndIsApproved((int)$id, $month, 'approved');
-        } else {
-            $orders = $this->orderModel->getOrdersBySectionAndIsApproved((int)$id, 'approved');
-        }
-
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Section History", "heading" => "Section History"]));
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/section.php", ["section" => $section, "orders" => $orders]));
-        $this->response->appendBody($this->viewer->render("shared/footer.php"));
-
-        return $this->response;
-    }
-
-    public function one(string $id): Response
-    {
-        $order = $this->orderModel->getOrderByID((string)$id);
-
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Order Details", "heading" => "Order Details"]));
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/one.php", ["order" => $order]));
-        $this->response->appendBody($this->viewer->render("shared/footer.php"));
-
-        return $this->response;
-    }
-
-    public function monthly(): Response
-    {
-        $month = $_POST['month'] ?? null;
-
-        $orders = $this->orderModel->getOrdersByMonthAndIsApproved($month, 'approved');
-
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Monthly Report", "heading" => "Monthly Report"]));
-
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/monthly.php", ["orders" => $orders, "selectedMonth" => $month]));
-
-        $this->response->appendBody($this->viewer->render("shared/footer.php"));
-
-        return $this->response;
-    }
-
-    public function yearly(): Response
-    {
-        $year = $_POST['year'] ?? null;
-    
-        $orders = $this->orderModel->getOrdersByYearAndIsApproved($year, 'approved');
-    
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Yearly Report", "heading" => "Yearly Report"]));
-    
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/yearly.php", ["orders" => $orders, "selectedYear" => $year]));
-    
-        $this->response->appendBody($this->viewer->render("shared/footer.php"));
-    
-        return $this->response;
-    }
-
-    /*********************************************************************************************************************************** */
-    // Denied Requests Page
-
-    public function denied(): Response
-    {
-        $orders = $this->orderModel->getAllDeniedOrders();
-
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Denied Requests", "heading" => "Denied Requests"]));
-
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/denied.php", ["orders" => $orders]));
-
-        $this->response->appendBody($this->viewer->render("shared/footer.php"));
-
-        return $this->response;
-    }
 }

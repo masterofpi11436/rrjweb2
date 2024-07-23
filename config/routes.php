@@ -150,17 +150,11 @@ $router->add("/warehouse/admins/delete/{id:\d+}", ["controller" => "admins", "ac
 $router->add("/warehouse/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyAdmin", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // Approve/Deny Page
-$router->add("/warehouse/managers/one/{id:\d+}", ["controller" => "admins", "action" => "viewOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
-$router->add("/warehouse/managers/approve/{id:\d+}", ["controller" => "admins", "action" => "approveOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
-$router->add("/warehouse/managers/deny/{id:\d+}", ["controller" => "admins", "action" => "denyOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/request/one/{id:\d+}", ["controller" => "admins", "action" => "viewOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/request/approve/{id:\d+}", ["controller" => "admins", "action" => "approveOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/request/deny/{id:\d+}", ["controller" => "admins", "action" => "denyOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // History Pages
-$router->add("/warehouse/admins/history", ["controller" => "admins", "action" => "history", "middleware" => "auth", "namespace" => "Warehouse"]);
-$router->add("/warehouse/admins/history/one/{id:\d+}", ["controller" => "admins", "action" => "one", "middleware" => "auth", "namespace" => "Warehouse"]); // Specific route for one order
-$router->add("/warehouse/admins/history/section/{id:\d+}", ["controller" => "admins", "action" => "section", "middleware" => "auth", "namespace" => "Warehouse"]); // Section route with {id}
-$router->add("/warehouse/admins/history/denied", ["controller" => "admins", "action" => "denied", "middleware" => "auth", "namespace" => "Warehouse"]);
-$router->add("/warehouse/admins/history/monthly", ["controller" => "admins", "action" => "monthly", "middleware" => "auth", "namespace" => "Warehouse"]);
-$router->add("/warehouse/admins/history/yearly", ["controller" => "admins", "action" => "yearly", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // *************************************************************************************************************************************************//
 
