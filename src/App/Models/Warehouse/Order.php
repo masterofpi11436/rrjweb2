@@ -88,7 +88,9 @@ class Order extends Model
         }
     }
 
-    // Get all pending orders
+    /*********** Warehouse Manager Pages ********************************************************************************************************************** */
+    
+    // Get all pending orders to display in the dashboard
     public function getAllPendingOrders(): array
     {
         $conn = $this->db->getConn();
@@ -126,6 +128,7 @@ class Order extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Gets one order that is pending
     public function getPendingOrder(string $id): array
     {
         $conn = $this->db->getConn();
@@ -201,6 +204,66 @@ class Order extends Model
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    }
+
+    // Warehouse Manager edit the request
+    public function getOrderForEdit(string $id): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    orders.id, 
+                    orders.user_id, 
+                    orders.supervisor_id, 
+                    orders.section_id, 
+                    orders.items, 
+                    orders.status, 
+                    orders.created_at, 
+                    orders.approved_denied_at, 
+                    orders.approved_denied_by,
+                    user.first_name AS user_first_name, 
+                    user.last_name AS user_last_name, 
+                    supervisor.first_name AS supervisor_first_name, 
+                    supervisor.last_name AS supervisor_last_name,
+                    section.name AS section_name
+                FROM 
+                    orders
+                JOIN 
+                    user ON orders.user_id = user.id
+                JOIN 
+                    user AS supervisor ON orders.supervisor_id = supervisor.id
+                JOIN 
+                    section ON orders.section_id = section.id
+                WHERE 
+                    orders.id = :id";
+                
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $order = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($order) {
+            $order['items'] = json_decode($order['items'], true);
+        }
+
+        return $order;
+    }
+
+    // Update the order that was edited
+    public function updateOrderItems(string $id, string $items): bool
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "UPDATE orders 
+                SET items = :items
+                WHERE id = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->bindParam(':items', $items, PDO::PARAM_STR);
 
         return $stmt->execute();
     }

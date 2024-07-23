@@ -4,6 +4,10 @@
 <p><strong>Status:</strong> <?= htmlspecialchars($order['status']) ?></p>
 <p><strong>Created At:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
 
+<form action="/warehouse/managers/request/edit/<?= htmlspecialchars($order['id']) ?>">
+    <button>Edit</button>
+</form>
+
 <h2>Items</h2>
 <table>
     <thead>
@@ -30,7 +34,7 @@
     <button type="submit">Deny</button>
 </form>
 
-<!-- Add Print Button -->
+<!-- Print Button -->
 <noscript>
     <p>Please enable JavaScript to use the print functionality. If you need assistance, contact MIU!</p>
 </noscript>

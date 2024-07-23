@@ -12,6 +12,7 @@ warehouse supervisor account
 
 Email notification
 -new request received
+-request denied for reason xyz
 
 denied requests deleted for supervisors.
 denied requests for warehouse gets saved.
@@ -19,3 +20,7 @@ denied requests for warehouse gets saved.
 History pages required by section, by month, and year.
 
 1 for 1 exhange does not need supervisor approval
+
+Approve then print request for warehouse manager
+
+edit for supervisor and warehouse manager

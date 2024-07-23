@@ -7,6 +7,7 @@ namespace App\Controllers\Warehouse;
 
 use App\Models\Warehouse\Admin;
 use App\Models\Warehouse\Order;
+use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Section;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
@@ -23,7 +24,7 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model, private Order $orderModel){}
+    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel){}
 
     public function dashboard(): Response
     {
@@ -317,7 +318,7 @@ class Admins extends Controller
             return $this->redirect('/warehouse/dashboard');
         } else {
             // Handle failure case
-            return $this->redirect('/login');
+            throw new FailedProcessingRequest("Failed to submit order");
         }
     }
 
@@ -334,10 +335,71 @@ class Admins extends Controller
             return $this->redirect('/warehouse/dashboard');
         } else {
             // Handle failure case
-            return $this->redirect('/login');
+            throw new FailedProcessingRequest("Failed to submit order");
         }
     }
 
+    // Page for the warehouse manager to edit the order
+    public function editOrder(string $id): Response
+    {
+        $order = $this->orderModel->getOrderForEdit($id);
+
+        if (!$order) {
+            // Handle case where order is not found
+            return $this->response->redirect('/warehouse/admins/dashboard');
+        }
+
+        $itemTypes = $this->itemModel->getItemTypes();
+        $items = $this->itemModel->getAllItems();
+
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Order", "heading" => "Edit Order"]));
+
+        // Render the edit order page
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_order.php", ["order" => $order, "itemTypes" => $itemTypes, "items" => $items]));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
+    // Updates the order by the warehouse manager
+    public function updateOrder(string $id): Response
+    {
+        // Assuming you have a method to get the logged-in user ID
+        $userId = $this->getLoggedInUserId();
+        $order = $this->orderModel->getOrderForEdit($id);
+
+        if (!$order) {
+            return $this->response->redirect('/warehouse/admins/dashboard');
+        }
+
+        $itemId = $_POST['item_id'];
+        $quantity = $_POST['quantity'];
+
+        if (isset($order['items'][$itemId])) {
+            $order['items'][$itemId]['quantity'] = $quantity;
+        } else {
+            $item = $this->itemModel->getItemById($itemId); // Assuming you have a method to get an item by ID
+            $order['items'][$itemId] = [
+                'id' => $itemId,
+                'name' => $item['name'],
+                'item_type' => $item['item_type'],
+                'quantity' => $quantity
+            ];
+        }
+
+        $updatedItems = json_encode($order['items']);
+        $success = $this->orderModel->updateOrderItems($id, $updatedItems);
+
+        if ($success) {
+            return $this->redirect("/warehouse/managers/request/edit/$id");
+        } else {
+            // Handle failure case
+            return $this->response->redirect("/warehouse/managers/request/edit/$id?error=update_failed");
+        }
+    }
 
     /*********************************************************************************************************************************** */
     // History Pages
