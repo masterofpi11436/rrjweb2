@@ -31,6 +31,9 @@
 </form>
 
 <!-- Add Print Button -->
+<noscript>
+    <p>Please enable JavaScript to use the print functionality. If you need assistance, contact MIU!</p>
+</noscript>
 <button onclick="printOrderDetails()">Print Order Details</button>
 
 <script>
