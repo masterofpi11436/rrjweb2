@@ -82,7 +82,7 @@ class Mailer
             // Set the sender's address
             $this->mail->setFrom($from, $fromName);
             // Add a recipient
-            $this->mail->addAddress('tugglem@rrjva.org');
+            $this->mail->addAddress('watson.charles@rrjva.org');
 
             // Content
             $this->mail->isHTML(true); // Set email format to HTML
