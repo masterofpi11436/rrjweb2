@@ -31,7 +31,7 @@ class Mailroom extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->getTableName()} WHERE first_name LIKE :search OR last_name LIKE :search OR inmate_number LIKE :search";
+        $sql = "SELECT * FROM {$this->getTableName()} WHERE first_name LIKE :search OR last_name LIKE :search OR inmate_number LIKE :search ORDER BY last_name";
         $stmt = $conn->prepare($sql);
 
         $searchTerm = '%' . $search . '%';
