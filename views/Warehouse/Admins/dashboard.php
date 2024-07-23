@@ -14,7 +14,7 @@
     <button>Warehouse Sections</button>
 </form>
 
-<form action="/warehouse/admins/history">
+<form action="/warehouse/managers/history/dashboard">
     <button>History</button>
 </form>
 

@@ -283,14 +283,14 @@ class Admins extends Controller
     
         if (!$order) {
             // Handle case where order is not found
-            return $this->response->redirect('/warehouse/admins/dashboard');
+            return $this->response->redirect('/warehouse/dashboard');
         }
     
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "View Order", "heading" => "Order Details"]));
     
         // Render the order details
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/one.php", ["order" => $order]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/one.php", ["order" => $order]));
     
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
@@ -343,14 +343,13 @@ class Admins extends Controller
     // History Pages
 
     // Main History Page
-    public function history(): Response
+    public function historyDashboard(): Response
     {
-        $sections = $this->sectionModel->getAll();
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "History", "heading" => "History"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "History", "heading" => "HistoryDashboard"]));
 
         // Render the new admin form
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/History/main.php", ["sections" => $sections]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/history_dashboard.php"));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php"));

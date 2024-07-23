@@ -155,6 +155,7 @@ $router->add("/warehouse/managers/request/approve/{id:\d+}", ["controller" => "a
 $router->add("/warehouse/managers/request/deny/{id:\d+}", ["controller" => "admins", "action" => "denyOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // History Pages
+$router->add("/warehouse/managers/history/dashboard", ["controller" => "admins", "action" => "historyDashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // *************************************************************************************************************************************************//
 
