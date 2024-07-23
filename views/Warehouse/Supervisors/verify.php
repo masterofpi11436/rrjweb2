@@ -1,5 +1,5 @@
 <?php if ($section && $items): ?>
-    <p>Would you like to submit this request to warehouse for approval for the <?= htmlspecialchars($section['name']) ?> section?</p>
+    <p>Would you like to submit this request to the warehouse for approval for the <?= htmlspecialchars($section['name']) ?> section?</p>
 
     <h2>Selected Items</h2>
     <table>
