@@ -125,10 +125,10 @@ class Supervisors extends Controller
             $this->orderModel->submitSupervisorOrder();
             
             // Send Email to warehouse manager
-            $this->mailer->sendNewRequest();
+            $this->mailer->sendNewRequestToWarehouse();
             
             return $this->redirect('/warehouse/supervisors/success');
-            
+
         } catch (Exception $e) {
             $this->response->setBody('Failed to submit order: ' . $e->getMessage());
             return $this->response;
