@@ -54,10 +54,11 @@ class Supervisors extends Controller
 
     public function items(): Response
     {
-        $search = $this->request->get['search'] ?? '';
-        $itemType = $this->request->get['item_type'] ?? '';
-        $sort = $this->request->get['sort'] ?? 'name';
-        $order = $this->request->get['order'] ?? 'asc';
+        // Extract search parameters from GET or POST
+        $search = $this->request->post['search'] ?? $this->request->get['search'] ?? '';
+        $itemType = $this->request->post['item_type'] ?? $this->request->get['item_type'] ?? '';
+        $sort = $this->request->post['sort'] ?? $this->request->get['sort'] ?? 'name';
+        $order = $this->request->post['order'] ?? $this->request->get['order'] ?? 'asc';
     
         $itemTypes = $this->itemModel->getItemTypes();
     
@@ -91,9 +92,13 @@ class Supervisors extends Controller
     
         // Render the all items view
         $this->response->appendBody($this->viewer->render("Warehouse/supervisors/form.php", [
-            "items" => $items, 
-            "itemTypes" => $itemTypes, 
-            "selectedItems" => $selectedItems
+            "items" => $items,
+            "itemTypes" => $itemTypes,
+            "selectedItems" => $selectedItems,
+            "search" => $search,
+            "itemType" => $itemType,
+            "sort" => $sort,
+            "order" => $order
         ]));
     
         // Render the footer

@@ -42,10 +42,11 @@ class Users extends Controller
 
     public function items(): Response
     {
-        $search = $this->request->get['search'] ?? '';
-        $itemType = $this->request->get['item_type'] ?? '';
-        $sort = $this->request->get['sort'] ?? 'name';
-        $order = $this->request->get['order'] ?? 'asc';
+        // Extract search parameters from GET or POST
+        $search = $this->request->post['search'] ?? $this->request->get['search'] ?? '';
+        $itemType = $this->request->post['item_type'] ?? $this->request->get['item_type'] ?? '';
+        $sort = $this->request->post['sort'] ?? $this->request->get['sort'] ?? 'name';
+        $order = $this->request->post['order'] ?? $this->request->get['order'] ?? 'asc';
     
         $itemTypes = $this->itemModel->getItemTypes();
     
@@ -62,8 +63,8 @@ class Users extends Controller
     
         // Handle form submission to add item to the cart
         if ($this->request->method === 'POST' && isset($this->request->post['item_id']) && isset($this->request->post['quantity'])) {
-            $itemId = (int)$this->request->post['item_id'];
-            $quantity = (int)$this->request->post['quantity'];
+            $itemId = $this->request->post['item_id'];
+            $quantity = $this->request->post['quantity'];
     
             $item = $this->itemModel->getItemById($itemId);
             $item['quantity'] = $quantity;
@@ -78,10 +79,14 @@ class Users extends Controller
                                                                                 "heading" => "WSR Supplies"]));
     
         // Render the all items view
-        $this->response->appendBody($this->viewer->render("Warehouse/Users/form.php", [
-            "items" => $items, 
-            "itemTypes" => $itemTypes, 
-            "selectedItems" => $selectedItems
+        $this->response->appendBody($this->viewer->render("Warehouse/users/form.php", [
+            "items" => $items,
+            "itemTypes" => $itemTypes,
+            "selectedItems" => $selectedItems,
+            "search" => $search,
+            "itemType" => $itemType,
+            "sort" => $sort,
+            "order" => $order
         ]));
     
         // Render the footer

@@ -1,10 +1,10 @@
-<form method="get" action="/warehouse/supervisors/items">
-    <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
+<form method="get" action="/warehouse/supervisors/items" id="searchForm">
+    <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
     
     <select name="item_type">
         <option value="">Select Item Type</option>
         <?php foreach ($itemTypes as $type): ?>
-            <option value="<?= htmlspecialchars($type['id']); ?>" <?= (isset($_GET['item_type']) && $_GET['item_type'] == $type['id']) ? 'selected' : ''; ?>>
+            <option value="<?= htmlspecialchars($type['id']); ?>" <?= (isset($itemType) && $itemType == $type['id']) ? 'selected' : ''; ?>>
                 <?= htmlspecialchars($type['type']); ?>
             </option>
         <?php endforeach; ?>
@@ -26,8 +26,12 @@
             <td><?= htmlspecialchars($item['name']); ?></td>
             <td><?= htmlspecialchars($item['item_type']); ?></td>
             <td>
-                <form action="/warehouse/supervisors/items" method="post">
+                <form action="/warehouse/supervisors/items" method="post" class="cartForm">
                     <input type="hidden" name="item_id" value="<?= htmlspecialchars($item['id']); ?>">
+                    <input type="hidden" name="search" id="searchHidden" value="<?= htmlspecialchars($search ?? '') ?>">
+                    <input type="hidden" name="item_type" id="itemTypeHidden" value="<?= htmlspecialchars($itemType ?? '') ?>">
+                    <input type="hidden" name="sort" id="sortHidden" value="<?= htmlspecialchars($sort ?? 'name') ?>">
+                    <input type="hidden" name="order" id="orderHidden" value="<?= htmlspecialchars($order ?? 'asc') ?>">
                     <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($selectedItems[$item['id']]['quantity'] ?? 0); ?>">
             </td>
             <td>
@@ -38,6 +42,31 @@
     <?php endforeach; ?>
 </table>
 
-<form action="/warehouse/supervisors/verify">
+<form action="/warehouse/supervisors/verify" id="checkoutForm">
     <button>Checkout</button>
 </form>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Restore scroll position
+    if (sessionStorage.getItem('scrollPos')) {
+        window.scrollTo(0, sessionStorage.getItem('scrollPos'));
+    }
+
+    // Save scroll position before form submission
+    document.querySelectorAll("form").forEach(form => {
+        form.addEventListener("submit", function() {
+            sessionStorage.setItem('scrollPos', window.scrollY);
+
+            // Populate hidden fields for the cart form with current search parameters
+            if (form.classList.contains('cartForm')) {
+                const searchForm = document.getElementById('searchForm');
+                form.querySelector('#searchHidden').value = searchForm.querySelector('input[name="search"]').value;
+                form.querySelector('#itemTypeHidden').value = searchForm.querySelector('select[name="item_type"]').value;
+                form.querySelector('#sortHidden').value = searchForm.querySelector('input[name="sort"]').value;
+                form.querySelector('#orderHidden').value = searchForm.querySelector('input[name="order"]').value;
+            }
+        });
+    });
+});
+</script>
