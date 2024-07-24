@@ -25,12 +25,16 @@ class Supervisors extends Controller
     // Supervisor name section seelction
     public function dashboard(): Response
     {
+        $supervisorId = $_SESSION['user_id'];
+        
+        $orders = $this->orderModel->getPendingSupervisorOrders($supervisorId);
+
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Supervisor Dashboard",
                                                                                 "heading" => "Supervisor Dashboard"]));
 
         // Render the all items view
-        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/dashboard.php"));
+        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/dashboard.php", ["orders" => $orders]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
@@ -155,17 +159,33 @@ class Supervisors extends Controller
         return $this->response;
     }
 
-    public function approveDeny(): Response
+/***** Manage Requests ***************************************************************************************/
+
+    public function viewOrder(): Response
     {
-        $sections = $this->model->getSections();
+        $order = $this->orderModel->getOrderById($orderId);
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "View Requests",
-                                                                               "heading" => "Approve or Deny Requests"]));
+        // Decode the JSON-encoded items
+        $items = json_decode($order['items'], true);
 
-        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/approve_deny.php"));
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", [
+            "title" => "View Order",
+            "heading" => "Order Details"
+        ]));
 
-        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+        // Render the order view
+        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/view_order.php", [
+            "order" => $order,
+            "items" => $items
+        ]));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", [
+            "creator" => "Mark Tuggle"
+        ]));
 
         return $this->response;
     }
+
 }

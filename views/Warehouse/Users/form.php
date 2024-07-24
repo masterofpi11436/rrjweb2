@@ -14,6 +14,11 @@
 </form>
 
 <h2>Select Items to add to Request</h2>
+
+<form action="/warehouse/users/verify" id="checkoutForm">
+    <button>Checkout</button>
+</form>
+
 <table>
     <tr>
         <th>Item</th>
@@ -41,10 +46,6 @@
         </tr>
     <?php endforeach; ?>
 </table>
-
-<form action="/warehouse/users/verify" id="checkoutForm">
-    <button>Checkout</button>
-</form>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {

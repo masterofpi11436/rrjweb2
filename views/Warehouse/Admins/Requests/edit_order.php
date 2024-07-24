@@ -19,7 +19,12 @@
     <p><strong>Status:</strong> <?= htmlspecialchars($order['status']) ?></p>
     <p><strong>Created At:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
 
-    <h2>Select Items to add to Edit</h2>
+    <h2>Select Items to Edit</h2>
+
+    <form action="/warehouse/managers/request/one/<?= htmlspecialchars($order['id']); ?>" method="post">
+        <button>Checkout</button>
+    </form>
+    
     <table>
         <tr>
             <th>Item</th>
@@ -45,7 +50,3 @@
             </tr>
         <?php endforeach; ?>
     </table>
-
-    <form action="/warehouse/managers/request/one/<?= htmlspecialchars($order['id']); ?>" method="post">
-        <button>Checkout</button>
-    </form>

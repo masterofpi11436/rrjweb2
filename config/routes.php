@@ -214,13 +214,20 @@ $router->add("/warehouse/users/success", ["controller" => "users", "action" => "
 
 // WSR Supervisor Pages
 $router->add("/warehouse/supervisors/dashboard", ["controller" => "supervisors", "action" => "dashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
-$router->add("/warehouse/supervisors/approvedeny", ["controller" => "supervisors", "action" => "approveDeny", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+
+// Creating Request Pages
 $router->add("/warehouse/supervisors/section", ["controller" => "supervisors", "action" => "section", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/items", ["controller" => "supervisors", "action" => "items", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/verify", ["controller" => "supervisors", "action" => "verify", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/submit", ["controller" => "supervisors", "action" => "submit", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/success", ["controller" => "supervisors", "action" => "success", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 
+// User Submited Order Request Pages
+$router->add("/warehouse/supervisors/request/one/{id:\d+}", ["controller" => "supervisors", "action" => "viewOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/request/approve/{id:\d+}", ["controller" => "supervisors", "action" => "approveOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/request/deny/{id:\d+}", ["controller" => "supervisors", "action" => "denyOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/request/edit/{id:\d+}", ["controller" => "supervisors", "action" => "editOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/request/update/{id:\d+}", ["controller" => "supervisors", "action" => "updateOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // Blanket Route
 // $router->add("/{controller}/{action}");

@@ -128,7 +128,7 @@ class Order extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Gets one order that is pending
+    // Gets one order based on ID
     public function getPendingOrder(string $id): array
     {
         $conn = $this->db->getConn();
@@ -157,7 +157,7 @@ class Order extends Model
                 JOIN 
                     section ON orders.section_id = section.id
                 WHERE 
-                    orders.id = :id";
+                    orders.id = :id AND status = 'pending warehouse approval'";
                 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
@@ -267,4 +267,46 @@ class Order extends Model
 
         return $stmt->execute();
     }
+
+    /*********** Warehouse Supervisor Pages ********************************************************************************************************************** */
+
+    public function getPendingSupervisorOrders($supervisorId): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT orders.id, orders.status, orders.created_at, user.first_name AS user_first_name, user.last_name AS user_last_name
+                FROM orders
+                JOIN user ON orders.user_id = user.id
+                WHERE orders.supervisor_id = :supervisor_id AND status = 'pending supervisor approval'";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':supervisor_id', $supervisorId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOrderById(string $orderId): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT orders.id,
+                       orders.status,
+                       orders.created_at,
+                       orders.items,
+                       user.first_name AS user_first_name,
+                       user.last_name AS user_last_name,
+                       section.name AS section_name
+                FROM orders
+                JOIN user ON orders.user_id = user.id
+                JOIN section ON orders.section_id = section.id
+                WHERE orders.id = :order_id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':order_id', $orderId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
