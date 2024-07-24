@@ -27,8 +27,8 @@ class Mailroom extends Model
         }
     }
 
+    // Used to organize the names by last name
     public function getAll()
-
     {
         $conn = $this->db->getConn();
 
