@@ -8,6 +8,7 @@ namespace App\Controllers\Warehouse;
 use App\Models\Warehouse\User;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Order;
+use App\Models\Warehouse\Mail;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -19,7 +20,7 @@ use Exception;
  */
 class Users extends Controller
 {
-    public function __construct(private User $userModel, private Item $itemModel, private Order $orderModel){}
+    public function __construct(private User $userModel, private Item $itemModel, private Order $orderModel, private Mail $mailer){}
 
     // Supervisor name section seelction
     public function info(): Response
@@ -120,7 +121,14 @@ class Users extends Controller
     {
         try {
             $this->orderModel->submitUserOrder();
+
+            $email = $_SESSION['selected_supervisor']['email'];
+
+            // Send Email to warehouse manager
+            $this->mailer->sendNewRequestToSupervisor($email);
+
             return $this->redirect('/warehouse/users/success');
+
         } catch (Exception $e) {
             $this->response->setBody('Failed to submit order: ' . $e->getMessage());
             return $this->response;
