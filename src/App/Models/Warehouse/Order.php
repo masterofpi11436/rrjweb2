@@ -286,27 +286,73 @@ class Order extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getOrderById(string $orderId): array
+    public function getOrderById(string $id): array
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT orders.id,
-                       orders.status,
-                       orders.created_at,
-                       orders.items,
-                       user.first_name AS user_first_name,
-                       user.last_name AS user_last_name,
-                       section.name AS section_name
-                FROM orders
-                JOIN user ON orders.user_id = user.id
-                JOIN section ON orders.section_id = section.id
-                WHERE orders.id = :order_id";
-
+        $sql = "SELECT 
+                    orders.id, 
+                    orders.user_id, 
+                    orders.supervisor_id, 
+                    orders.section_id, 
+                    orders.items, 
+                    orders.status, 
+                    orders.created_at, 
+                    orders.approved_denied_at, 
+                    orders.approved_denied_by,
+                    user.first_name AS user_first_name, 
+                    user.last_name AS user_last_name,
+                    section.name AS section_name
+                FROM 
+                    orders
+                JOIN 
+                    user ON orders.user_id = user.id
+                JOIN 
+                    section ON orders.section_id = section.id
+                WHERE 
+                    orders.id = :id";
+                    
         $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':order_id', $orderId, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $order = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($order) {
+            $order['items'] = json_decode($order['items'], true);
+            return $order;
+        }
+
+        return [];
     }
 
+    // Order is approved
+    public function approveUserOrder(string $id): bool
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "UPDATE orders 
+                SET status = 'approved'
+                WHERE id = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
+    // Order is denied and deleted
+    public function denyUserOrder(string $id): bool
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "UPDATE orders 
+                SET status = 'approved'
+                WHERE id = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
 }

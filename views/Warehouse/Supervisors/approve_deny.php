@@ -1,39 +1,59 @@
-<h1>Order Details</h1>
-
-<p><strong>User:</strong> <?= htmlspecialchars($order['user_first_name'] . ' ' . $order['user_last_name']) ?></p>
-<p><strong>Section:</strong> <?= htmlspecialchars($order['section_name']) ?></p>
-<p><strong>Status:</strong> <?= htmlspecialchars($order['status']) ?></p>
-<p><strong>Created At:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
+<form action="/warehouse/supervisors/dashboard">
+    <button>Back</button>
+</form>
 
 <h2>Items</h2>
-<table>
-    <thead>
+
+<?php if (!empty($order)): ?>
+    <h2>Order Details</h2>
+    <table>
         <tr>
-            <th>Item Name</th>
-            <th>Quantity</th>
+            <th>Order ID</th>
+            <td><?= htmlspecialchars($order['id']) ?></td>
         </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($items as $item): ?>
+        <tr>
+            <th>User</th>
+            <td><?= htmlspecialchars($order['user_first_name']) . ' ' . htmlspecialchars($order['user_last_name']); ?></td>
+        </tr>
+        <tr>
+            <th>Section</th>
+            <td><?= htmlspecialchars($order['section_name']) ?></td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td><?= htmlspecialchars($order['status']) ?></td>
+        </tr>
+        <tr>
+            <th>Created At</th>
+            <td><?= htmlspecialchars($order['created_at']) ?></td>
+        </tr>
+    </table>
+
+    <h3>Items</h3>
+    <table>
+        <thead>
             <tr>
-                <td><?= htmlspecialchars($item['name']) ?></td>
-                <td><?= htmlspecialchars($item['quantity']) ?></td>
+                <th>Item Name</th>
+                <th>Quantity</th>
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php foreach ($order['items'] as $item): ?>
+                <tr>
+                    <td><?= htmlspecialchars($item['name']) ?></td>
+                    <td><?= htmlspecialchars($item['quantity']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>No order details found.</p>
+<?php endif; ?>
 
-<form action="/warehouse/supervisors/approve" method="post">
-    <input type="hidden" name="order_id" value="<?= htmlspecialchars($order['id']) ?>">
-    <button type="submit">Approve</button>
+<form action="/warehouse/supervisors/request/approve/<?= htmlspecialchars($order['id']) ?>">
+    <button>Approve</button>
 </form>
 
-<form action="/warehouse/supervisors/edit" method="get">
-    <input type="hidden" name="order_id" value="<?= htmlspecialchars($order['id']) ?>">
-    <button type="submit">Edit</button>
-</form>
-
-<form action="/warehouse/supervisors/deny" method="post">
-    <input type="hidden" name="order_id" value="<?= htmlspecialchars($order['id']) ?>">
-    <button type="submit">Deny</button>
+<form action="/warehouse/supervisors/request/deny/<?= htmlspecialchars($order['id']) ?>">
+    <button>Deny</button>
 </form>

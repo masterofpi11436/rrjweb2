@@ -95,15 +95,13 @@ class Supervisors extends Controller
                                                                                 "heading" => "WSR Supplies"]));
     
         // Render the all items view
-        $this->response->appendBody($this->viewer->render("Warehouse/supervisors/form.php", [
-            "items" => $items,
-            "itemTypes" => $itemTypes,
-            "selectedItems" => $selectedItems,
-            "search" => $search,
-            "itemType" => $itemType,
-            "sort" => $sort,
-            "order" => $order
-        ]));
+        $this->response->appendBody($this->viewer->render("Warehouse/supervisors/form.php", ["items" => $items,
+                                                                                             "itemTypes" => $itemTypes,
+                                                                                             "selectedItems" => $selectedItems,
+                                                                                             "search" => $search,
+                                                                                             "itemType" => $itemType,
+                                                                                             "sort" => $sort,
+                                                                                             "order" => $order]));
     
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
@@ -161,31 +159,55 @@ class Supervisors extends Controller
 
 /***** Manage Requests ***************************************************************************************/
 
-    public function viewOrder(): Response
+    private function getOrderID(string $id): array
     {
-        $order = $this->orderModel->getOrderById($orderId);
+        // Assign this model's id to the $order variable to the 
+        $order = $this->orderModel->getOne($id);
 
-        // Decode the JSON-encoded items
-        $items = json_decode($order['items'], true);
+        // Verify if the order was found
+        if ($order === false) {
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", [
-            "title" => "View Order",
-            "heading" => "Order Details"
-        ]));
+            throw new PageNotFoundException("No Information Found");
+        }
 
-        // Render the order view
-        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/view_order.php", [
-            "order" => $order,
-            "items" => $items
-        ]));
+        return $order;
+    }
+
+    public function viewOrder(string $id): Response
+    {
+        $order = $this->orderModel->getOrderById($id);
+
+       // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Approve Deny", "heading" => "Order Details"]));
+
+        // Render the order details view and pass the order data
+        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/approve_deny.php", ["order" => $order]));
 
         // Render the footer
-        $this->response->appendBody($this->viewer->render("shared/footer.php", [
-            "creator" => "Mark Tuggle"
-        ]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;
     }
 
+    public function approveOrder(string $id): Response
+    {
+        $success = $this->orderModel->approveUserOrder($id);
+
+        if ($success) {
+            // Redirect to a success page or the dashboard
+            return $this->redirect('/warehouse/supervisors/dashboard');
+        } else {
+            // Handle failure case
+            throw new FailedProcessingRequest("Failed to submit order");
+        }
+    }
+
+    public function denyOrder(string $id): Response
+    {
+        $order = $this->getOrderID($id);
+
+        $this->orderModel->deleteRecord($id);
+
+        return $this->redirect("/warehouse/supervisors/dashboard");
+    }
 }

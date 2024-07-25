@@ -2,10 +2,6 @@
     <button>Create New Request</button>
 </form>
 
-<form action="/warehouse/supervisors/approvedeny">
-    <button>View Requests</button>
-</form>
-
 <h1>Current Requests</h1>
 
 <?php if (!empty($orders)): ?>

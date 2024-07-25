@@ -222,7 +222,7 @@ $router->add("/warehouse/supervisors/verify", ["controller" => "supervisors", "a
 $router->add("/warehouse/supervisors/submit", ["controller" => "supervisors", "action" => "submit", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/success", ["controller" => "supervisors", "action" => "success", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 
-// User Submited Order Request Pages
+// Submited Order Approve/Deny Pages
 $router->add("/warehouse/supervisors/request/one/{id:\d+}", ["controller" => "supervisors", "action" => "viewOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/request/approve/{id:\d+}", ["controller" => "supervisors", "action" => "approveOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/request/deny/{id:\d+}", ["controller" => "supervisors", "action" => "denyOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
