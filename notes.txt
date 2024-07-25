@@ -36,3 +36,7 @@ APP Wide
 - Cart is displayed on right with items and checkout button
 - Images for items
 - On verify pages, annotate which items are 1 for 1 exchange
+
+
+ChatGPT prompt:
+Hello, I am working on a PHP application. The application is in an MVC framework.
