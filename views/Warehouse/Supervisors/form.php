@@ -19,6 +19,18 @@
     <button>Checkout</button>
 </form>
 
+<!-- Add this div to display selected items -->
+<div id="cartItems">
+    <?php if (!empty($selectedItems)): ?>
+        <h3>Selected Items</h3>
+        <ul>
+            <?php foreach ($selectedItems as $item): ?>
+                <li><?= htmlspecialchars($item['name']) . ': ' . htmlspecialchars($item['quantity']); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</div>
+
 <table>
     <tr>
         <th>Item</th>
