@@ -1,5 +1,9 @@
 <?php if ($section && $items): ?>
-    <p>Would you like to submit this request to the warehouse for approval for the <?= htmlspecialchars($section['name']) ?> section?</p>
+    <h3>Would you like to submit this request to the warehouse for <?= htmlspecialchars($section['name']) ?>?</h3>
+
+    <form action="/warehouse/supervisors/items" method="post">
+        <button type="submit">Go Back</button>
+    </form>
 
     <h2>Selected Items</h2>
     <table>
@@ -14,10 +18,6 @@
             </tr>
         <?php endforeach; ?>
     </table>
-
-    <form action="/warehouse/supervisors/items" method="post">
-        <button type="submit">Go Back</button>
-    </form>
 
     <form action="/warehouse/supervisors/submit" method="post">
         <button type="submit">Submit Request</button>

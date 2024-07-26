@@ -18,7 +18,7 @@
     <button>History</button>
 </form>
 
-<h1>Current Requests</h1>
+<h1>Pending Warehouse Supply Requests</h1>
 
 <?php if (!empty($orders)): ?>
     <table>
@@ -26,7 +26,6 @@
             <tr>
                 <th>Supervisor Name</th>
                 <th>Section</th>
-                <th>Status</th>
                 <th>Created At</th>
                 <th>View</th>
             </tr>
@@ -36,7 +35,6 @@
                 <tr>
                     <td><?= htmlspecialchars($order['supervisor_first_name'] . ' ' . $order['supervisor_last_name']) ?></td>
                     <td><?= htmlspecialchars($order['section_name']) ?></td>
-                    <td><?= htmlspecialchars($order['status']) ?></td>
                     <td><?= htmlspecialchars($order['created_at']) ?></td>
                     <td>
                         <a href="/warehouse/managers/request/one/<?= htmlspecialchars($order['id']); ?>">View</a>

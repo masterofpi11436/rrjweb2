@@ -15,6 +15,7 @@
 <p><strong>Created At:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
 <p><strong>Denied By:</strong> <?= htmlspecialchars($order['warehouse_first_name'] . ' ' . $order['warehouse_last_name']) ?></p>
 <p><strong>Date Denied:</strong> <?= htmlspecialchars($order['approved_denied_at']) ?></p>
+<p><strong>Note:</strong> <?= htmlspecialchars($order['note']) ?></p>
 
 <table>
     <thead>

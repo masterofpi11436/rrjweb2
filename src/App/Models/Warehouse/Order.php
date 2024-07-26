@@ -190,6 +190,39 @@ class Order extends Model
         return $stmt->execute();
     }
 
+    // Adding note to denied order
+    // Add the denial note to the order and then delete the order
+    public function addDenyNoteAndDelete(string $id, int $userId, string $note): bool
+    {
+        $conn = $this->db->getConn();
+
+        try {
+            $conn->beginTransaction();
+
+            // Add the denial note
+            $sql = "UPDATE orders 
+                    SET note = :note, 
+                        status = 'denied', 
+                        approved_denied_by = :userId, 
+                        approved_denied_at = NOW() 
+                    WHERE id = :id";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->bindParam(':note', $note, PDO::PARAM_STR);
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $conn->commit();
+            return true;
+        } catch (PDOException $e) {
+            $conn->rollBack();
+            error_log("Database error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+
     // Order is denied
     public function denyOrder(string $id, int $userId): bool
     {
@@ -364,7 +397,8 @@ class Order extends Model
                 orders.items, 
                 orders.status, 
                 orders.created_at, 
-                orders.approved_denied_at, 
+                orders.approved_denied_at,
+                orders.note,
                 user.first_name AS user_first_name, 
                 user.last_name AS user_last_name, 
                 supervisor.first_name AS supervisor_first_name, 

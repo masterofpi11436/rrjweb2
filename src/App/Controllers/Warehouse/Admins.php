@@ -322,13 +322,32 @@ class Admins extends Controller
         }
     }
 
-    // Order is approved
+    // Display the form to add a denial note
+    public function deny(string $id): Response
+    {
+        $order = $this->orderModel->getOne($id);
+
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Note", "heading" => "Add Denial Reason"]));
+
+        // Render the order details
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/deny_note.php", ["order" => $order]));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
+    // Process the denial, add the note, and delete the order
     public function denyOrder(string $id): Response
     {
         // Get the logged-in user ID (this assumes you have a way to get the logged-in user ID)
         $userId = $this->getLoggedInUserId();
+        $note = $_POST['note'] ?? '';
 
-        $success = $this->orderModel->denyOrder($id, $userId);
+        // Add the denial note to the order
+        $success = $this->orderModel->addDenyNoteAndDelete($id, $userId, $note);
 
         if ($success) {
             // Redirect to a success page or the dashboard

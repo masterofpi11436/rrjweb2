@@ -1,8 +1,6 @@
-<p><strong>User:</strong> <?= htmlspecialchars($order['user_first_name'] . ' ' . $order['user_last_name']) ?></p>
 <p><strong>Supervisor:</strong> <?= htmlspecialchars($order['supervisor_first_name'] . ' ' . $order['supervisor_last_name']) ?></p>
 <p><strong>Section:</strong> <?= htmlspecialchars($order['section_name']) ?></p>
-<p><strong>Status:</strong> <?= htmlspecialchars($order['status']) ?></p>
-<p><strong>Created At:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
+<p><strong>Date Created:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
 
 <form action="/warehouse/managers/request/edit/<?= htmlspecialchars($order['id']) ?>">
     <button>Edit</button>
@@ -26,11 +24,11 @@
     </tbody>
 </table>
 
-<form action="/warehouse/managers/request/approve/<?= htmlspecialchars($order['id']) ?>" method="post">
-    <button type="submit">Approve</button>
+<form id="approveForm" action="/warehouse/managers/request/approve/<?= htmlspecialchars($order['id']) ?>" method="post">
+    <button type="submit" onclick="return confirmApprove()">Approve</button>
 </form>
 
-<form action="/warehouse/managers/request/deny/<?= htmlspecialchars($order['id']) ?>" method="post">
+<form action="/warehouse/managers/request/deny_note/<?= htmlspecialchars($order['id']) ?>">
     <button type="submit">Deny</button>
 </form>
 
@@ -41,12 +39,19 @@
 <button onclick="printOrderDetails()">Print Order Details</button>
 
 <script>
+function confirmApprove() {
+    if (confirm("Do you want to print the order details?")) {
+        printOrderDetails();
+    }
+    // Submit the form regardless of the user's choice
+    return true;
+}
+
 function printOrderDetails() {
-    var printContents = `
-        <p><strong>Supervisor:</strong> <?= htmlspecialchars($order['supervisor_first_name'] . ' ' . $order['supervisor_last_name']) ?></p>
+    var printContents = 
+        `<p><strong>Supervisor:</strong> <?= htmlspecialchars($order['supervisor_first_name'] . ' ' . $order['supervisor_last_name']) ?></p>
         <p><strong>Section:</strong> <?= htmlspecialchars($order['section_name']) ?></p>
-        <p><strong>Status:</strong> <?= htmlspecialchars($order['status']) ?></p>
-        <p><strong>Created At:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
+        <p><strong>Date Created:</strong> <?= htmlspecialchars($order['created_at']) ?></p>
         <h2>Items</h2>
         <table>
             <thead>
@@ -63,8 +68,7 @@ function printOrderDetails() {
                     </tr>
                 <?php endforeach; ?>
             </tbody>
-        </table>
-    `;
+        </table>`;
     
     var printWindow = window.open('', '', 'height=600,width=800');
     printWindow.document.write('<html><head><title>Print Order Details</title>');
