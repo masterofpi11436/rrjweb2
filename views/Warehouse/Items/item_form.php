@@ -21,6 +21,11 @@
     </div>
 
     <div>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="<?= isset($item) ? htmlspecialchars($item['quantity'] ?? '') : '' ?>">
+    </div>
+
+    <div>
         <button type="submit">Save</button>
     </div>
 </div>

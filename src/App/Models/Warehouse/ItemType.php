@@ -27,12 +27,12 @@ class ItemType extends Model
     //     }
     // }
 
-    public function searchItemTypes(string $search, string $sort = 'name', string $order = 'asc'): array
+    public function searchItemTypes(string $search, string $sort = 'type', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();
 
         $sql = "SELECT * FROM {$this->getTableName()}
-                WHERE name LIKE :search";
+                WHERE type LIKE :search";
 
         $stmt = $conn->prepare($sql);
 

@@ -19,4 +19,8 @@
         <th>Image</th>
         <td><?= htmlspecialchars($item["image"] ?? '') ?></td>
     </tr>
+    <tr>
+        <th>Quantity</th>
+        <td><?= htmlspecialchars($item["quantity"] ?? '') ?></td>
+    </tr>
 </table>

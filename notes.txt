@@ -11,11 +11,6 @@ Excel: =CONCATENATE("('", B2, "', '", C2, "', '", D2, "', '", E2, "', '", F2, "'
 WSR To Do List
 
 Warehouse Supervisor Account
-- Ability to approve, edit, and deny/delete requests (email why request is denied for reason xyz)
-    *Denied Requests are deleted from the orders table
-- View Requests pening supervisor approval
-- Email notification
-
 
 Manager Account
 - Request denied for reason xyz email
@@ -23,19 +18,14 @@ Manager Account
 - if edited, form populates after checkout to give reason why item was edited.
 - History pages required by section by month and total item count for the year.
 - Approve then print request for warehouse manager
-- Fix the search for items and item types
-- Delete items completely
 
 Warehouse Supervisors
-- manager users
-- approve/deny requests
-- in progress status
+- Manage users
+- In progress status
 
 APP Wide
 - Make a desktop icon
-- Cart is displayed on right with items and checkout button
 - Images for items
-- On verify pages, annotate which items are 1 for 1 exchange
 
 
 ChatGPT prompt:

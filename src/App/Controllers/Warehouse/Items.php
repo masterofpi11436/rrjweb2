@@ -55,7 +55,7 @@ class Items extends Controller
 
         if ($search) {
             // Perform search query
-            $items = $this->model->searchItems($search, $sort, $order);
+            $items = $this->model->searchItems($search, '', $sort, $order);
         } else {
             // Retrieve all records if no search query
             $items = $this->model->getAll($sort, $order);
@@ -117,7 +117,8 @@ class Items extends Controller
         $data = [
             "name" => $this->request->post["name"],
             "item_type" => $this->request->post["item_type"],
-            "image" => $this->request->post["image"]
+            "image" => $this->request->post["image"],
+            "quantity" => $this->request->post["quantity"],
         ];
 
         if ($this->model->insertRecord($data)) {
@@ -163,6 +164,7 @@ class Items extends Controller
         $item["name"] = $this->request->post["name"];
         $item["item_type"] = $this->request->post["item_type"];
         $item["image"] = $this->request->post["image"];
+        $item["quantity"] = $this->request->post["quantity"];
 
         if ($this->model->updateRecord($id, $item)) {
             return $this->redirect("/warehouse/items/one/{$id}");

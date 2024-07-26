@@ -43,7 +43,19 @@ class Item extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image
+        // Validate the sorting parameters
+        $validColumns = ['name', 'item_type'];
+        if (!in_array($sort, $validColumns)) {
+            $sort = 'name'; // Default to 'name' if an invalid column is provided
+        }
+        $order = ($order === 'desc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'
+
+        // Map 'item_type' to 'item_type.type' for sorting
+        if ($sort === 'item_type') {
+            $sort = 'item_type.type';
+        }
+
+        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image, item.quantity
                 FROM item
                 JOIN item_type ON item.item_type = item_type.id
                 WHERE (item.name LIKE :search OR item_type.type LIKE :search)";
@@ -69,12 +81,13 @@ class Item extends Model
     }
 
 
+
     // All Items for the User and Supervisor pages
     public function getAllItems()
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image
+        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image, item.quantity
                 FROM item
                 JOIN item_type ON item.item_type = item_type.id";
         
@@ -101,7 +114,7 @@ class Item extends Model
             $sort = 'item_type.type';
         }
 
-        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image
+        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image, item.quantity
                 FROM item
                 JOIN item_type ON item.item_type = item_type.id
                 ORDER BY {$sort} {$order}";
@@ -129,7 +142,7 @@ class Item extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image
+        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image, item.quantity
                 FROM item
                 JOIN item_type ON item.item_type = item_type.id
                 WHERE item.id = :id";
