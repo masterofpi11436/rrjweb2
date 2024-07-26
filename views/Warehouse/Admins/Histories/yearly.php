@@ -1,41 +1,30 @@
-<h2>Yearly Report</h2>
-
-    <form method="post" action="">
-        <label for="year">Select Year:</label>
-        <select id="year" name="year">
-            <option value="">All Years</option>
-            <?php for ($y = date('Y'); $y >= 2000; $y--): ?>
-                <option value="<?= $y ?>" <?= isset($selectedYear) && $selectedYear == $y ? 'selected' : '' ?>><?= $y ?></option>
-            <?php endfor; ?>
-        </select>
-        <button type="submit">Filter</button>
-    </form>
-
-    <?php if (!empty($orders)): ?>
-        <table>
-            <thead>
+<?php if (!empty($orders)): ?>
+    <table border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px; border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Total Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($orders as $order): ?>
                 <tr>
-                    <th>User</th>
-                    <th>Supervisor</th>
-                    <th>Section</th>
-                    <th>Created At</th>
-                    <th>Approved By</th>
-                    <th>Approved At</th>
+                    <td><?= htmlspecialchars($order['name'] ?? '') ?></td>
+                    <td><?= htmlspecialchars($order['total_quantity'] ?? '') ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($orders as $order): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($order['user_last_name']); ?></td>
-                        <td><?php echo htmlspecialchars($order['supervisor_last_name']); ?></td>
-                        <td><?php echo htmlspecialchars($order['section_name']); ?></td>
-                        <td><?php echo htmlspecialchars($order['created_at']); ?></td>
-                        <td><?php echo htmlspecialchars($order['warehouse_last_name']); ?></td>
-                        <td><?php echo htmlspecialchars($order['approved_denied_at']); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p>No approved orders found for the selected year.</p>
-    <?php endif; ?>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>No data found for the yearly report.</p>
+<?php endif; ?>
+
+<div>
+    <?php
+        // Get the previous URL from the HTTP referer
+        $previousUrl = $_SERVER['HTTP_REFERER'] ?? '/login';
+    ?>
+    <form action="<?= htmlspecialchars($previousUrl) ?>">
+        <button>Go Back</button>
+    </form>
+</div>

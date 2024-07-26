@@ -1,8 +1,12 @@
 <h2>This Page is under construction.</h2>
 
-<h2>Monthly Requests based on section</h2>
+<form action="/warehouse/managers/history/monthly">
+    <button>Monthly totals</button>
+</form>
 
-<h2>Year to Date total item count</h2>
+<form action="/warehouse/managers/history/yearly">
+    <button>Yearly totals</button>
+</form>
 
 <div>
     <?php

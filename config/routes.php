@@ -158,6 +158,8 @@ $router->add("/warehouse/managers/request/update/{id:\d+}", ["controller" => "ad
 
 // History Pages
 $router->add("/warehouse/managers/history/dashboard", ["controller" => "admins", "action" => "historyDashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/history/yearly", ["controller" => "admins", "action" => "yearly", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/history/monthly", ["controller" => "admins", "action" => "monthly", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // *************************************************************************************************************************************************//
 

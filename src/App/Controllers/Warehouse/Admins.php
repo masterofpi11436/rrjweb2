@@ -24,7 +24,7 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel){}
+    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel, private Section $sectionModel){}
 
     public function dashboard(): Response
     {
@@ -428,16 +428,48 @@ class Admins extends Controller
     // Main History Page
     public function historyDashboard(): Response
     {
-
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "History", "heading" => "HistoryDashboard"]));
 
-        // Render the new admin form
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/history_dashboard.php"));
 
-        // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php"));
 
         return $this->response;
     }
 
+    public function yearly(): Response
+    {
+        $orders = $this->orderModel->yearlyReport();
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Yearly", "heading" => "Yearly Report (365 days)"]));
+
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/yearly.php", ["orders" => $orders]));
+
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+
+        return $this->response;
+    }
+
+    public function monthly(): Response
+    {
+        $sections = $this->sectionModel->getAll();
+    
+        $sectionId = $_GET['section_id'] ?? '';
+    
+        $orders = $this->orderModel->monthlyReport($sectionId);
+    
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Monthly", "heading" => "Section Items (30 Days)"]));
+    
+        // Render the new admin form
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/monthly.php", [
+            "orders" => $orders, 
+            "sections" => $sections,
+            "section_id" => $sectionId
+        ]));
+    
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+    
+        return $this->response;
+    }
 }

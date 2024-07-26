@@ -268,6 +268,52 @@ class Order extends Model
         return $stmt->execute();
     }
 
+    /*********** Warehouse Reports ********************************************************************************************************************** */
+
+    public function yearlyReport(): array
+    {
+        $conn = $this->db->getConn();
+    
+        $sql = "SELECT item.id, item.name, SUM(CAST(JSON_UNQUOTE(JSON_EXTRACT(items, CONCAT('$.\"', item.id, '\".quantity'))) AS UNSIGNED)) AS total_quantity
+                FROM orders
+                JOIN item ON JSON_CONTAINS_PATH(items, 'one', CONCAT('$.\"', item.id, '\"'))
+                WHERE orders.status = 'approved' AND orders.approved_denied_at >= NOW() - INTERVAL 365 DAY
+                GROUP BY item.id, item.name";
+    
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $orders;
+    }
+
+    public function monthlyReport($sectionId): array
+    {
+        $conn = $this->db->getConn();
+    
+        $sql = "SELECT section.name as section_name, item.id, item.name, SUM(CAST(JSON_UNQUOTE(JSON_EXTRACT(items, CONCAT('$.\"', item.id, '\".quantity'))) AS UNSIGNED)) AS total_quantity
+                FROM orders
+                JOIN item ON JSON_CONTAINS_PATH(items, 'one', CONCAT('$.\"', item.id, '\"'))
+                JOIN section ON orders.section_id = section.id
+                WHERE orders.status = 'approved' AND orders.approved_denied_at >= NOW() - INTERVAL 30 DAY";
+        
+        if ($sectionId) {
+            $sql .= " AND orders.section_id = :section_id";
+        }
+    
+        $sql .= " GROUP BY section.name, item.id, item.name";
+    
+        $stmt = $conn->prepare($sql);
+        if ($sectionId) {
+            $stmt->bindParam(':section_id', $sectionId, PDO::PARAM_INT);
+        }
+        $stmt->execute();
+        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        return $orders;
+    }
+
     /*********** Warehouse Supervisor Pages ********************************************************************************************************************** */
 
     public function getPendingSupervisorOrders($supervisorId): array
@@ -332,7 +378,7 @@ class Order extends Model
         $conn = $this->db->getConn();
 
         $sql = "UPDATE orders 
-                SET status = 'approved'
+                SET status = 'pending warehouse approval'
                 WHERE id = :id";
 
         $stmt = $conn->prepare($sql);
@@ -346,8 +392,7 @@ class Order extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "UPDATE orders 
-                SET status = 'approved'
+        $sql = "DELETE FROM orders 
                 WHERE id = :id";
 
         $stmt = $conn->prepare($sql);
