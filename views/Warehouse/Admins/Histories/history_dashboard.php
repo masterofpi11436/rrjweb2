@@ -1,5 +1,8 @@
-<h2>This Page is under construction.</h2>
+<form action="/warehouse/dashboard">
+    <button>Back to Dashboard</button>
+</form>
 
+<h2>Reports</h2>
 <form action="/warehouse/managers/history/monthly">
     <button>Monthly totals</button>
 </form>
@@ -11,13 +14,3 @@
 <form action="/warehouse/managers/history/denied">
     <button>Denied Requests</button>
 </form>
-
-<div>
-    <?php
-        // Get the previous URL from the HTTP referer
-        $previousUrl = $_SERVER['HTTP_REFERER'] ?? '/login';
-    ?>
-    <form action="<?= htmlspecialchars($previousUrl) ?>">
-        <button>Go Back</button>
-    </form>
-</div>

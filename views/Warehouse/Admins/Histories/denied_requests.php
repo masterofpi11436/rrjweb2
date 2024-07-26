@@ -1,3 +1,13 @@
+<div>
+    <?php
+    // Get the previous URL from the HTTP referer
+    $previousUrl = $_SERVER['HTTP_REFERER'] ?? '/login';
+    ?>
+    <form action="<?= htmlspecialchars($previousUrl) ?>">
+        <button>Go Back</button>
+    </form>
+</div>
+
 <?php if (!empty($orders)): ?>
     <table>
         <thead>

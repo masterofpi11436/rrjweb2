@@ -1,3 +1,13 @@
+<div>
+    <?php
+    // Get the previous URL from the HTTP referer
+    $previousUrl = $_SERVER['HTTP_REFERER'] ?? '/login';
+    ?>
+    <form action="<?= htmlspecialchars($previousUrl) ?>">
+        <button>Go Back</button>
+    </form>
+</div>
+
 <form method="get" action="/warehouse/managers/history/monthly">
     <label for="section">Select Section:</label>
     <select name="section_id" id="section">
