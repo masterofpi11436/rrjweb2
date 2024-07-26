@@ -48,9 +48,9 @@ class Users extends Controller
         $itemType = $this->request->post['item_type'] ?? $this->request->get['item_type'] ?? '';
         $sort = $this->request->post['sort'] ?? $this->request->get['sort'] ?? 'name';
         $order = $this->request->post['order'] ?? $this->request->get['order'] ?? 'asc';
-    
+
         $itemTypes = $this->itemModel->getItemTypes();
-    
+
         if ($search || $itemType) {
             // Perform search query
             $items = $this->itemModel->searchItems($search, $itemType, $sort, $order);
@@ -58,41 +58,45 @@ class Users extends Controller
             // Retrieve all records if no search query
             $items = $this->itemModel->getAllItems($sort, $order);
         }
-    
+
         // Get previously selected items and quantities from the session
         $selectedItems = $_SESSION['selected_items'] ?? [];
-    
+
         // Handle form submission to add item to the cart
         if ($this->request->method === 'POST' && isset($this->request->post['item_id']) && isset($this->request->post['quantity'])) {
             $itemId = $this->request->post['item_id'];
-            $quantity = $this->request->post['quantity'];
-    
-            $item = $this->itemModel->getItemById($itemId);
-            $item['quantity'] = $quantity;
-            $selectedItems[$itemId] = $item;
-    
+            $quantity = (int)$this->request->post['quantity'];
+
+            if ($quantity > 0) {
+                // Add or update the item in the session if quantity is greater than zero
+                $item = $this->itemModel->getItemById($itemId);
+                $item['quantity'] = $quantity;
+                $selectedItems[$itemId] = $item;
+            } else {
+                // Remove the item if quantity is zero
+                unset($selectedItems[$itemId]);
+            }
+
             // Update the session with the selected items
             $_SESSION['selected_items'] = $selectedItems;
         }
-    
+
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "WSR",
                                                                                 "heading" => "WSR Supplies"]));
-    
+
         // Render the all items view
-        $this->response->appendBody($this->viewer->render("Warehouse/users/form.php", [
-            "items" => $items,
-            "itemTypes" => $itemTypes,
-            "selectedItems" => $selectedItems,
-            "search" => $search,
-            "itemType" => $itemType,
-            "sort" => $sort,
-            "order" => $order
-        ]));
-    
+        $this->response->appendBody($this->viewer->render("Warehouse/users/form.php", ["items" => $items,
+                                                                                            "itemTypes" => $itemTypes,
+                                                                                            "selectedItems" => $selectedItems,
+                                                                                            "search" => $search,
+                                                                                            "itemType" => $itemType,
+                                                                                            "sort" => $sort,
+                                                                                            "order" => $order]));
+
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-    
+
         return $this->response;
     }
     

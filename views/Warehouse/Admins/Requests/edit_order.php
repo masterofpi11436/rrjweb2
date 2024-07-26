@@ -24,6 +24,18 @@
     <form action="/warehouse/managers/request/one/<?= htmlspecialchars($order['id']); ?>" method="post">
         <button>Checkout</button>
     </form>
+
+    <!-- Add this div to display selected items -->
+<div id="cartItems">
+    <?php if (!empty($_SESSION['selected_items'])): ?>
+        <h3>Edited Items</h3>
+        <ul>
+            <?php foreach ($_SESSION['selected_items'] as $item): ?>
+                <li><?= htmlspecialchars($item['name']) . ': ' . htmlspecialchars($item['quantity']); ?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</div>
     
     <table>
         <tr>

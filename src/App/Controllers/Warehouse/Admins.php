@@ -343,60 +343,81 @@ class Admins extends Controller
     public function editOrder(string $id): Response
     {
         $order = $this->orderModel->getOrderForEdit($id);
-
+    
         if (!$order) {
-            // Handle case where order is not found
             return $this->response->redirect('/warehouse/admins/dashboard');
         }
-
+    
         $itemTypes = $this->itemModel->getItemTypes();
         $items = $this->itemModel->getAllItems();
-
+    
+        // Store the current order items in the session if not already set
+        if (!isset($_SESSION['selected_items'])) {
+            $_SESSION['selected_items'] = $order['items'];
+        }
+    
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Order", "heading" => "Edit Order"]));
-
+    
         // Render the edit order page
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_order.php", ["order" => $order, "itemTypes" => $itemTypes, "items" => $items]));
-
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_order.php", [
+            "order" => $order,
+            "itemTypes" => $itemTypes,
+            "items" => $items,
+            "selectedItems" => $_SESSION['selected_items']
+        ]));
+    
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-
+    
         return $this->response;
     }
+    
 
-    // Updates the order by the warehouse manager
     public function updateOrder(string $id): Response
     {
-        // Assuming you have a method to get the logged-in user ID
-        $userId = $this->getLoggedInUserId();
+        // Retrieve the order
         $order = $this->orderModel->getOrderForEdit($id);
-
+    
         if (!$order) {
             return $this->response->redirect('/warehouse/admins/dashboard');
         }
-
+    
         $itemId = $_POST['item_id'];
-        $quantity = $_POST['quantity'];
-
-        if (isset($order['items'][$itemId])) {
-            $order['items'][$itemId]['quantity'] = $quantity;
+        $quantity = (int)$_POST['quantity'];
+    
+        // Get previously selected items and quantities from the session
+        $selectedItems = $_SESSION['selected_items'] ?? [];
+    
+        if ($quantity > 0) {
+            // Add or update the item in the session if quantity is greater than zero
+            if (isset($order['items'][$itemId])) {
+                $order['items'][$itemId]['quantity'] = $quantity;
+            } else {
+                $item = $this->itemModel->getItemById($itemId);
+                $order['items'][$itemId] = [
+                    'id' => $itemId,
+                    'name' => $item['name'],
+                    'item_type' => $item['item_type'],
+                    'quantity' => $quantity
+                ];
+            }
+            $selectedItems[$itemId] = $order['items'][$itemId];
         } else {
-            $item = $this->itemModel->getItemById($itemId); // Assuming you have a method to get an item by ID
-            $order['items'][$itemId] = [
-                'id' => $itemId,
-                'name' => $item['name'],
-                'item_type' => $item['item_type'],
-                'quantity' => $quantity
-            ];
+            // Remove the item if quantity is zero
+            unset($order['items'][$itemId]);
+            unset($selectedItems[$itemId]);
         }
-
+    
+        $_SESSION['selected_items'] = $selectedItems;
+    
+        // Update the order items in the database
         $updatedItems = json_encode($order['items']);
         $success = $this->orderModel->updateOrderItems($id, $updatedItems);
-
+    
         if ($success) {
             return $this->redirect("/warehouse/managers/request/edit/$id");
         } else {
-            // Handle failure case
             return $this->response->redirect("/warehouse/managers/request/edit/$id?error=update_failed");
         }
     }
