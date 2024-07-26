@@ -16,7 +16,6 @@ Manager Account
 - Request denied for reason xyz email
 - if denied, form to email user why the request was denied
 - if edited, form populates after checkout to give reason why item was edited.
-- History pages required by section by month and total item count for the year.
 - Approve then print request for warehouse manager
 
 Warehouse Supervisors

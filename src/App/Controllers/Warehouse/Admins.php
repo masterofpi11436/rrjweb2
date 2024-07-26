@@ -472,4 +472,34 @@ class Admins extends Controller
     
         return $this->response;
     }
+
+    public function denied(): Response
+    {
+        $orders = $this->orderModel->deniedReport();
+    
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Denied", "heading" => "Denied Requests"]));
+    
+        // Render the new admin form
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/denied_requests.php", ["orders" => $orders]));
+    
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+    
+        return $this->response;
+    }
+
+    public function deniedOne(string $id): Response
+    {
+        $order = $this->orderModel->denyOne($id);
+    
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Denied", "heading" => "Denied Requests"]));
+    
+        // Render the new admin form
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/denied_one.php", ["order" => $order]));
+    
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+    
+        return $this->response;
+    }
 }

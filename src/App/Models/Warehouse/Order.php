@@ -314,6 +314,90 @@ class Order extends Model
         return $orders;
     }
 
+    public function deniedReport()
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    orders.id, 
+                    orders.user_id, 
+                    orders.supervisor_id, 
+                    orders.section_id, 
+                    orders.items, 
+                    orders.status, 
+                    orders.created_at, 
+                    orders.approved_denied_at, 
+                    orders.approved_denied_by,
+                    user.first_name AS user_first_name, 
+                    user.last_name AS user_last_name, 
+                    supervisor.first_name AS supervisor_first_name, 
+                    supervisor.last_name AS supervisor_last_name,
+                    section.name AS section_name
+                FROM 
+                    orders
+                JOIN 
+                    user ON orders.user_id = user.id
+                JOIN 
+                    user AS supervisor ON orders.supervisor_id = supervisor.id
+                JOIN 
+                    section ON orders.section_id = section.id
+                WHERE 
+                    orders.status = 'denied'";
+
+        $stmt = $conn->prepare($sql);
+                
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function denyOne(string $id)
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                orders.id, 
+                orders.user_id, 
+                orders.supervisor_id,
+                orders.approved_denied_by, 
+                orders.section_id, 
+                orders.items, 
+                orders.status, 
+                orders.created_at, 
+                orders.approved_denied_at, 
+                user.first_name AS user_first_name, 
+                user.last_name AS user_last_name, 
+                supervisor.first_name AS supervisor_first_name, 
+                supervisor.last_name AS supervisor_last_name,
+                warehouse.first_name AS warehouse_first_name,
+                warehouse.last_name AS warehouse_last_name,
+                section.name AS section_name
+            FROM 
+                orders
+            JOIN 
+                user ON orders.user_id = user.id
+            JOIN 
+                user AS supervisor ON orders.supervisor_id = supervisor.id
+            JOIN
+                user AS warehouse ON orders.approved_denied_by = warehouse.id
+            JOIN 
+                section ON orders.section_id = section.id
+            WHERE 
+                orders.id = :id AND orders.status = 'denied'";
+                
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $order = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($order) {
+            $order['items'] = json_decode($order['items'], true);
+        }
+
+        return $order;
+    }
+
     /*********** Warehouse Supervisor Pages ********************************************************************************************************************** */
 
     public function getPendingSupervisorOrders($supervisorId): array

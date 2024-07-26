@@ -8,6 +8,10 @@
     <button>Yearly totals</button>
 </form>
 
+<form action="/warehouse/managers/history/denied">
+    <button>Denied Requests</button>
+</form>
+
 <div>
     <?php
         // Get the previous URL from the HTTP referer
