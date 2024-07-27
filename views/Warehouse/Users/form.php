@@ -1,3 +1,7 @@
+<form action="/warehouse/users/section" id="checkoutForm">
+    <button>Home</button>
+</form>
+
 <form method="get" action="/warehouse/users/items" id="searchForm">
     <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
     

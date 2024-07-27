@@ -1,3 +1,7 @@
+<form action="/warehouse/dashboard">
+    <button>Back</button>
+</form>
+
 <p><strong>Supervisor:</strong> <?= htmlspecialchars($order['supervisor_first_name'] . ' ' . $order['supervisor_last_name']) ?></p>
 <p><strong>Section:</strong> <?= htmlspecialchars($order['section_name']) ?></p>
 <p><strong>Date Created:</strong> <?= htmlspecialchars($order['created_at']) ?></p>

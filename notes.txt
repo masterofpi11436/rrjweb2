@@ -17,14 +17,23 @@ Manager Account
 - if denied, form to email user why the request was denied
 - if edited, form populates after checkout to give reason why item was edited.
 - Approve then print request for warehouse manager
+- Need Approved reuests sections
 
 Warehouse Supervisors
 - Manage users
-- In progress status
+- In progress status, view requests that have been submitted, be able to edit orders
+- Differnetiate between user submitted requests and requests submitted to warehouse
 
-APP Wide
+User Account
+- Display the section they are submitting too
+
+
+App Wide
 - Make a desktop icon
 - Images for items
+- Need to change logout if they close the window, force a logout.
+- Add a delete button to remove an item from the cart
+- Check navigation buttons
 
 
 ChatGPT prompt:
