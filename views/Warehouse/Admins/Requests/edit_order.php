@@ -56,7 +56,7 @@
                         <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($order['items'][$item['id']]['quantity'] ?? 0); ?>">
                 </td>
                 <td>
-                    <button type="submit">Add/Update Cart</button>
+                    <button type="submit">Update Cart</button>
                     </form>
                 </td>
             </tr>
