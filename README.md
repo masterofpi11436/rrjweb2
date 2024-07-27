@@ -21,3 +21,6 @@ A search engine that searches names of inmates with Restricted tablet access for
 
 # Admin
 Dashboard for the IT Administrator to control who has access to what program
+
+# Warehouse
+Warehouse Supply request is used to allow users to submit requests to the warehouse to get supplies
