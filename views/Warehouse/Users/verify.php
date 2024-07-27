@@ -1,5 +1,6 @@
 <?php if ($supervisor && $section && $items): ?>
-    <p>Would you like to submit this request to <?= htmlspecialchars($supervisor['first_name']) . ' ' . htmlspecialchars($supervisor['last_name']) ?> for the <?= htmlspecialchars($section['name']) ?> section?</p>
+    <h2>Would you like to submit this request to your supervisor 
+        <?= htmlspecialchars($supervisor['first_name']) . ' ' . htmlspecialchars($supervisor['last_name']) ?> for the <?= htmlspecialchars($section['name']) ?>?</h2>
 
     <h2>Selected Items</h2>
     <table>

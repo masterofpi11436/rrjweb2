@@ -29,8 +29,8 @@ class Users extends Controller
         $sections = $this->userModel->getSections();
 
         // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Submission Information",
-                                                                                "heading" => "Submission Information"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Section Supervisor and Section",
+                                                                                "heading" => "Section Supervisor and Section"]));
 
         // Render the all items view
         $this->response->appendBody($this->viewer->render("Warehouse/Users/section.php", ["supervisors" => $supervisors, "sections" => $sections]));
@@ -83,7 +83,7 @@ class Users extends Controller
 
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "WSR",
-                                                                                "heading" => "WSR Supplies"]));
+                                                                                "heading" => "Request Supplies"]));
 
         // Render the all items view
         $this->response->appendBody($this->viewer->render("Warehouse/users/form.php", ["items" => $items,
@@ -108,7 +108,7 @@ class Users extends Controller
         $items = $_SESSION['selected_items'] ?? [];
 
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Verify Request",
-                                                                                "heading" => "Verify Your Request"]));
+                                                                                "heading" => "Submit Request"]));
 
         // Render the verification view
         $this->response->appendBody($this->viewer->render("Warehouse/Users/verify.php", ['supervisor' => $supervisor,

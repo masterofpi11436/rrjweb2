@@ -38,3 +38,5 @@ App Wide
 
 ChatGPT prompt:
 Hello, I am working on a PHP application. The application is in an MVC framework.
+
+CHANGE PASSWORD TO DATABASE!!!
