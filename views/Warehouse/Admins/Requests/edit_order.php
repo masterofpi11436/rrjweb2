@@ -12,6 +12,10 @@
     });
 </script>
 
+<form action="/warehouse/dashboard">
+    <button>Back</button>
+</form>
+
     <p><strong>Order ID:</strong> <?= htmlspecialchars($order['id']) ?></p>
     <p><strong>User:</strong> <?= htmlspecialchars($order['user_first_name'] . ' ' . $order['user_last_name']) ?></p>
     <p><strong>Supervisor:</strong> <?= htmlspecialchars($order['supervisor_first_name'] . ' ' . $order['supervisor_last_name']) ?></p>
@@ -35,8 +39,7 @@
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
-</div>
-    
+</div>    
     <table>
         <tr>
             <th>Item</th>

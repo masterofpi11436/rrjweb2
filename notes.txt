@@ -18,11 +18,13 @@ Manager Account
 - if edited, form populates after checkout to give reason why item was edited.
 - Approve then print request for warehouse manager
 - Need Approved reuests sections
+- Search for items
 
 Warehouse Supervisors
 - Manage users
 - In progress status, view requests that have been submitted, be able to edit orders
 - Differnetiate between user submitted requests and requests submitted to warehouse
+- Supervisor need ability cancel orders
 
 User Account
 - Display the section they are submitting too
@@ -34,7 +36,7 @@ App Wide
 - Need to change logout if they close the window, force a logout.
 - Add a delete button to remove an item from the cart
 - Check navigation buttons
-
+- Approve Deny buttons are horizontal to each other
 
 ChatGPT prompt:
 Hello, I am working on a PHP application. The application is in an MVC framework.
