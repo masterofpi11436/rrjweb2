@@ -29,12 +29,14 @@ class Supervisors extends Controller
         
         $orders = $this->orderModel->getPendingSupervisorOrders($supervisorId);
 
+        $pendings = $this->orderModel->getAllPendingOrders();
+
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Supervisor Dashboard",
                                                                                 "heading" => "Supervisor Dashboard"]));
 
         // Render the all items view
-        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/dashboard.php", ["orders" => $orders]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/dashboard.php", ["orders" => $orders, "pendings" => $pendings]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
