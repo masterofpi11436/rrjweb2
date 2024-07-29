@@ -368,7 +368,14 @@ class Admins extends Controller
         }
     
         $itemTypes = $this->itemModel->getItemTypes();
-        $items = $this->itemModel->getAllItems();
+    
+        // Check if a search query is present
+        $searchQuery = $_GET['search'] ?? ($_POST['search'] ?? '');
+        if (!empty($searchQuery)) {
+            $items = $this->itemModel->searchItems($searchQuery);
+        } else {
+            $items = $this->itemModel->getAllItems();
+        }
     
         // Store the current order items in the session if not already set
         if (!isset($_SESSION['selected_items'])) {
@@ -379,12 +386,10 @@ class Admins extends Controller
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Order", "heading" => "Edit Order"]));
     
         // Render the edit order page
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_order.php", [
-            "order" => $order,
-            "itemTypes" => $itemTypes,
-            "items" => $items,
-            "selectedItems" => $_SESSION['selected_items']
-        ]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_order.php", ["order" => $order,
+                                                                                                       "itemTypes" => $itemTypes,
+                                                                                                       "items" => $items,
+                                                                                                       "selectedItems" => $_SESSION['selected_items']]));
     
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
@@ -392,7 +397,6 @@ class Admins extends Controller
         return $this->response;
     }
     
-
     public function updateOrder(string $id): Response
     {
         // Retrieve the order
@@ -404,6 +408,7 @@ class Admins extends Controller
     
         $itemId = $_POST['item_id'];
         $quantity = (int)$_POST['quantity'];
+        $searchQuery = $_POST['search'] ?? '';
     
         // Get previously selected items and quantities from the session
         $selectedItems = $_SESSION['selected_items'] ?? [];
@@ -435,9 +440,9 @@ class Admins extends Controller
         $success = $this->orderModel->updateOrderItems($id, $updatedItems);
     
         if ($success) {
-            return $this->redirect("/warehouse/managers/request/edit/$id");
+            return $this->redirect("/warehouse/managers/request/edit/$id?search=" . urlencode($searchQuery));
         } else {
-            return $this->response->redirect("/warehouse/managers/request/edit/$id?error=update_failed");
+            return $this->redirect("/warehouse/managers/request/edit/$id?error=update_failed&search=" . urlencode($searchQuery));
         }
     }
 

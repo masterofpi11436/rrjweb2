@@ -241,6 +241,19 @@ class Order extends Model
         return $stmt->execute();
     }
 
+    public function searchItems(string $query): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT id, name, item_type FROM items WHERE name LIKE :query";
+        $stmt = $conn->prepare($sql);
+        $searchTerm = '%' . $query . '%';
+        $stmt->bindParam(':query', $searchTerm, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Warehouse Manager edit the request
     public function getOrderForEdit(string $id): array
     {
