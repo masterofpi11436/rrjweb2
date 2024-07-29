@@ -413,8 +413,8 @@ class Admins extends Controller
         // Get previously selected items and quantities from the session
         $selectedItems = $_SESSION['selected_items'] ?? [];
     
+        // Add or update the item in the session if quantity is greater than zero
         if ($quantity > 0) {
-            // Add or update the item in the session if quantity is greater than zero
             if (isset($order['items'][$itemId])) {
                 $order['items'][$itemId]['quantity'] = $quantity;
             } else {
@@ -477,18 +477,40 @@ class Admins extends Controller
     public function monthly(): Response
     {
         $sections = $this->sectionModel->getAll();
-    
         $sectionId = $_GET['section_id'] ?? '';
     
-        $orders = $this->orderModel->monthlyReport($sectionId);
+        $currentMonth = date('Y-m');
+        $selectedMonth = $_GET['month'] ?? $currentMonth;
+    
+        $orders = $this->orderModel->monthlyReport($sectionId, $selectedMonth);
+    
+        $months = [];
+        for ($i = 0; $i < 12; $i++) {
+            $months[] = date('Y-m', strtotime("-$i month"));
+        }
+    
+        $selectedSectionName = '';
+        if ($sectionId) {
+            foreach ($sections as $section) {
+                if ($section['id'] == $sectionId) {
+                    $selectedSectionName = $section['name'];
+                    break;
+                }
+            }
+        } else {
+            $selectedSectionName = 'All Sections';
+        }
     
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Monthly", "heading" => "Section Items (30 Days)"]));
     
         // Render the new admin form
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/monthly.php", [
-            "orders" => $orders, 
+            "orders" => $orders,
             "sections" => $sections,
-            "section_id" => $sectionId
+            "section_id" => $sectionId,
+            "months" => $months,
+            "selected_month" => $selectedMonth,
+            "selected_section_name" => $selectedSectionName
         ]));
     
         // Render the footer
@@ -496,6 +518,8 @@ class Admins extends Controller
     
         return $this->response;
     }
+    
+    
 
     public function denied(): Response
     {

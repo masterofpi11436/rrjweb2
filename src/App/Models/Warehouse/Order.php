@@ -334,7 +334,7 @@ class Order extends Model
         return $orders;
     }
 
-    public function monthlyReport($sectionId): array
+    public function monthlyReport($sectionId, $selectedMonth): array
     {
         $conn = $this->db->getConn();
     
@@ -342,8 +342,8 @@ class Order extends Model
                 FROM orders
                 JOIN item ON JSON_CONTAINS_PATH(items, 'one', CONCAT('$.\"', item.id, '\"'))
                 JOIN section ON orders.section_id = section.id
-                WHERE orders.status = 'approved' AND orders.approved_denied_at >= NOW() - INTERVAL 30 DAY";
-        
+                WHERE orders.status = 'approved' AND DATE_FORMAT(orders.approved_denied_at, '%Y-%m') = :selected_month";
+    
         if ($sectionId) {
             $sql .= " AND orders.section_id = :section_id";
         }
@@ -351,6 +351,7 @@ class Order extends Model
         $sql .= " GROUP BY section.name, item.id, item.name";
     
         $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':selected_month', $selectedMonth, PDO::PARAM_STR);
         if ($sectionId) {
             $stmt->bindParam(':section_id', $sectionId, PDO::PARAM_INT);
         }

@@ -13,9 +13,17 @@
     <select name="section_id" id="section">
         <option value="">All Sections</option>
         <?php foreach ($sections as $section): ?>
-            <option value="<?= htmlspecialchars($section['id']) ?>" <?= isset($sectionId) && $sectionId == $section['id'] ? 'selected' : '' ?>><?= htmlspecialchars($section['name']) ?></option>
+            <option value="<?= htmlspecialchars($section['id']) ?>" <?= isset($section_id) && $section_id == $section['id'] ? 'selected' : '' ?>><?= htmlspecialchars($section['name']) ?></option>
         <?php endforeach; ?>
     </select>
+    
+    <label for="month">Select Month:</label>
+    <select name="month" id="month">
+        <?php foreach ($months as $month): ?>
+            <option value="<?= htmlspecialchars($month) ?>" <?= isset($selected_month) && $selected_month == $month ? 'selected' : '' ?>><?= htmlspecialchars(date('F Y', strtotime($month))) ?></option>
+        <?php endforeach; ?>
+    </select>
+
     <button type="submit">Filter</button>
 </form>
 
@@ -39,7 +47,7 @@
         </tbody>
     </table>
 <?php else: ?>
-    <p>No data found for the monthly report.</p>
+    <p>No requests found for <?= htmlspecialchars($selected_section_name) ?> in the month of <?= htmlspecialchars(date('F Y', strtotime($selected_month))) ?>.</p>
 <?php endif; ?>
 
 <div>
