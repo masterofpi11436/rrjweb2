@@ -99,7 +99,7 @@ class Users extends Controller
 
         return $this->response;
     }
-    
+
     // Ask the user to verify the cart to submit to the supervisor
     public function verify(): Response
     {
@@ -119,6 +119,35 @@ class Users extends Controller
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;
+    }
+
+    public function update(): Response
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $items = $_SESSION['selected_items'] ?? [];
+
+            foreach ($_POST['items'] as $index => $item) {
+                if ($_POST['action'] === 'update') {
+                    if ($item['quantity'] == 0) {
+                        // Remove item if quantity is 0
+                        unset($items[$index]);
+                    } else {
+                        // Update quantity
+                        $items[$index]['quantity'] = $item['quantity'];
+                    }
+                } elseif ($_POST['action'] === 'remove') {
+                    // Remove item
+                    unset($items[$index]);
+                }
+            }
+
+            // Update the session with modified items
+            $_SESSION['selected_items'] = array_values($items);
+        }
+
+        // Redirect back to the verify page
+        header('Location: /warehouse/users/verify');
+        exit;
     }
 
     public function submit(): Response

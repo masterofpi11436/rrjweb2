@@ -1,12 +1,6 @@
-<div>
-    <?php
-    // Get the previous URL from the HTTP referer
-    $previousUrl = $_SERVER['HTTP_REFERER'] ?? '/login';
-    ?>
-    <form action="<?= htmlspecialchars($previousUrl) ?>">
-        <button>Go Back</button>
-    </form>
-</div>
+<form action="/warehouse/managers/history/denied">
+    <button>Go Back</button>
+</form>
 
 <p><strong>User:</strong> <?= htmlspecialchars($order['user_first_name'] . ' ' . $order['user_last_name']) ?></p>
 <p><strong>Supervisor:</strong> <?= htmlspecialchars($order['supervisor_first_name'] . ' ' . $order['supervisor_last_name']) ?></p>

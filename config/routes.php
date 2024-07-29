@@ -212,6 +212,7 @@ $router->add("/warehouse/sections/destroy/{id:\d+}", ["controller" => "sections"
 $router->add("/warehouse/users/section", ["controller" => "users", "action" => "info", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/users/items", ["controller" => "users", "action" => "items", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/users/verify", ["controller" => "users", "action" => "verify", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/users/update", ["controller" => "users", "action" => "update", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/users/submit", ["controller" => "users", "action" => "submit", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/users/success", ["controller" => "users", "action" => "success", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 
@@ -224,6 +225,7 @@ $router->add("/warehouse/supervisors/dashboard", ["controller" => "supervisors",
 $router->add("/warehouse/supervisors/section", ["controller" => "supervisors", "action" => "section", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/items", ["controller" => "supervisors", "action" => "items", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/verify", ["controller" => "supervisors", "action" => "verify", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/update", ["controller" => "supervisors", "action" => "update", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/submit", ["controller" => "supervisors", "action" => "submit", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/success", ["controller" => "supervisors", "action" => "success", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 

@@ -3,5 +3,5 @@
 <h3>You may now close this page or submit another request</h3>
 
 <form action="/warehouse/supervisors/dashboard">
-    <button>Submit Another Request</button>
+    <button>Back To Dashboard</button>
 </form>
