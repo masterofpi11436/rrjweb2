@@ -7,7 +7,6 @@
         <tr>
             <th>Item</th>
             <th>Quantity</th>
-            <th>Actions</th>
         </tr>
         <?php foreach ($items as $index => $item): ?>
             <tr>

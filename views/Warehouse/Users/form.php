@@ -29,7 +29,7 @@
         <h3>Selected Items</h3>
         <ul>
             <?php foreach ($selectedItems as $item): ?>
-                <li><?= htmlspecialchars($item['name']) . ': ' . htmlspecialchars($item['quantity']); ?></li>
+                <li><?= htmlspecialchars($item['name']) ?></li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
