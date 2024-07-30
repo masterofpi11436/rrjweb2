@@ -170,7 +170,7 @@ class Supervisors extends Controller
             $this->orderModel->submitSupervisorOrder();
             
             // Send Email to warehouse manager
-            // $this->mailer->sendNewRequestToWarehouse();
+            $this->mailer->sendNewRequestToWarehouse();
             
             return $this->redirect('/warehouse/supervisors/success');
 
