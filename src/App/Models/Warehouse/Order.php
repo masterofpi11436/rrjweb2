@@ -485,6 +485,44 @@ class Order extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getAllPendingWarehouseOrders($supervisorId): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT 
+                    orders.id, 
+                    orders.user_id, 
+                    orders.supervisor_id, 
+                    orders.section_id, 
+                    orders.items, 
+                    orders.status, 
+                    orders.created_at, 
+                    orders.approved_denied_at, 
+                    orders.approved_denied_by,
+                    user.first_name AS user_first_name, 
+                    user.last_name AS user_last_name, 
+                    supervisor.first_name AS supervisor_first_name, 
+                    supervisor.last_name AS supervisor_last_name,
+                    section.name AS section_name
+                FROM 
+                    orders
+                JOIN 
+                    user ON orders.user_id = user.id
+                JOIN 
+                    user AS supervisor ON orders.supervisor_id = supervisor.id
+                JOIN 
+                    section ON orders.section_id = section.id
+                WHERE 
+                    orders.supervisor_id = :supervisor_id AND orders.status = 'pending warehouse approval'";
+            
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':supervisor_id', $supervisorId, PDO::PARAM_INT);
+        
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getOrderById(string $id): array
     {
         $conn = $this->db->getConn();

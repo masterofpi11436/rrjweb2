@@ -29,7 +29,7 @@ class Supervisors extends Controller
         
         $orders = $this->orderModel->getPendingSupervisorOrders($supervisorId);
 
-        $pendings = $this->orderModel->getAllPendingOrders();
+        $pendings = $this->orderModel->getAllPendingWarehouseOrders($supervisorId);
 
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Supervisor Dashboard",
