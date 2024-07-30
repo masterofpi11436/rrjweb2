@@ -145,4 +145,40 @@ class Mail extends Mailer
             return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
         }
     }
+
+    /**
+     * Email that request was edited for a certain reason.
+     *
+     * @param string $to Recipient's email address
+     * @param string $resetLink Password reset link
+     * @return bool|string Returns true on success, error message on failure
+     */
+    public function sendEdited($requestorEmail, $reason) {
+        try {
+            $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
+            $fromName = 'WSR'; // Sender's name
+            $subject = 'Warehouse Request Edited (Do Not Reply)';
+            $body = "Hello,<br><br>
+                     Your recent request to the warehouse for supplies was edited by the warehouse manager.<br><br>
+                     Reason the request was edited:<br><br>
+                     $reason";
+
+            // Set the sender's address
+            $this->mail->setFrom($from, $fromName);
+            // Add a recipient
+            $this->mail->addAddress($requestorEmail);
+
+            // Content
+            $this->mail->isHTML(true); // Set email format to HTML
+            $this->mail->Subject = $subject; // Set the subject of the email
+            $this->mail->Body = $body; // Set the body of the email
+
+            // Send the email
+            $this->mail->send();
+            return true; // Return true on success
+        } catch (Exception $e) {
+            // Return error message on failure
+            return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
+        }
+    }
 }

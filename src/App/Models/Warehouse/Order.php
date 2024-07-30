@@ -222,6 +222,25 @@ class Order extends Model
         }
     }
 
+    // Return the email as a string
+    public function getSupervisorEmail(string $order_id): ?string
+    {
+        $conn = $this->db->getConn();
+    
+        $sql = "SELECT u.email
+                FROM orders o
+                JOIN user u ON o.supervisor_id = u.id
+                WHERE o.id = :order_id";
+    
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':order_id', $order_id, PDO::PARAM_STR);
+        $stmt->execute();
+    
+        $email = $stmt->fetchColumn();
+    
+        return $email !== false ? $email : null;
+    }
+
     // Order is denied
     public function denyOrder(string $id, int $userId): bool
     {

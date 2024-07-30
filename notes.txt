@@ -13,12 +13,9 @@ WSR To Do List
 Warehouse Supervisor Account
 
 Manager Account
-- Request denied for reason xyz email
-- if denied, form to email user why the request was denied
 - if edited, form populates after checkout to give reason why item was edited.
 - Approve then print request for warehouse manager
 - Need Approved reuests sections
-- Search for items
 
 Warehouse Supervisors
 - Manage users

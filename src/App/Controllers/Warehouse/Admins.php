@@ -328,6 +328,8 @@ class Admins extends Controller
     {
         $order = $this->orderModel->getOne($id);
 
+        var_dump($order['supervisor_id']);
+
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Note", "heading" => "Add Denial Reason"]));
 
@@ -343,12 +345,15 @@ class Admins extends Controller
     // Process the denial, add the note, and delete the order
     public function denyOrder(string $id): Response
     {
-        // Get the logged-in user ID (this assumes you have a way to get the logged-in user ID)
+        // Get the logged-in user ID to say who denied the order
         $userId = $this->getLoggedInUserId();
+
+        // Not to be added to the order and email
         $note = $_POST['note'] ?? '';
 
         // Add the denial note to the order
         $success = $this->orderModel->addDenyNoteAndSetDeniedStatus($id, $userId, $note);
+        $requestorEmail = $this->orderModel->getSupervisorEmail($id);
 
         if ($success) {
             
