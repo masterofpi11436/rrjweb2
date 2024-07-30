@@ -30,8 +30,8 @@
     <button type="submit">Search</button>
 </form>
 
-<form action="/warehouse/managers/request/one/<?= htmlspecialchars($order['id']); ?>" method="post">
-    <button>Checkout</button>
+<form action="/warehouse/managers/request/edit_note/<?= htmlspecialchars($order['id']) ?>" method="post">
+    <button>Finalize</button>
 </form>
 
 <!-- Add this div to display selected items -->

@@ -20,7 +20,6 @@ Manager Account
 Warehouse Supervisors
 - Manage users
 - In progress status, view requests that have been submitted, be able to edit orders
-- Differnetiate between user submitted requests and requests submitted to warehouse
 - Supervisor need ability cancel orders
 
 User Account

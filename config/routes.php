@@ -154,6 +154,7 @@ $router->add("/warehouse/managers/request/one/{id:\d+}", ["controller" => "admin
 $router->add("/warehouse/managers/request/approve/{id:\d+}", ["controller" => "admins", "action" => "approveOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/request/deny_note/{id:\d+}", ["controller" => "admins", "action" => "deny", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/request/deny/{id:\d+}", ["controller" => "admins", "action" => "denyOrder", "middleware" => "auth", "namespace" => "Warehouse", "method" => "post"]);
+$router->add("/warehouse/managers/request/edit_note/{id:\d+}", ["controller" => "admins", "action" => "edit", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/request/edit/{id:\d+}", ["controller" => "admins", "action" => "editOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/request/update/{id:\d+}", ["controller" => "admins", "action" => "updateOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 

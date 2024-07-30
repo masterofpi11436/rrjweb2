@@ -44,7 +44,7 @@
                 <tr>
                     <td><?= htmlspecialchars($order['user_first_name']) . ' ' . htmlspecialchars($order['user_last_name']); ?></td>
                     <td><?= htmlspecialchars($order['created_at']) ?></td>
-                    <td><?= htmlspecialchars($pending['section_name']) ?></td>
+                    <td><?= htmlspecialchars($order['section_name']) ?></td>
                     <td>
                         <a href="/warehouse/supervisors/request/one/<?= htmlspecialchars($order['id']); ?>">View</a>
                     </td>

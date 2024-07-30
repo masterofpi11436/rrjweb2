@@ -317,18 +317,20 @@ class Order extends Model
     }
 
     // Update the order that was edited
-    public function updateOrderItems(string $id, string $items): bool
+    public function updateOrderItems(string $id, string $items, string $note): bool
     {
         $conn = $this->db->getConn();
-
+    
         $sql = "UPDATE orders 
-                SET items = :items
+                SET items = :items,
+                    note = :note
                 WHERE id = :id";
-
+    
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->bindParam(':items', $items, PDO::PARAM_STR);
-
+        $stmt->bindParam(':note', $note, PDO::PARAM_STR);
+    
         return $stmt->execute();
     }
 
@@ -470,10 +472,11 @@ class Order extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT orders.id, orders.status, orders.created_at, user.first_name AS user_first_name, user.last_name AS user_last_name
+        $sql = "SELECT orders.id, orders.status, orders.created_at, user.first_name AS user_first_name, user.last_name AS user_last_name, section.name AS section_name
                 FROM orders
                 JOIN user ON orders.user_id = user.id
-                WHERE orders.supervisor_id = :supervisor_id AND status = 'pending supervisor approval'";
+                JOIN section ON orders.section_id = section.id
+                WHERE orders.supervisor_id = :supervisor_id AND orders.status = 'pending supervisor approval'";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':supervisor_id', $supervisorId, PDO::PARAM_INT);

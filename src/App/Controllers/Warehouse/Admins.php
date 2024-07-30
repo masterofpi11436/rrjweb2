@@ -328,8 +328,6 @@ class Admins extends Controller
     {
         $order = $this->orderModel->getOne($id);
 
-        var_dump($order['supervisor_id']);
-
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Note", "heading" => "Add Denial Reason"]));
 
@@ -404,6 +402,22 @@ class Admins extends Controller
         return $this->response;
     }
     
+    public function edit(string $id): Response
+    {
+        $order = $this->orderModel->getOne($id);
+    
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Note", "heading" => "Add Denial Reason"]));
+    
+        // Render the order details
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_note.php", ["order" => $order]));
+    
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    
+        return $this->response;
+    }
+    
     public function updateOrder(string $id): Response
     {
         // Retrieve the order
@@ -413,45 +427,64 @@ class Admins extends Controller
             return $this->response->redirect('/warehouse/admins/dashboard');
         }
     
-        $itemId = $_POST['item_id'];
-        $quantity = (int)$_POST['quantity'];
+        $note = $_POST['note'] ?? '';
         $searchQuery = $_POST['search'] ?? '';
     
         // Get previously selected items and quantities from the session
         $selectedItems = $_SESSION['selected_items'] ?? [];
     
-        // Add or update the item in the session if quantity is greater than zero
-        if ($quantity > 0) {
-            if (isset($order['items'][$itemId])) {
-                $order['items'][$itemId]['quantity'] = $quantity;
+        // Check if item_id is set in the POST request
+        if (isset($_POST['item_id'])) {
+            $itemId = $_POST['item_id'];
+            $quantity = (int)$_POST['quantity'];
+    
+            // Add or update the item in the session if quantity is greater than zero
+            if ($quantity > 0) {
+                if (isset($order['items'][$itemId])) {
+                    $order['items'][$itemId]['quantity'] = $quantity;
+                } else {
+                    $item = $this->itemModel->getItemById($itemId);
+                    $order['items'][$itemId] = [
+                        'id' => $itemId,
+                        'name' => $item['name'],
+                        'item_type' => $item['item_type'],
+                        'quantity' => $quantity
+                    ];
+                }
+                $selectedItems[$itemId] = $order['items'][$itemId];
             } else {
-                $item = $this->itemModel->getItemById($itemId);
-                $order['items'][$itemId] = [
-                    'id' => $itemId,
-                    'name' => $item['name'],
-                    'item_type' => $item['item_type'],
-                    'quantity' => $quantity
-                ];
+                // Remove the item if quantity is zero
+                unset($order['items'][$itemId]);
+                unset($selectedItems[$itemId]);
             }
-            $selectedItems[$itemId] = $order['items'][$itemId];
-        } else {
-            // Remove the item if quantity is zero
-            unset($order['items'][$itemId]);
-            unset($selectedItems[$itemId]);
+    
+            $_SESSION['selected_items'] = $selectedItems;
         }
     
-        $_SESSION['selected_items'] = $selectedItems;
-    
-        // Update the order items in the database
+        // Update the order items and note in the database
         $updatedItems = json_encode($order['items']);
-        $success = $this->orderModel->updateOrderItems($id, $updatedItems);
+        $success = $this->orderModel->updateOrderItems($id, $updatedItems, $note);
     
         if ($success) {
+            // Send email only if the note is being updated
+            if (isset($_POST['update_note'])) {
+                // Get the supervisor's email
+                $requestorEmail = $this->orderModel->getSupervisorEmail($id);
+    
+                // Send email with the note
+                if ($requestorEmail) {
+                    $this->mailer->sendEdited($requestorEmail, $note);
+                }
+                
+                // Redirect to the Order Details page after submitting the note
+                return $this->redirect("/warehouse/managers/request/one/$id");
+            }
+    
             return $this->redirect("/warehouse/managers/request/edit/$id?search=" . urlencode($searchQuery));
         } else {
             return $this->redirect("/warehouse/managers/request/edit/$id?error=update_failed&search=" . urlencode($searchQuery));
         }
-    }
+    }    
 
     /*********************************************************************************************************************************** */
     // History Pages
