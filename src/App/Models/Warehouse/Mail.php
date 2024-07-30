@@ -10,10 +10,46 @@ class Mail extends Mailer
      * Send a password reset email.
      *
      * @param string $to Recipient's email address
+     * @param string $registerLink create a password
+     * @return bool|string Returns true on success, error message on failure
+     */
+    public function registerEmail($to, $registerLink) 
+    {
+        try {
+            $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
+            $fromName = 'WSR Account Activation'; // Sender's name
+            $subject = 'Account Activation';
+            $body = "Hello,<br><br>Please click the following link to finish registering for your <strong>Warehouse Supply Request</strong> account:<br>
+                     <a href=\"$registerLink\">";
+
+            // Set the sender's address
+            $this->mail->setFrom($from, $fromName);
+            // Add a recipient
+            $this->mail->addAddress($to);
+
+            // Content
+            $this->mail->isHTML(true); // Set email format to HTML
+            $this->mail->Subject = $subject; // Set the subject of the email
+            $this->mail->Body = $body; // Set the body of the email
+
+            // Send the email
+            $this->mail->send();
+            return true; // Return true on success
+        } catch (Exception $e) {
+            // Return error message on failure
+            return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
+        }
+    }
+
+    /**
+     * Send a password reset email.
+     *
+     * @param string $to Recipient's email address
      * @param string $resetLink Password reset link
      * @return bool|string Returns true on success, error message on failure
      */
-    public function sendNewPass($to, $resetLink) {
+    public function sendNewPass($to, $resetLink) 
+    {
         try {
             $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
             $fromName = 'Password Reset Service'; // Sender's name
@@ -47,7 +83,8 @@ class Mail extends Mailer
      * @param string $resetLink Password reset link
      * @return bool|string Returns true on success, error message on failure
      */
-    public function sendNewRequestToWarehouse() {
+    public function sendNewRequestToWarehouse() 
+    {
         try {
             $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
             $fromName = 'WSR'; // Sender's name
@@ -82,7 +119,8 @@ class Mail extends Mailer
      * @param string $resetLink Password reset link
      * @return bool|string Returns true on success, error message on failure
      */
-    public function sendNewRequestToSupervisor($to) {
+    public function sendNewRequestToSupervisor($to) 
+    {
         try {
             $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
             $fromName = 'WSR'; // Sender's name
@@ -117,7 +155,8 @@ class Mail extends Mailer
      * @param string $resetLink Password reset link
      * @return bool|string Returns true on success, error message on failure
      */
-    public function sendDenied($requestorEmail, $reason) {
+    public function sendDenied($requestorEmail, $reason) 
+    {
         try {
             $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
             $fromName = 'WSR'; // Sender's name
@@ -153,7 +192,8 @@ class Mail extends Mailer
      * @param string $resetLink Password reset link
      * @return bool|string Returns true on success, error message on failure
      */
-    public function sendEdited($requestorEmail, $reason) {
+    public function sendEdited($requestorEmail, $reason) 
+    {
         try {
             $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
             $fromName = 'WSR'; // Sender's name
