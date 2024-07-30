@@ -144,6 +144,8 @@ class Admins extends Controller
             "role_id" => $this->request->post["role_id"]
         ];
 
+        // Send an email to the user redirecting them to create a new password.
+
         // Hash the password
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
@@ -327,12 +329,7 @@ class Admins extends Controller
     
         return $this->response;
     }
-
-    public function print(): Response
-    {
         
-    }
-    
     // Order is approved
     public function approveOrder(string $id): Response
     {

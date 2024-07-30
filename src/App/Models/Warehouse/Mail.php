@@ -7,7 +7,7 @@ use Framework\Mailer;
 class Mail extends Mailer 
 {
     /**
-     * Send a password reset email.
+     * Send a temporary password for a newly created user.
      *
      * @param string $to Recipient's email address
      * @param string $registerLink create a password

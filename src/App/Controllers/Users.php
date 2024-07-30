@@ -180,34 +180,45 @@ class Users extends Controller
 
 
     public function createNewPassword(): Response
-{
-    // Get the form data
-    $data = [
-        "new_password" => $this->request->post["new_password"],
-        "confirm_password" => $this->request->post["confirm_password"],
-        "reset_token" => $this->request->post["reset_token"]
-    ];
+    {
+        // Get the form data
+        $data = [
+            "new_password" => $this->request->post["new_password"],
+            "confirm_password" => $this->request->post["confirm_password"],
+            "reset_token" => $this->request->post["reset_token"]
+        ];
 
-    // Validate the form data
-    if ($data['new_password'] !== $data['confirm_password']) {
-        $errorMessage = "Passwords do not match.";
-    } else {
-        $errorMessage = '';
-
-        // Attempt to update the password
-        if ($this->model->updatePassword($data)) {
-            return $this->redirect("/login");
+        // Validate the form data
+        if ($data['new_password'] !== $data['confirm_password']) {
+            $errorMessage = "Passwords do not match.";
         } else {
-            $errorMessage = "Failed to update the password.";
+            $errorMessage = '';
+
+            // Attempt to update the password
+            if ($this->model->updatePassword($data)) {
+                return $this->redirect("/login");
+            } else {
+                $errorMessage = "Failed to update the password.";
+            }
         }
+
+        // Render the form again with error messages
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Your Password"]));
+        $this->response->appendBody($this->viewer->render("Logins/reset_password.php", ["errorMessage" => $errorMessage, "user" => $data, "token" => ["reset_token" => $data["reset_token"]]]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
     }
 
-    // Render the form again with error messages
-    $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Your Password"]));
-    $this->response->appendBody($this->viewer->render("Logins/reset_password.php", ["errorMessage" => $errorMessage, "user" => $data, "token" => ["reset_token" => $data["reset_token"]]]));
-    $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    // New User sets new password
+    public function newPassword(): Response
+    {
 
-    return $this->response;
-}
+    }
+    // New User's password is updated to the database after registration link is sent.
+    public function processNewPassword(): Response
+    {
+
+    }
 
 }

@@ -19,6 +19,11 @@ $router->add('/success', ["controller" => "users", "action" => "success"]);
 $router->add('/reset_password', ["controller" => "users", "action" => "resetPassword"]);
 $router->add('/process_password', ["controller" => "users", "action" => "createNewPassword"]);
 
+// New User Pages
+$router->add('/new_password', ["controller" => "users", "action" => "newPassword"]);
+$router->add('/process_new_password', ["controller" => "users", "action" => "processNewPassword"]);
+
+// Log Out
 $router->add('/logout', ["controller" => "users", "action" => "logout"]);
 
 // *************************************************************************************************************************************************//
