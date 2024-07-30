@@ -131,7 +131,7 @@ class Admins extends Controller
     }
 
     /**
-     * Creates a new admin.
+     * Creates a new warehouse user
      */
     public function create()
     {
@@ -144,15 +144,26 @@ class Admins extends Controller
             "role_id" => $this->request->post["role_id"]
         ];
 
-        // Send an email to the user redirecting them to create a new password.
+        // Generate reset token and expiry time
+        $resetToken = bin2hex(random_bytes(32)); // Secure token generation
+        $tokenExpiry = date('Y-m-d H:i:s', strtotime('+1 hour')); // Token expires in 1 hour
+
+        // Add reset token and expiry time to the data
+        $data['reset_token'] = $resetToken;
+        $data['token_expiry'] = $tokenExpiry;
 
         // Hash the password
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         // Attempt to insert the new admin record
         if ($this->model->insertRecord($data)) {
+            
+            $resetLink = "localhost/reset_password?token=" . $resetToken;
+            $this->mailer->registerEmail($data['email'], $resetLink);
+
             // Redirect to the newly created admin's page
             return $this->redirect("/warehouse/admins/one/{$this->model->getInsertID()}");
+
         } else {
             // Render the form again with error messages
             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
@@ -162,7 +173,6 @@ class Admins extends Controller
             return $this->response;
         }
     }
-
 
     /**
      * Renders the form to edit an existing admin.

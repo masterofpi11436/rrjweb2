@@ -20,7 +20,7 @@ class Mail extends Mailer
             $fromName = 'WSR Account Activation'; // Sender's name
             $subject = 'Account Activation';
             $body = "Hello,<br><br>Please click the following link to finish registering for your <strong>Warehouse Supply Request</strong> account:<br>
-                     <a href=\"$registerLink\">";
+                     <a href=\"$registerLink\">Register</a>";
 
             // Set the sender's address
             $this->mail->setFrom($from, $fromName);
