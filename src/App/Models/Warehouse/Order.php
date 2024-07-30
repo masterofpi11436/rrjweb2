@@ -192,7 +192,7 @@ class Order extends Model
 
     // Adding note to denied order
     // Add the denial note to the order and then delete the order
-    public function addDenyNoteAndDelete(string $id, int $userId, string $note): bool
+    public function addDenyNoteAndSetDeniedStatus(string $id, int $userId, string $note): bool
     {
         $conn = $this->db->getConn();
 
@@ -221,7 +221,6 @@ class Order extends Model
             return false;
         }
     }
-
 
     // Order is denied
     public function denyOrder(string $id, int $userId): bool

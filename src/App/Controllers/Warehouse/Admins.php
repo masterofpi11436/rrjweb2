@@ -9,6 +9,7 @@ use App\Models\Warehouse\Admin;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Section;
+use App\Models\Warehouse\Mail;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -24,7 +25,7 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel, private Section $sectionModel){}
+    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel, private Section $sectionModel, private Mail $mailer){}
 
     public function dashboard(): Response
     {
@@ -347,10 +348,11 @@ class Admins extends Controller
         $note = $_POST['note'] ?? '';
 
         // Add the denial note to the order
-        $success = $this->orderModel->addDenyNoteAndDelete($id, $userId, $note);
+        $success = $this->orderModel->addDenyNoteAndSetDeniedStatus($id, $userId, $note);
 
         if ($success) {
-            // Redirect to a success page or the dashboard
+            
+            $this->mailer->sendDenied($requestorEmail, $note);
             return $this->redirect('/warehouse/dashboard');
         } else {
             // Handle failure case
