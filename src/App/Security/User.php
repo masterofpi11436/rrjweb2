@@ -71,18 +71,20 @@ class User extends Model
     }
 
     // Get the token from the query string
-    public function getToken()
-    {
-        $token = $_GET["token"];
+    public function getToken($resetToken)
+    {        
+        $token = $_GET['token'];
+    
         $conn = $this->db->getConn();
-
+    
         $sql = "SELECT * FROM user WHERE reset_token = :token";
-
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(":token", $token, PDO::PARAM_STR);
         $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $result;
     }
 
     public function updatePassword($data)

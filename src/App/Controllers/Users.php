@@ -11,7 +11,7 @@ use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
 use Framework\Response;
 use Framework\Request;
-use Framework\Mailer;
+use App\Models\Warehouse\Mail;
 
 /**
  * Controller for handling user-related actions.
@@ -23,7 +23,7 @@ class Users extends Controller
      *
      * @param User $model The user model
      */
-    public function __construct(private User $model, private Mailer $mailer){}
+    public function __construct(private User $model, private Mail $mailer){}
 
     // Log in Page
     public function login(): Response
@@ -128,7 +128,7 @@ class Users extends Controller
 
                 $this->model->storeResetToken($user['id'], $token, $expiry);
 
-                $resetLink = "http://rrjweb2/reset_password?token=$token";
+                $resetLink = "http://localhost/reset_password?token=$token";
                 $sendResult = $this->mailer->sendNewPass($email, $resetLink);
 
                 if ($sendResult === true) {
@@ -163,18 +163,19 @@ class Users extends Controller
     // Password reset pages
     public function resetPassword(): Response
     {
-        $token = $this->model->getToken();
-
+        $resetToken = $_GET['token'];
+        $token = $this->model->getToken($resetToken);
+            
         $errorMessage = '';
-
-        if ((strtotime($token['token_expiry'])) <= time()) {
-            $errorMessage = "Time limit has expired for this reset, please go back and reset again";
+    
+        if (strtotime($token['token_expiry']) <= time()) {
+            $errorMessage = "The time limit has expired for this reset. Please go back and reset again.";
         }
-
+    
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Reset Password", "heading" => "Reset Your Password"]));
         $this->response->appendBody($this->viewer->render("Logins/reset_password.php", ["token" => $token, "errorMessage" => $errorMessage]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-
+    
         return $this->response;
     }
 
@@ -209,16 +210,4 @@ class Users extends Controller
 
         return $this->response;
     }
-
-    // New User sets new password
-    public function newPassword(): Response
-    {
-
-    }
-    // New User's password is updated to the database after registration link is sent.
-    public function processNewPassword(): Response
-    {
-
-    }
-
 }
