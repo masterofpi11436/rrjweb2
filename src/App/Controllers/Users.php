@@ -128,7 +128,7 @@ class Users extends Controller
 
                 $this->model->storeResetToken($user['id'], $token, $expiry);
 
-                $resetLink = "http://localhost/reset_password?token=$token";
+                $resetLink = "http://rrjweb2/reset_password?token=$token";
                 $sendResult = $this->mailer->sendNewPass($email, $resetLink);
 
                 if ($sendResult === true) {
