@@ -158,7 +158,7 @@ class Admins extends Controller
         // Attempt to insert the new admin record
         if ($this->model->insertRecord($data)) {
             
-            $resetLink = "localhost/reset_password?token=" . $resetToken;
+            $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
             $this->mailer->registerEmail($data['email'], $resetLink);
 
             // Redirect to the newly created admin's page

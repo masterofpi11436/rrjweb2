@@ -12,25 +12,20 @@ WSR To Do List
 
 Warehouse Supervisor Account
 
-Manager Account
-- if edited, form populates after checkout to give reason why item was edited.
-- Approve then print request for warehouse manager
-- Need Approved reuests sections
+***Manager Account***
 
-Warehouse Supervisors
+***Warehouse Supervisors***
 - Manage users
 - In progress status, view requests that have been submitted, be able to edit orders
 - Supervisor need ability cancel orders
 
-User Account
+***User Account***
 - Display the section they are submitting too
 
-
-App Wide
+***App Wide***
 - Make a desktop icon
 - Images for items
 - Need to change logout if they close the window, force a logout.
-- Add a delete button to remove an item from the cart
 - Check navigation buttons
 - Approve Deny buttons are horizontal to each other
 
