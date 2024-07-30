@@ -152,6 +152,8 @@ $router->add("/warehouse/admins/destroy/{id:\d+}", ["controller" => "admins", "a
 // Approve/Deny Page
 $router->add("/warehouse/managers/request/one/{id:\d+}", ["controller" => "admins", "action" => "viewOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/request/approve/{id:\d+}", ["controller" => "admins", "action" => "approveOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/request/approve_print/{id:\d+}", ["controller" => "admins", "action" => "approvePrint", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/request/print/{id:\d+}", ["controller" => "admins", "action" => "print", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/request/deny_note/{id:\d+}", ["controller" => "admins", "action" => "deny", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/request/deny/{id:\d+}", ["controller" => "admins", "action" => "denyOrder", "middleware" => "auth", "namespace" => "Warehouse", "method" => "post"]);
 $router->add("/warehouse/managers/request/edit_note/{id:\d+}", ["controller" => "admins", "action" => "edit", "middleware" => "auth", "namespace" => "Warehouse"]);

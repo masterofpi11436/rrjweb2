@@ -28,7 +28,7 @@
     </tbody>
 </table>
 
-<form id="approveForm" action="/warehouse/managers/request/approve/<?= htmlspecialchars($order['id']) ?>" method="post">
+<form id="approveForm" action="/warehouse/managers/request/approve_print/<?= htmlspecialchars($order['id']) ?>" method="post">
     <button type="submit" onclick="return confirmApprove()">Approve</button>
 </form>
 

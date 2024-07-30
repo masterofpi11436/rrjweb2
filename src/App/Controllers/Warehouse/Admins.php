@@ -305,6 +305,33 @@ class Admins extends Controller
     {
         return $_SESSION['user_id'];
     }
+
+    // Warehouse manager is asked if they want to print the request
+    public function approvePrint(string $id): Response
+    {
+        $order = $this->orderModel->getPendingOrder($id);
+
+        if (!$order) {
+            // Handle case where order is not found
+            return $this->response->redirect('/warehouse/dashboard');
+        }
+
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Print Order", "heading" => "Print the Request?"]));
+    
+        // Render the order details
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/print.php", ["order" => $order]));
+    
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    
+        return $this->response;
+    }
+
+    public function print(): Response
+    {
+        
+    }
     
     // Order is approved
     public function approveOrder(string $id): Response
