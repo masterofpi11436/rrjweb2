@@ -35,3 +35,9 @@ ChatGPT prompt:
 Hello, I am working on a PHP application. The application is in an MVC framework.
 
 CHANGE PASSWORD TO DATABASE!!!
+
+admin***
+
+Log In:
+if true for warehouse column, then route the user to choose which application to run or add a button on their
+page to direct them to the page they want
