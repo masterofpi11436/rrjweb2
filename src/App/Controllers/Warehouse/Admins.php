@@ -146,7 +146,7 @@ class Admins extends Controller
 
         // Generate reset token and expiry time
         $resetToken = bin2hex(random_bytes(32)); // Secure token generation
-        $tokenExpiry = date('Y-m-d H:i:s', strtotime('+1 hour')); // Token expires in 1 hour
+        $tokenExpiry = date('Y-m-d H:i:s', strtotime('+48 hour')); // Token expires in 48 hours
 
         // Add reset token and expiry time to the data
         $data['reset_token'] = $resetToken;
