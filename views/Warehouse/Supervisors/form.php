@@ -15,20 +15,34 @@
 
 <h2>Select Items to add to Request</h2>
 
-<form action="/warehouse/supervisors/verify" id="checkoutForm">
-    <button>Checkout</button>
-</form>
-
 <!-- Add this div to display selected items -->
 <div id="cartItems">
     <?php if (!empty($selectedItems)): ?>
         <h3>Selected Items</h3>
-        <ul>
-            <?php foreach ($selectedItems as $item): ?>
-                <li><?= htmlspecialchars($item['name']) . ': ' . htmlspecialchars($item['quantity']); ?></li>
-            <?php endforeach; ?>
-        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($selectedItems as $item): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($item['name']); ?></td>
+                        <td><?= htmlspecialchars($item['quantity']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    <?php else: ?>
+        <h3>Your Cart is Empty</h3>
     <?php endif; ?>
+
+    <form class="checkout-btn" action="/warehouse/supervisors/verify" id="checkoutForm">
+        <button>Checkout</button>
+    </form>
 </div>
 
 <table>

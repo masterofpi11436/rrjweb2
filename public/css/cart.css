@@ -1,23 +1,67 @@
-/* Style for the cartItems section to be fixed on the right side of the screen */
 #cartItems {
     position: fixed;
-    top: 10%; /* Adjust as needed */
+    top: 30%; /* Adjust as needed */
     right: 10px; /* Adjust as needed */
     width: 300px; /* Adjust as needed */
-    background-color: #fff; /* White background */
-    padding: 20px;
+    max-height: 400px; /* Set maximum height */
+    background-color: #636363; /* Background color */
+    padding: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
     border-radius: 10px; /* Rounded corners */
     z-index: 1000; /* Ensure it's on top of other elements */
+    overflow-y: auto; /* Add vertical scrollbar */
+    border: 2px solid #444; /* Add border */
 }
 
-/* Adjust the list inside cartItems */
-#cartItems ul {
-    list-style-type: none; /* Remove bullet points */
-    padding: 0; /* Remove padding */
-    margin: 0; /* Remove margin */
+/* Adjust the table inside cartItems */
+#cartItems table {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Collapse borders */
+    color: white; /* Text color */
 }
 
-#cartItems li {
-    margin-bottom: 10px; /* Space between items */
+#cartItems th, #cartItems td {
+    padding: 10px; /* Padding for table cells */
+    border-bottom: 1px solid #888; /* Border between rows */
+    color: #eee; /* Text color */
+}
+
+#cartItems th {
+    background-color: #444; /* Header background color */
+    color: #ddd; /* Header text color */
+}
+
+#cartItems tr:nth-child(even) {
+    background-color: #555; /* Row background color for even rows */
+}
+
+#cartItems tr:nth-child(odd) {
+    background-color: #666; /* Row background color for odd rows */
+}
+
+#cartItems tr:last-child td {
+    border-bottom: none; /* Remove border from last row */
+}
+
+.checkout-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.checkout-btn button {
+    background-color: #2f548d; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+}
+
+.checkout-btn button:hover {
+    background-color: #1f395f; /* Darker green on hover */
+}
+
+#cartItems h3 {
+    text-align: center;
 }
