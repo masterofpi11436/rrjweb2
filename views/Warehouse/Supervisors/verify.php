@@ -1,3 +1,7 @@
+<form action="/warehouse/supervisors/items">
+    <button>Back</button>
+</form>
+
 <?php if ($section && $items): ?>
     <h3>Would you like to submit this request to the warehouse for <?= htmlspecialchars($section['name']) ?>?</h3>
 
@@ -6,7 +10,6 @@
         <tr>
             <th>Item</th>
             <th>Quantity</th>
-            <th>Actions</th>
         </tr>
         <?php foreach ($items as $index => $item): ?>
             <tr>

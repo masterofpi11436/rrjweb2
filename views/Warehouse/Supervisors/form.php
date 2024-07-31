@@ -52,7 +52,7 @@
                     <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($selectedItems[$item['id']]['quantity'] ?? ''); ?>">
             </td>
             <td>
-                <button type="submit">Update Cart</button>
+                <button type="submit">Add</button>
                 </form>
             </td>
         </tr>

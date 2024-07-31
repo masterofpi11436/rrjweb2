@@ -1,0 +1,23 @@
+/* Style for the cartItems section to be fixed on the right side of the screen */
+#cartItems {
+    position: fixed;
+    top: 10%; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    width: 300px; /* Adjust as needed */
+    background-color: #fff; /* White background */
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+    border-radius: 10px; /* Rounded corners */
+    z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+/* Adjust the list inside cartItems */
+#cartItems ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+#cartItems li {
+    margin-bottom: 10px; /* Space between items */
+}

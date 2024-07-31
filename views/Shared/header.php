@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="/public/css/dark.css">
     <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="/public/css/cart.css">
     <!--[if IE]><link rel="stylesheet" href="/public/css/edge.css"><![endif]-->
     <script src="/public/JavaScript/script.js"></script>
     <title><?= $title ?></title>

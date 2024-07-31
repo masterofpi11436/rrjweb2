@@ -18,6 +18,7 @@ Warehouse Supervisor Account
 - Manage users
 - In progress status, view requests that have been submitted, be able to edit orders
 - Supervisor need ability cancel orders
+- Back Button needs to preserve session
 
 ***User Account***
 - Display the section they are submitting too
@@ -28,6 +29,7 @@ Warehouse Supervisor Account
 - Need to change logout if they close the window, force a logout.
 - Check navigation buttons
 - Approve Deny buttons are horizontal to each other
+- 
 
 ChatGPT prompt:
 Hello, I am working on a PHP application. The application is in an MVC framework.
