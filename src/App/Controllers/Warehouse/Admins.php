@@ -348,7 +348,11 @@ class Admins extends Controller
 
         $success = $this->orderModel->approveOrder($id, $userId);
 
+        $requestorEmail = $this->orderModel->getSupervisorEmail($id);
+
         if ($success) {
+            // Email the supervisor that their order was approved
+            $this->mailer->sendApproved($requestorEmail);
             // Redirect to a success page or the dashboard
             return $this->redirect('/warehouse/dashboard');
         } else {
