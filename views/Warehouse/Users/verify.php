@@ -1,3 +1,7 @@
+<form action="/warehouse/users/items">
+    <button>Back</button>
+</form>
+
 <?php if ($supervisor && $section && $items): ?>
     <h2>Would you like to submit this request to your supervisor 
         <?= htmlspecialchars($supervisor['first_name']) . ' ' . htmlspecialchars($supervisor['last_name']) ?> for the <?= htmlspecialchars($section['name']) ?>?</h2>
