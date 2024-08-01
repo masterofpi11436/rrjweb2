@@ -55,6 +55,7 @@
 
 <table>
     <tr>
+        <th>Image</th>
         <th>Item</th>
         <th>Item Type</th>
         <th>Quantity</th>
@@ -62,6 +63,7 @@
     </tr>
     <?php foreach ($items as $item): ?>
         <tr>
+            <td><img src="<?= $item['image']; ?>" alt="No Image Available" onerror="this.onerror=null; this.src='/public/images/no-image.jpg';" style="width:100px;height:100px;"></td>
             <td><?= htmlspecialchars($item['name']); ?></td>
             <td><?= htmlspecialchars($item['item_type']); ?></td>
             <td>

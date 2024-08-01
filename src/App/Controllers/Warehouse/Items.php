@@ -117,8 +117,7 @@ class Items extends Controller
         $data = [
             "name" => $this->request->post["name"],
             "item_type" => $this->request->post["item_type"],
-            "image" => $this->request->post["image"],
-            "quantity" => $this->request->post["quantity"],
+            "quantity" => $this->request->post["quantity"]
         ];
 
         if ($this->model->insertRecord($data)) {
@@ -133,7 +132,6 @@ class Items extends Controller
             return $this->response;
         }
     }
-
 
     /**
      * Renders the form to edit an existing item.
@@ -163,7 +161,6 @@ class Items extends Controller
 
         $item["name"] = $this->request->post["name"];
         $item["item_type"] = $this->request->post["item_type"];
-        $item["image"] = $this->request->post["image"];
         $item["quantity"] = $this->request->post["quantity"];
 
         if ($this->model->updateRecord($id, $item)) {

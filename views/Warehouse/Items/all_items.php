@@ -2,6 +2,10 @@
     <button>Back to Dashboard</button>
 </form>
 
+<form action="/warehouse/items/add">
+    <button>Add Item</button>
+</form>
+
 <form method="get" action="/warehouse/items/all">
     <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
     <button type="submit">Search</button>
