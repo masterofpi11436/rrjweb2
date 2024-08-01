@@ -76,7 +76,7 @@ class UserAuthorization implements MiddlewareInterface
         }
     }
 
-    private function hasAccess(string $route, ?int $roleId): bool
+    private function hasAccess(string $route, int|string $roleId): bool
     {
         $rolePermissions = [
             1 => ['/.*'], // Role ID 1 (admin): Access to all routes

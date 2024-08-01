@@ -20,11 +20,15 @@ class Admins extends Controller
 
     public function dashboard(): Response
     {
+        // Get the Id of the user log to check for warehouse user
+        $userId = $_SESSION['user_id'];
+        $user = $this->model->getOne((string)$userId);
+
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Dashboard", "heading" => "Admin Dashboard"]));
 
         // Render the dashboard console
-        $this->response->appendBody($this->viewer->render("Admins/dashboard.php"));
+        $this->response->appendBody($this->viewer->render("Admins/dashboard.php", ["user" => $user]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));

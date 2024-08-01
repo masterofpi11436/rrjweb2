@@ -37,6 +37,31 @@ class Users extends Controller
         return $this->response;
     }
 
+    // Swtich roles to transfer to different applcations
+    public function switchrole()
+    {
+        $userId = $_SESSION['user_id'];
+        $user = $this->model->getOne((string)$userId);
+
+        if (isset($_POST['warehouse_role'])) {
+            $_SESSION['role_id'] = $_POST['warehouse_role'];
+    
+            // Redirect based on warehouse_role
+            switch ($_POST['warehouse_role']) {
+                case 8:
+                    return $this->redirect('/warehouse/dashboard');
+                case 9:
+                    return $this->redirect('/warehouse/supervisors/dashboard');
+                case 10:
+                    return $this->redirect('/warehouse/users/section');
+                case 11:
+                    return $this->redirect('/warehouse/warehousesupervisors/dashboard');
+                default:
+                    return $this->redirect('/login'); // Default fallback
+            }
+        }
+    }
+
     // Modify the auth() method in Users controller
     public function auth(): Response
     {

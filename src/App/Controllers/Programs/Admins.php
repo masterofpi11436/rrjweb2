@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Controllers\Programs;
 
 use App\Models\Programs\Admin;
+use App\Models\User;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -21,15 +22,18 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model){}
+    public function __construct(private Admin $model, private User $userModel){}
 
     public function dashboard(): Response
     {
+        $userId = $_SESSION['user_id'];
+        $user = $this->userModel->getOne((string)$userId);
+
         // Render the header
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Dashboard", "heading" => "Programs Admin Dashboard"]));
 
         // Render the dashboard console
-        $this->response->appendBody($this->viewer->render("Programs/Admins/dashboard.php"));
+        $this->response->appendBody($this->viewer->render("Programs/Admins/dashboard.php", ["user" => $user]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));

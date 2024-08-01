@@ -41,6 +41,10 @@ $router->add("/admins/update/{id:\d+}", ["controller" => "admins", "action" => "
 $router->add("/admins/delete/{id:\d+}", ["controller" => "admins", "action" => "deleteUser", "middleware" => "auth"]);
 $router->add("/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyUser", "method" => "post", "middleware" => "auth"]);
 
+// Swtich application
+$router->add("/admins/switchRole", ["controller" => "users", "action" => "switchRole"]);
+
+
 // *************************************************************************************************************************************************//
 
 // Admin Pages (Tablet)
@@ -112,6 +116,7 @@ $router->add("/programs/admins/edit/{id:\d+}", ["controller" => "admins", "actio
 $router->add("/programs/admins/update/{id:\d+}", ["controller" => "admins", "action" => "updateAdmin", "method" => "post", "middleware" => "auth|trim", "namespace" => "Programs"]);
 $router->add("/programs/admins/delete/{id:\d+}", ["controller" => "admins", "action" => "deleteAdmin", "middleware" => "auth", "namespace" => "Programs"]);
 $router->add("/programs/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyAdmin", "method" => "post", "middleware" => "auth", "namespace" => "Programs"]);
+
 
 // *************************************************************************************************************************************************//
 

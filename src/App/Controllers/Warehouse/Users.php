@@ -29,8 +29,8 @@ class Users extends Controller
         $sections = $this->userModel->getSections();
 
         // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Section Supervisor and Section",
-                                                                                "heading" => "Section Supervisor and Section"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Select Supervisor and Section",
+                                                                                "heading" => "Select Supervisor and Section"]));
 
         // Render the all items view
         $this->response->appendBody($this->viewer->render("Warehouse/Users/section.php", ["supervisors" => $supervisors, "sections" => $sections]));
