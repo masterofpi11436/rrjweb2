@@ -1,3 +1,7 @@
+<form action="/warehouse/supervisors/section">
+    <button>Home</button>
+</form>
+
 <form method="get" action="/warehouse/supervisors/items" id="searchForm">
     <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
     
@@ -45,33 +49,29 @@
     </form>
 </div>
 
-<table>
-    <tr>
-        <th>Item</th>
-        <th>Item Type</th>
-        <th>Quantity</th>
-        <th>Action</th>
-    </tr>
+<div class="items-container">
     <?php foreach ($items as $item): ?>
-        <tr>
-            <td><?= htmlspecialchars($item['name']); ?></td>
-            <td><?= htmlspecialchars($item['item_type']); ?></td>
-            <td>
+        <div class="item-card">
+            <img src="<?= $item['image']; ?>" alt="No Image Available" onerror="this.onerror=null; this.src='/public/images/no-image.jpg';" class="item-image">
+            <div class="item-details">
+                <div class="item-name"><?= htmlspecialchars($item['name']); ?></div>
                 <form action="/warehouse/supervisors/items" method="post" class="cartForm">
                     <input type="hidden" name="item_id" value="<?= htmlspecialchars($item['id']); ?>">
                     <input type="hidden" name="search" id="searchHidden" value="<?= htmlspecialchars($search ?? '') ?>">
                     <input type="hidden" name="item_type" id="itemTypeHidden" value="<?= htmlspecialchars($itemType ?? '') ?>">
                     <input type="hidden" name="sort" id="sortHidden" value="<?= htmlspecialchars($sort ?? 'name') ?>">
                     <input type="hidden" name="order" id="orderHidden" value="<?= htmlspecialchars($order ?? 'asc') ?>">
-                    <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($selectedItems[$item['id']]['quantity'] ?? ''); ?>">
-            </td>
-            <td>
-                <button type="submit">Add</button>
+                    <div class="quantity-input">
+                        <button type="button" onclick="changeQuantity(this, -1)">-</button>
+                        <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($selectedItems[$item['id']]['quantity'] ?? 0); ?>" readonly>
+                        <button type="button" onclick="changeQuantity(this, 1)">+</button>
+                    </div>
+                    <button type="submit">Add</button>
                 </form>
-            </td>
-        </tr>
+            </div>
+        </div>
     <?php endforeach; ?>
-</table>
+</div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -96,4 +96,12 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+function changeQuantity(button, delta) {
+    const input = button.parentElement.querySelector('input[name="quantity"]');
+    let quantity = parseInt(input.value) || 0;
+    quantity += delta;
+    if (quantity < 0) quantity = 0;
+    input.value = quantity;
+}
 </script>
