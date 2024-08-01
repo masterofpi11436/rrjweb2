@@ -155,22 +155,46 @@ class Admins extends Controller
         // Hash the password
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
-        // Attempt to insert the new admin record
-        if ($this->model->insertRecord($data)) {
-            
-            $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
-            $this->mailer->registerEmail($data['email'], $resetLink);
+        // Check if the user already exists by email
+        $existingUser = $this->model->findUserByEmail($data['email']);
 
-            // Redirect to the newly created admin's page
-            return $this->redirect("/warehouse/admins/one/{$this->model->getInsertID()}");
+        if ($existingUser) {
+            // User exists, update the warehouse_role
+            $updateData = [
+                'warehouse_role' => $this->request->post['role_id'],
+                'reset_token' => $resetToken,
+                'token_expiry' => $tokenExpiry
+            ];
+            if ($this->model->updateUserRecord($existingUser['id'], $updateData)) {
+                $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
+                $this->mailer->registerEmail($data['email'], $resetLink);
 
+                // Redirect to the updated user's page
+                return $this->redirect("/warehouse/admins/one/{$existingUser['id']}");
+            } else {
+                // Render the form again with error messages
+                $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
+                $this->response->appendBody($this->viewer->render("Warehouse/Admins/add_admin.php", ["errorMessage" => $this->model->getErrors(), "admin" => $data]));
+                $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+                return $this->response;
+            }
         } else {
-            // Render the form again with error messages
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
-            $this->response->appendBody($this->viewer->render("Warehouse/Admins/add_admin.php", ["errorMessage" => $this->model->getErrors(), "admin" => $data]));
-            $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+            // User does not exist, insert new record
+            if ($this->model->insertRecord($data)) {
+                $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
+                $this->mailer->registerEmail($data['email'], $resetLink);
 
-            return $this->response;
+                // Redirect to the newly created admin's page
+                return $this->redirect("/warehouse/admins/one/{$this->model->getInsertID()}");
+            } else {
+                // Render the form again with error messages
+                $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
+                $this->response->appendBody($this->viewer->render("Warehouse/Admins/add_admin.php", ["errorMessage" => $this->model->getErrors(), "admin" => $data]));
+                $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+                return $this->response;
+            }
         }
     }
 
@@ -204,13 +228,12 @@ class Admins extends Controller
     {
         // Retrieve the admin record
         $admin = $this->getAdminID($id);
-
+    
         // Get the form data and set empty fields to null
         $admin["first_name"] = $this->request->post["first_name"];
         $admin["last_name"] = $this->request->post["last_name"];
         $admin["email"] = $this->request->post["email"];
-        $admin["role_id"] = $this->request->post["role_id"];
-
+    
         // Check if password field is not empty before hashing and updating
         if (!empty($this->request->post["password"])) {
             $admin["password"] = $this->request->post["password"];
@@ -219,19 +242,24 @@ class Admins extends Controller
             // Unset password key to prevent updating it
             unset($admin['password']);
         }
+    
+        // Check if the user has data in the warehouse_role column
+        if (!is_null($admin["warehouse_role"])) {
+            $admin["warehouse_role"] = $this->request->post["role_id"];
+        } else {
+            $admin["role_id"] = $this->request->post["role_id"];
+        }
         
         // Attempt to update the admin record
         if ($this->model->updateRecord($id, $admin)) {
-
-            // Redirect to the newly created tablet's page
+            // Redirect to the updated admin's page
             return $this->redirect("/warehouse/admins/one/{$id}");
         } else {
-
             // Render the form again with error messages if update fails
             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Admin", "heading" => "Edit Admin"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Admins/edit_admin.php", ["errorMessage" => $this->model->getErrors(), "admin" => $admin]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-
+    
             return $this->response;
         }
     }

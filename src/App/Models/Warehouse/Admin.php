@@ -33,6 +33,37 @@ class Admin extends Model
         }
     }
 
+    public function findUserByEmail($email)
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT * FROM user WHERE email = :email";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updateUserRecord($id, $data)
+    {
+        $conn = $this->db->getConn();
+    
+        $fields = [];
+    
+        foreach ($data as $key => $value) {
+            $fields[] = "$key = :$key";
+        }
+        $sql = "UPDATE user SET " . implode(", ", $fields) . " WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT); // Assuming id is an integer
+        foreach ($data as $key => $value) {
+            $stmt->bindValue(":$key", $value);
+        }
+        return $stmt->execute();
+    }
+
     // Search functionality
     public function searchAdminssWithRoles(string $search): array
     {
