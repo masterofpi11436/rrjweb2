@@ -143,10 +143,52 @@ class Items extends Controller
         $item = $this->getItemID($id);
         $itemTypes = $this->model->getItemTypes();
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Number", "heading" => "Edit Number"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Item", "heading" => "Edit Item"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Items/edit_item.php", ["item" => $item, "itemTypes" => $itemTypes]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
+        return $this->response;
+    }
+
+    public function addPicture(string $id): Response
+    {
+        $item = $this->getItemID($id);
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Picture", "heading" => "Add/Edit Picture"]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Items/add_picture.php", ["item" => $item]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
+    public function processPicture(string $id): Response
+    {
+        $item = $this->getItemID($id);
+    
+        if (isset($_FILES['fileToUpload']) && $_FILES['fileToUpload']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = 'C:/xampp/htdocs/rrjweb2/public/images/';
+            $uploadFile = $uploadDir . basename($_FILES['fileToUpload']['name']);
+    
+            if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $uploadFile)) {
+                $imagePath = basename($_FILES['fileToUpload']['name']);
+                $success = $this->model->processPhoto((int)$id, $imagePath);
+    
+                if ($success) {
+                    return $this->redirect("/warehouse/items/one/{$id}");
+                } else {
+                    $errorMessage = "Failed to update image path in database.";
+                }
+            } else {
+                $errorMessage = "Failed to upload image.";
+            }
+        } else {
+            $errorMessage = "No file uploaded or upload error.";
+        }
+    
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Picture", "heading" => "Add/Edit Picture"]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Items/add_picture.php", ["errorMessage" => $errorMessage, "item" => $item]));
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    
         return $this->response;
     }
 

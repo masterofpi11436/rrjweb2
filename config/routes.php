@@ -187,6 +187,8 @@ $router->add("/warehouse/items/add", ["controller" => "items", "action" => "addN
 $router->add("/warehouse/items/create", ["controller" => "items", "action" => "create", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
 $router->add("/warehouse/items/one/{id:\d+}", ["controller" => "items", "action" => "viewone", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/items/edit/{id:\d+}", ["controller" => "items", "action" => "editItem", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/items/addpicture/{id:\d+}", ["controller" => "items", "action" => "addPicture", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/items/processpicture/{id:\d+}", ["controller" => "items", "action" => "processPicture", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/items/update/{id:\d+}", ["controller" => "items", "action" => "updateItem", "method" => "post", "middleware" => "auth|trim", "namespace" => "Warehouse"]);
 $router->add("/warehouse/items/delete/{id:\d+}", ["controller" => "items", "action" => "deleteItem", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/items/destroy/{id:\d+}", ["controller" => "items", "action" => "destroyItem", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);

@@ -6,6 +6,10 @@
     <button>Delete Item</button>
 </form>
 
+<form action="/warehouse/items/addpicture/<?= htmlspecialchars($item['id']) ?>">
+    <button>Add Picture</button>
+</form>
+
 <form method="post" action="/warehouse/items/update/<?= htmlspecialchars($item['id']) ?>">
     <?php require "item_form.php"; ?>
 </form>

@@ -153,4 +153,20 @@ class Item extends Model
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function processPhoto($id, string $image): bool
+    {
+        $conn = $this->db->getConn();
+
+        // Add the relative path to the image name
+        $imagePath = '/public/images/' . $image;
+
+        $sql = "UPDATE item SET image = :image WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
+        $stmt->bindParam(':image', $imagePath, \PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+    
 }
