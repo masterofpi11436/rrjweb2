@@ -52,7 +52,7 @@
 <div class="items-container">
     <?php foreach ($items as $item): ?>
         <div class="item-card">
-            <img src="<?= $item['image']; ?>" alt="No Image Available" onerror="this.onerror=null; this.src='/public/images/no-image.jpg';" class="item-image">
+            <img src="public/images/<?= $item['name']; ?>.jpg" alt="No Image Available" onerror="this.onerror=null; this.src='/public/images/no-image.jpg';" class="item-image">
             <div class="item-details">
                 <div class="item-name"><?= htmlspecialchars($item['name']); ?></div>
                 <form action="/warehouse/supervisors/items" method="post" class="cartForm">
