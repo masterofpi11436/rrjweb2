@@ -37,7 +37,7 @@
                 <tr>
                     <td><?= htmlspecialchars($item['name'] ?? '') ?></td>
                     <td><?= htmlspecialchars($item['item_type'] ?? '') ?></td>
-                    <td><?= htmlspecialchars($item['image'] ?? '') ?></td>
+                    <td><img src="<?= $item['image']; ?>" alt="No Image Available" onerror="this.onerror=null; this.src='/public/images/no-image.jpg';"></td>
                     <td><?= htmlspecialchars($item['quantity'] ?? '') ?></td>
                     <td>
                         <a href="/warehouse/items/one/<?= htmlspecialchars($item['id']) ?>">View</a>

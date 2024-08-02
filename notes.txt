@@ -13,6 +13,7 @@ WSR To Do List
 Warehouse Supervisor Account
 
 ***Manager Account***
+- Delete photos
 
 ***Warehouse Supervisors***
 - Manage users
