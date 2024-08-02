@@ -30,10 +30,6 @@
     <button type="submit">Search</button>
 </form>
 
-<form action="/warehouse/managers/request/edit_note/<?= htmlspecialchars($order['id']) ?>" method="post">
-    <button>Finalize</button>
-</form>
-
 <!-- Add this div to display selected items -->
 <div id="cartItems">
     <?php if (!empty($_SESSION['selected_items'])): ?>
@@ -44,6 +40,9 @@
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
+    <form action="/warehouse/managers/request/edit_note/<?= htmlspecialchars($order['id']) ?>" method="post" class="checkout-btn">
+        <button>Finalize</button>
+    </form>
 </div>
 
 <table>
