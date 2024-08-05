@@ -1,30 +1,28 @@
 <h1>Current Requests</h1>
 
 <?php if (!empty($orders)): ?>
-<table>
-    <thead>
-        <tr>
-            <th>Supervisor</th>
-            <th>Section</th>
-            <th>Date Created</th>
-            <th>View Order</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach($orders as $order): ?>
+    <table>
+        <thead>
             <tr>
-                <td><?= $order['supervisor_last_name'] ?></td>
-                <td><?= $order['section_name'] ?></td>
-                <td><?= $order['created_at'] ?></td>
-                <td>
-                    <form action="/warehouse/managers/one/<?= $order['id'] ?>">
-                        <button>View</button>
-                    </form>
-                </td>
+                <th>Supervisor Name</th>
+                <th>Section</th>
+                <th>Created At</th>
+                <th>View</th>
             </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <?php foreach ($orders as $order): ?>
+                <tr>
+                    <td><?= htmlspecialchars($order['supervisor_first_name'] . ' ' . $order['supervisor_last_name']) ?></td>
+                    <td><?= htmlspecialchars($order['section_name']) ?></td>
+                    <td><?= htmlspecialchars($order['created_at']) ?></td>
+                    <td>
+                        <a href="/warehouse/managers/request/one/<?= htmlspecialchars($order['id']); ?>">View</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 <?php else: ?>
     <p>All caught up on orders.</p>
 <?php endif; ?>
