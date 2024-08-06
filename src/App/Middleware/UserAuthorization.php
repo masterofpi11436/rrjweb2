@@ -89,7 +89,7 @@ class UserAuthorization implements MiddlewareInterface
             8 => ['/warehouse/.*'], // Role ID 8: Access to the WSR Manager-related routes
             9 => ['/warehouse/supervisors/.*'], // Role ID 9: Access to the WSR Supervisor-related routes
             10 => ['/warehouse/users/.*'], // Role ID 10: Access to the WSR User-related routes
-            11 => ['/warehouse/warehousesupervisors/.*'], // Role ID 11: Access to the WSR supervisor-related routes
+            11 => ['/warehouse/.*'], // Role ID 11: Access to the WSR supervisor-related routes
         ];
 
         if ($roleId === null) {

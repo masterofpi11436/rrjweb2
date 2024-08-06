@@ -1,4 +1,24 @@
-<h1>Current Requests</h1>
+<form action="/warehouse/admins/all">
+    <button>Warehouse Users</button>
+</form>
+
+<form action="/warehouse/items/all">
+    <button>Warehouse Items</button>
+</form>
+
+<form action="/warehouse/itemtype/all">
+    <button>Warehouse Item Types</button>
+</form>
+
+<form action="/warehouse/sections/all">
+    <button>Warehouse Sections</button>
+</form>
+
+<form action="/warehouse/managers/history/dashboard">
+    <button>History</button>
+</form>
+
+<h1>Pending Warehouse Supply Requests</h1>
 
 <?php if (!empty($orders)): ?>
     <table>

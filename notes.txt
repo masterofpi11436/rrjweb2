@@ -17,7 +17,6 @@ Warehouse Supervisor Account
 
 ***Warehouse Supervisors***
 - Manage users
-- In progress status, view requests that have been submitted, be able to edit orders
 - Supervisor need ability cancel orders
 - Back Button needs to preserve session
 
@@ -26,19 +25,11 @@ Warehouse Supervisor Account
 
 ***App Wide***
 - Make a desktop icon
-- Images for items
 - Need to change logout if they close the window, force a logout.
 - Check navigation buttons
 - Approve Deny buttons are horizontal to each other
-- Plus and Minus for item quantity
 
 ChatGPT prompt:
 Hello, I am working on a PHP application. The application is in an MVC framework.
 
 CHANGE PASSWORD TO DATABASE!!!
-
-admin***
-
-Log In:
-if true for warehouse column, then route the user to choose which application to run or add a button on their
-page to direct them to the page they want
