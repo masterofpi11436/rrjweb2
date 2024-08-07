@@ -39,7 +39,7 @@ class Mail extends Mailer
             // Set the sender's address
             $this->mail->setFrom($from, $fromName);
             // Add a recipient
-            $this->mail->addAddress('tugglem@rrjva.org');
+            $this->mail->addAddress('jones.deetta@rrjva.org');
 
             // Content
             $this->mail->isHTML(true); // Set email format to HTML
