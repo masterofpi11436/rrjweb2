@@ -3,6 +3,8 @@
     <button type="submit">Search</button>
 </form>
 
+<p>Click <strong><a href="/phones/updatePhones">here</a></strong> to update the phone directory</p>
+
 <!-- Display the list of tablets -->
 <?php if (!empty($phones)): ?>
     <table border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px; border-collapse:collapse;">
