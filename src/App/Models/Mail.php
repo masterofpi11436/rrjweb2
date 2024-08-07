@@ -8,7 +8,7 @@ class Mail extends Mailer
 {
 
     /**
-     * Email that request was denied for a certain reason.
+     * Email to request an update to the phone directory
      *
      * @param string $to Recipient's email address
      * @param string $resetLink Password reset link
@@ -21,6 +21,8 @@ class Mail extends Mailer
             $fromName = 'Phone'; // Sender's name
             $subject = 'Update Phone Directory';
             $body = "Information to update:<br><br>
+
+                    Requestor: $sender<br><br>
                      Old Information: <br>
                      Name: $oldName <br>
                      Rank/Title: $oldRankTitle <br>
@@ -39,7 +41,7 @@ class Mail extends Mailer
             // Set the sender's address
             $this->mail->setFrom($from, $fromName);
             // Add a recipient
-            $this->mail->addAddress('jones.deetta@rrjva.org');
+            $this->mail->addAddress('tugglem@rrjva.org');
 
             // Content
             $this->mail->isHTML(true); // Set email format to HTML
