@@ -232,6 +232,10 @@ class Supervisors extends Controller
         $success = $this->orderModel->approveUserOrder($id);
 
         if ($success) {
+
+            // Send Email to warehouse manager
+            $this->mailer->sendNewRequestToWarehouse();
+            
             // Redirect to a success page or the dashboard
             return $this->redirect('/warehouse/supervisors/dashboard');
         } else {

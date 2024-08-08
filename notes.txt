@@ -13,12 +13,11 @@ WSR To Do List
 Warehouse Supervisor Account
 
 ***Manager Account***
-- Delete photos
+- Delete photos when Item is deleted.
+- Send email that email is reset.
 
 ***Warehouse Supervisors***
-- Manage users
-- Supervisor need ability cancel orders
-- Back Button needs to preserve session
+- Create Routes and files for supervisor only
 
 ***User Account***
 - Display the section they are submitting too
