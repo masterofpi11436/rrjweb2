@@ -2,7 +2,7 @@
     <label for="supervisor">Select Supervisor:</label>
     <select name="supervisor" id="supervisor">
         <?php foreach ($supervisors as $supervisor): ?>
-            <option value="<?= htmlspecialchars($supervisor['id']) ?>"><?= htmlspecialchars($supervisor['last_name']) ?></option>
+            <option value="<?= htmlspecialchars($supervisor['id']) ?>"><?= htmlspecialchars($supervisor['last_name']) ?>, <?= htmlspecialchars($supervisor['first_name']) ?></option>
         <?php endforeach; ?>
     </select>
 

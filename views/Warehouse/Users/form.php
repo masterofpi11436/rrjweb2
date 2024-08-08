@@ -1,5 +1,5 @@
 <form action="/warehouse/users/section">
-    <button>Home</button>
+    <button>Back</button>
 </form>
 
 <form method="get" action="/warehouse/users/items" id="searchForm">
