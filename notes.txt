@@ -13,7 +13,7 @@ WSR To Do List
 Warehouse Supervisor Account
 
 ***Manager Account***
-- Delete photos when Item is deleted.
+- Delete photos when Item is deleted
 
 ***Warehouse Supervisors***
 - Create routes and files for supervisor only

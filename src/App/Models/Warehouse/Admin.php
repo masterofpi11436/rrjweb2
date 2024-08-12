@@ -70,9 +70,10 @@ class Admin extends Model
         $conn = $this->db->getConn();
 
         $sql = "SELECT user.*, role.name as role_name FROM user
-                LEFT JOIN role ON user.role_id = role.id
-                WHERE (first_name LIKE :search OR last_name LIKE :search OR email LIKE :search) AND (role_id = 8 || role_id = 9 || role_id = 10 || role_id = 11)
-                ORDER BY last_name";
+            LEFT JOIN role ON user.role_id = role.id
+            WHERE (first_name LIKE :search OR last_name LIKE :search OR email LIKE :search)
+            AND (role_id IN (8, 9, 10, 11) OR warehouse_role IN (8, 9, 10, 11))
+            ORDER BY last_name";
 
         $stmt = $conn->prepare($sql);
 
@@ -89,9 +90,9 @@ class Admin extends Model
         $conn = $this->db->getConn();
 
         $sql = "SELECT user.*, role.name as role_name FROM user
-                LEFT JOIN role ON user.role_id = role.id
-                WHERE role_id = 8 || role_id = 9 || role_id = 10 || role_id = 11
-                ORDER BY last_name";
+            LEFT JOIN role ON user.role_id = role.id
+            WHERE role_id IN (8, 9, 10, 11) OR warehouse_role IN (8, 9, 10, 11)
+            ORDER BY last_name";
         
         $stmt = $conn->prepare($sql);
         $stmt->execute();
