@@ -76,4 +76,13 @@ class User extends Model
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getWarehouseManagers(): array
+    {
+        $conn = $this->db->getConn();
+        $sql = "SELECT email FROM {$this->userTable} WHERE role_id = 8 or role_id = 11";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

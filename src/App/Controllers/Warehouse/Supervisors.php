@@ -194,12 +194,15 @@ class Supervisors extends Controller
 
     public function submit(): Response
     {
+        // Confirmation email information
         $section = $_SESSION['selected_section'];
         $items = $_SESSION['selected_items'] ?? [];
         $supervisorEmail = $this->userModel->getSupervisorEmail($_SESSION['user_id']);
-    
-        // Extract email from the array
         $supervisorEmail = $supervisorEmail['email'];
+        $section = $section['name'];
+
+        // Get all warehouse managers to email request
+        $warehouseManagers = $this->userModel->getWarehouseManagers();
     
         try {
             $this->orderModel->submitSupervisorOrder();
@@ -208,7 +211,7 @@ class Supervisors extends Controller
             $this->mailer->emailConfirmation($section, $items, $supervisorEmail);
             
             // Send Email to warehouse manager
-            $this->mailer->sendNewRequestToWarehouse();
+            $this->mailer->sendNewRequestToWarehouse($warehouseManagers);
     
             // Remove items from cart
             unset($_SESSION['selected_section'], $_SESSION['selected_items']);

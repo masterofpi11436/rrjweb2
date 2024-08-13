@@ -83,7 +83,7 @@ class Mail extends Mailer
      * @param string $resetLink Password reset link
      * @return bool|string Returns true on success, error message on failure
      */
-    public function sendNewRequestToWarehouse() 
+    public function sendNewRequestToWarehouse($warehouseManagers) 
     {
         try {
             $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
@@ -95,9 +95,10 @@ class Mail extends Mailer
 
             // Set the sender's address
             $this->mail->setFrom($from, $fromName);
-            // Add a recipient
-            $this->mail->addAddress('watson.charles@rrjva.org');
-            $this->mail->addAddress('parham.sharon@rrjva.org');
+            // Add a recipients
+            foreach ($warehouseManagers as $manager) {
+                $this->mail->addAddress($manager['email']);
+            }
 
             // Content
             $this->mail->isHTML(true); // Set email format to HTML
@@ -123,7 +124,7 @@ class Mail extends Mailer
             $body = "Hello,<br><br>
                     Your Warehouse Supply Request was successful!<br><br>
                     Here is your order:<br><br>
-                    <strong>Section:</strong> {$section['name']}<br><br>
+                    <strong>Section:</strong> $section<br><br>
                     <strong>Items Ordered:</strong><br>";
 
             // Add each item and quantity to the email body
