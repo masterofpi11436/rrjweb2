@@ -20,7 +20,6 @@ Warehouse Supervisor Account
 
 ***Supervisor Account***
 - Confirmation email with items and quantity on submission
-- Cancel Requests submitted to the Warehouse
 
 ***User Account***
 
