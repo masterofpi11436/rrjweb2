@@ -169,6 +169,15 @@ class Items extends Controller
             $uploadDir = 'C:/xampp/htdocs/rrjweb2/public/images/';
             $uploadFile = $uploadDir . basename($_FILES['fileToUpload']['name']);
     
+            // Delete the old image if it exists
+            if (!empty($item['image'])) {
+                $oldImagePath = "C:/xampp/htdocs/rrjweb2" . $item['image'];
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+    
+            // Move the new file to the upload directory
             if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $uploadFile)) {
                 $imagePath = basename($_FILES['fileToUpload']['name']);
                 $success = $this->model->processPhoto((int)$id, $imagePath);
@@ -191,6 +200,7 @@ class Items extends Controller
     
         return $this->response;
     }
+    
 
     /**
      * Updates an existing item.
