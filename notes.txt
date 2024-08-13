@@ -23,6 +23,5 @@ Warehouse Supervisor Account
 
 ***App Wide***
 - Make a desktop icon
-- Dynamically add email for warehouse managers to email on submission.
 
 CHANGE PASSWORD TO DATABASE!!!
