@@ -208,7 +208,7 @@ class Supervisors extends Controller
             $this->mailer->emailConfirmation($section, $items, $supervisorEmail);
             
             // Send Email to warehouse manager
-            // $this->mailer->sendNewRequestToWarehouse();
+            $this->mailer->sendNewRequestToWarehouse();
     
             // Remove items from cart
             unset($_SESSION['selected_section'], $_SESSION['selected_items']);
