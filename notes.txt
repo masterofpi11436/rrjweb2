@@ -13,22 +13,16 @@ WSR To Do List
 Warehouse Supervisor Account
 
 ***Manager Account***
-- Delete photos when Item is deleted
 
 ***Warehouse Supervisors***
 - Create routes and files for supervisor only
 
 ***Supervisor Account***
-- Confirmation email with items and quantity on submission
 
 ***User Account***
 
 ***App Wide***
 - Make a desktop icon
-- Need to change logout if they close the window, force a logout.
 - Dynamically add email for warehouse managers to email on submission.
-
-ChatGPT prompt:
-Hello, I am working on a PHP application. The application is in an MVC framework.
 
 CHANGE PASSWORD TO DATABASE!!!
