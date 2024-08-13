@@ -63,4 +63,17 @@ class User extends Model
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getSupervisorEmail($id): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT email FROM {$this->userTable} WHERE id = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

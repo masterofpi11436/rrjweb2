@@ -113,6 +113,48 @@ class Mail extends Mailer
         }
     }
 
+    // Email confirmation with the items ordered to the user
+    public function emailConfirmation($section, $items, $supervisorEmail)
+    {
+        try {
+            $from = 'rrjweb2@rrjva.org'; // Specific sender's email address
+            $fromName = 'Warehouse Service'; // Sender's name
+            $subject = 'Warehouse Supply Request Confirmation';
+            $body = "Hello,<br><br>
+                    Your Warehouse Supply Request was successful!<br><br>
+                    Here is your order:<br><br>
+                    <strong>Section:</strong> {$section['name']}<br><br>
+                    <strong>Items Ordered:</strong><br>";
+
+            // Add each item and quantity to the email body
+            foreach ($items as $item) {
+                $body .= "Item: " . htmlspecialchars($item['name']) . "<br>";
+                $body .= "Quantity: " . htmlspecialchars($item['quantity']) . "<br><br>";
+            }
+
+            $body .= "Thank you for your order!<br><br>
+                    Regards,<br>
+                    The Warehouse Team";
+
+            // Set the sender's address
+            $this->mail->setFrom($from, $fromName);
+            // Add a recipient
+            $this->mail->addAddress($supervisorEmail);
+
+            // Content
+            $this->mail->isHTML(true); // Set email format to HTML
+            $this->mail->Subject = $subject; // Set the subject of the email
+            $this->mail->Body = $body; // Set the body of the email
+
+            // Send the email
+            $this->mail->send();
+            return true; // Return true on success
+        } catch (Exception $e) {
+            // Return error message on failure
+            return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
+        }
+    }
+
     /**
      * Send a new request email from the user to the selected supervisor.
      *

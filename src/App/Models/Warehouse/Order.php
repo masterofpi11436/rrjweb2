@@ -76,8 +76,6 @@ class Order extends Model
 
                 $conn->commit();
 
-                unset($_SESSION['selected_section'], $_SESSION['selected_items']);
-
                 echo "Order submitted successfully.";
             } catch (Exception $e) {
                 $conn->rollBack();

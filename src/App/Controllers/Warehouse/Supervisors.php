@@ -194,19 +194,33 @@ class Supervisors extends Controller
 
     public function submit(): Response
     {
+        $section = $_SESSION['selected_section'];
+        $items = $_SESSION['selected_items'] ?? [];
+        $supervisorEmail = $this->userModel->getSupervisorEmail($_SESSION['user_id']);
+    
+        // Extract email from the array
+        $supervisorEmail = $supervisorEmail['email'];
+    
         try {
             $this->orderModel->submitSupervisorOrder();
+    
+            // Send an email confirmation to the Supervisor
+            $this->mailer->emailConfirmation($section, $items, $supervisorEmail);
             
             // Send Email to warehouse manager
-            $this->mailer->sendNewRequestToWarehouse();
-            
+            // $this->mailer->sendNewRequestToWarehouse();
+    
+            // Remove items from cart
+            unset($_SESSION['selected_section'], $_SESSION['selected_items']);
+    
             return $this->redirect('/warehouse/supervisors/success');
-
+    
         } catch (Exception $e) {
             $this->response->setBody('Failed to submit order: ' . $e->getMessage());
             return $this->response;
         }
     }
+    
 
     public function success(): Response
     {
