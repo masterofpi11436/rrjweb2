@@ -44,6 +44,34 @@ class Supervisors extends Controller
         return $this->response;
     }
 
+    // Supervisor can cancel a request. The order gets deleted
+    public function cancel(string $id) 
+    {
+        $success = $this->orderModel->denyUserOrder($id);
+
+        if ($success) {
+            return $this->redirect("/warehouse/supervisors/cancelrequest");
+        } else {
+            return $this->redirect("/warehouse/supervisors/dashboard");
+        }
+    }
+
+    // Cancel success page.
+    public function cancelSuccess()
+    {
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Order Canceled",
+                                                                                "heading" => "Order Canceled"]));
+
+        // Render the all items view
+        $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/order_canceled.php"));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
     public function section(): Response
     {
         $sections = $this->userModel->getSections();

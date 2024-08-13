@@ -11,6 +11,7 @@
                 <th>Section</th>
                 <th>Created At</th>
                 <th>Status</th>
+                <th>Cancel Order</th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +20,7 @@
                     <td><?= htmlspecialchars($pending['section_name']) ?></td>
                     <td><?= htmlspecialchars($pending['created_at']) ?></td>
                     <td><?= htmlspecialchars($pending['status']) ?></td>
+                    <td><a href="/warehouse/supervisors/cancel/<?= htmlspecialchars($pending['id']) ?>">Cancel Order</a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

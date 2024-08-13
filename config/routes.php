@@ -233,6 +233,8 @@ $router->add("/warehouse/users/success", ["controller" => "users", "action" => "
 
 // WSR Supervisor Pages
 $router->add("/warehouse/supervisors/dashboard", ["controller" => "supervisors", "action" => "dashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/cancel/{id:\d+}", ["controller" => "supervisors", "action" => "cancel", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/supervisors/cancelrequest", ["controller" => "supervisors", "action" => "cancelSuccess", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // Creating Request Pages
 $router->add("/warehouse/supervisors/section", ["controller" => "supervisors", "action" => "section", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
