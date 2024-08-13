@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\Phone;
+use App\Models\User;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -22,7 +23,7 @@ class Phones extends Controller
      *
      * @param Phone $model The phone model
      */
-    public function __construct(private Phone $model, private Mail $mailer){}
+    public function __construct(private Phone $model, private User $userModel, private Mail $mailer){}
 
     /**
      * Retrieves the phone by ID.
@@ -50,6 +51,9 @@ class Phones extends Controller
      */
     public function viewAll(): Response
     {
+        $userId = $_SESSION['user_id'];
+        $user = $this->userModel->getOne((string)$userId);
+
         // Get the search and sort parameters
         $search = $this->request->get['search'] ?? '';
         $sort = $this->request->get['sort'] ?? 'name';
@@ -67,7 +71,7 @@ class Phones extends Controller
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Phones Extensions", "heading" => "All RRJ Numbers"]));
 
         // Render the all phones view
-        $this->response->appendBody($this->viewer->render("Phones/all_phones.php", ["phones" => $phones]));
+        $this->response->appendBody($this->viewer->render("Phones/all_phones.php", ["phones" => $phones, "user" => $user]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));

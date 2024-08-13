@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\Mailroom;
+use App\Models\User;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -21,7 +22,7 @@ class Mailrooms extends Controller
      *
      * @param Mailroom $model The name model
      */
-    public function __construct(private Mailroom $model){}
+    public function __construct(private Mailroom $model, private User $userModel){}
 
     /**
      * Retrieves the name by ID.
@@ -49,6 +50,9 @@ class Mailrooms extends Controller
      */
     public function viewAll(): Response
     {
+        $userId = $_SESSION['user_id'];
+        $user = $this->userModel->getOne((string)$userId);
+
         $search = $this->request->get['search'] ?? '';
 
         if ($search) {
@@ -63,7 +67,7 @@ class Mailrooms extends Controller
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Names", "heading" => "All Names to forward to OPR"]));
 
         // Render the all names view
-        $this->response->appendBody($this->viewer->render("Mailrooms/all_names.php", ["names" => $names]));
+        $this->response->appendBody($this->viewer->render("Mailrooms/all_names.php", ["names" => $names, "user" => $user]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
