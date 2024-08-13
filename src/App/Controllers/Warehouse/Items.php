@@ -248,13 +248,15 @@ class Items extends Controller
     public function destroyItem(string $id): Response
     {
         $item = $this->getItemID($id);
-    
-        $image_path = "C:/xampp/htdocs/rrjweb2" . $item['image'];
-    
-        unlink($image_path);
-    
+
+        if (!empty($item['image'])) {
+
+            $image_path = "C:/xampp/htdocs/rrjweb2" . $item['image'];
+            unlink($image_path);
+        }
+
         $this->model->deleteRecord($id);
-    
+
         return $this->redirect("/warehouse/items/all");
     }
     
