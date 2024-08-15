@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Models\Warehouse;
 
 use Framework\Model;
+use App\Models\Section;
 use PDO;
 use Exception;
 
@@ -379,10 +380,10 @@ class Order extends Model
         return $orders;
     }
 
-    public function approvedReport()
+    public function approvedReport($week = null, $year = null, $section_id = null)
     {
         $conn = $this->db->getConn();
-
+    
         $sql = "SELECT 
                     orders.id, 
                     orders.user_id, 
@@ -407,13 +408,31 @@ class Order extends Model
                 JOIN 
                     section ON orders.section_id = section.id
                 WHERE 
-                    orders.status = 'approved'
-                ORDER BY approved_denied_at DESC";
-
+                    orders.status = 'approved'";
+    
+        if ($week !== null && $year !== null) {
+            $sql .= " AND WEEKOFYEAR(orders.created_at) = :week AND YEAR(orders.created_at) = :year";
+        }
+    
+        if ($section_id !== null) {
+            $sql .= " AND orders.section_id = :section_id";
+        }
+    
+        $sql .= " ORDER BY orders.approved_denied_at DESC";
+    
         $stmt = $conn->prepare($sql);
-                
+    
+        if ($week !== null && $year !== null) {
+            $stmt->bindParam(':week', $week, PDO::PARAM_INT);
+            $stmt->bindParam(':year', $year, PDO::PARAM_INT);
+        }
+    
+        if ($section_id !== null) {
+            $stmt->bindParam(':section_id', $section_id, PDO::PARAM_INT);
+        }
+    
         $stmt->execute();
-
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 

@@ -567,18 +567,29 @@ class Admins extends Controller
         return $this->response;
     }
 
-    public function approved():Response
+    public function approved(): Response
     {
-        $orders = $this->orderModel->approvedReport();
-
+        if (isset($_GET['week']) && $_GET['week'] !== '') {
+            list($week, $year) = explode('-', $_GET['week']);
+            $week = (int)$week;
+            $year = (int)$year;
+        } else {
+            $week = null;
+            $year = null;
+        }
+    
+        $section_id = isset($_GET['section']) && $_GET['section'] !== '' ? (int)$_GET['section'] : null;
+    
+        $orders = $this->orderModel->approvedReport($week, $year, $section_id);
+        $sections = $this->sectionModel->getAll();
+    
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Approved", "heading" => "Approved Reports"]));
-
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/approved.php", ["orders" => $orders]));
-
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/approved.php", ["orders" => $orders, "sections" => $sections]));
         $this->response->appendBody($this->viewer->render("shared/footer.php"));
-
+    
         return $this->response;
     }
+    
 
     public function approvedOne(string $id): Response
     {

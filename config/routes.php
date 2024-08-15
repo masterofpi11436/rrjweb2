@@ -170,7 +170,7 @@ $router->add("/warehouse/managers/request/update/{id:\d+}", ["controller" => "ad
 
 // History Pages
 $router->add("/warehouse/managers/history/dashboard", ["controller" => "admins", "action" => "historyDashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
-$router->add("/warehouse/managers/history/approved", ["controller" => "admins", "action" => "approved", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/history/approved", ["controller" => "admins", "action" => "approved", "middleware" => "auth", "namespace" => "Warehouse", "mthod" => "get"]);
 $router->add("/warehouse/managers/history/approved/{id:\d+}", ["controller" => "admins", "action" => "approvedOne", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/history/yearly", ["controller" => "admins", "action" => "yearly", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/history/monthly", ["controller" => "admins", "action" => "monthly", "middleware" => "auth", "namespace" => "Warehouse"]);
