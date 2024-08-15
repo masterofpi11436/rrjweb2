@@ -13,6 +13,14 @@ WSR To Do List
 Warehouse Supervisor Account
 
 ***Manager Account***
+Weekly Report
+- Total quantity per item per housing unit
+
+Monthly Report
+- Total quantity per item per housing unit
+
+Yearly Report
+- Total quantity per item July 1st - June 31st. Annual report per year.
 
 ***Warehouse Supervisors***
 - Create routes and files for supervisor only

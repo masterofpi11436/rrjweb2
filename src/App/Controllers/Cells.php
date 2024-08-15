@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Models\Cell;
+use App\Models\User;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -21,7 +22,7 @@ class Cells extends Controller
      *
      * @param Cell $model The cell model
      */
-    public function __construct(private Cell $model){}
+    public function __construct(private Cell $model, private User $userModel){}
 
     /**
      * Retrieves the cell by ID.
@@ -49,6 +50,9 @@ class Cells extends Controller
      */
     public function viewAll(): Response
     {
+        $userId = $_SESSION['user_id'];
+        $user = $this->userModel->getOne((string)$userId);
+
         $search = $this->request->get['search'] ?? '';
 
         if ($search) {
@@ -63,7 +67,7 @@ class Cells extends Controller
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Employee Contacts", "heading" => "RRJ Employee Contact List"]));
 
         // Render the all cells view
-        $this->response->appendBody($this->viewer->render("Cells/all_cells.php", ["cells" => $cells]));
+        $this->response->appendBody($this->viewer->render("Cells/all_cells.php", ["cells" => $cells, "user" => $user]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
