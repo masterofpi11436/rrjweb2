@@ -558,12 +558,40 @@ class Admins extends Controller
     // Main History Page
     public function historyDashboard(): Response
     {
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "History", "heading" => "HistoryDashboard"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "History", "heading" => "History Dashboard"]));
 
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/history_dashboard.php"));
 
         $this->response->appendBody($this->viewer->render("shared/footer.php"));
 
+        return $this->response;
+    }
+
+    public function approved():Response
+    {
+        $orders = $this->orderModel->approvedReport();
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Approved", "heading" => "Approved Reports"]));
+
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/approved.php", ["orders" => $orders]));
+
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+
+        return $this->response;
+    }
+
+    public function approvedOne(string $id): Response
+    {
+        $order = $this->orderModel->apprveOne($id);
+    
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "One", "heading" => "Approved Requests"]));
+    
+        // Render the new admin form
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/approved_one.php", ["order" => $order]));
+    
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+    
         return $this->response;
     }
 

@@ -3,6 +3,11 @@
 </form>
 
 <h2>Reports</h2>
+
+<form action="/warehouse/managers/history/approved">
+    <button>Recently Approved Requests</button>
+</form>
+
 <form action="/warehouse/managers/history/monthly">
     <button>Monthly totals</button>
 </form>
