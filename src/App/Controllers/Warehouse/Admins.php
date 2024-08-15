@@ -380,7 +380,7 @@ class Admins extends Controller
 
         if ($success) {
             // Email the supervisor that their order was approved
-            $this->mailer->sendApproved($requestorEmail);
+            // $this->mailer->sendApproved($requestorEmail);
             // Redirect to a success page or the dashboard
             return $this->redirect('/warehouse/dashboard');
         } else {
