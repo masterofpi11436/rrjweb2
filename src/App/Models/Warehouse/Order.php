@@ -373,7 +373,8 @@ class Order extends Model
             $sql .= " AND orders.section_id = :section_id";
         }
     
-        $sql .= " GROUP BY section.id, item.id, item.name";
+        $sql .= " GROUP BY section.id, item.id, item.name
+                  ORDER BY item_name";
     
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':selected_month', $selectedMonth, PDO::PARAM_STR);
