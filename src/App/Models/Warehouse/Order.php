@@ -357,17 +357,23 @@ class Order extends Model
     {
         $conn = $this->db->getConn();
     
-        $sql = "SELECT section.name as section_name, item.id, item.name, SUM(CAST(JSON_UNQUOTE(JSON_EXTRACT(items, CONCAT('$.\"', item.id, '\".quantity'))) AS UNSIGNED)) AS total_quantity
+        // SQL to get the total quantity of each item per section for the selected month
+        $sql = "SELECT section.name as section_name, 
+                       section.id as section_id, 
+                       item.id as item_id, 
+                       item.name as item_name, 
+                       SUM(CAST(JSON_UNQUOTE(JSON_EXTRACT(items, CONCAT('$.\"', item.id, '\".quantity'))) AS UNSIGNED)) AS total_quantity
                 FROM orders
                 JOIN item ON JSON_CONTAINS_PATH(items, 'one', CONCAT('$.\"', item.id, '\"'))
                 JOIN section ON orders.section_id = section.id
-                WHERE orders.status = 'approved' AND DATE_FORMAT(orders.approved_denied_at, '%Y-%m') = :selected_month";
+                WHERE orders.status = 'approved' 
+                  AND DATE_FORMAT(orders.approved_denied_at, '%Y-%m') = :selected_month";
     
         if ($sectionId) {
             $sql .= " AND orders.section_id = :section_id";
         }
     
-        $sql .= " GROUP BY section.name, item.id, item.name";
+        $sql .= " GROUP BY section.id, item.id, item.name";
     
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':selected_month', $selectedMonth, PDO::PARAM_STR);

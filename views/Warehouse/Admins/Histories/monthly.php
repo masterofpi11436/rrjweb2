@@ -21,21 +21,25 @@
     <button type="submit">Filter</button>
 </form>
 
-<?php if (!empty($orders)): ?>
+<?php if (!empty($itemNames) && !empty($sectionNames)): ?>
     <table border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px; border-collapse:collapse;">
         <thead>
             <tr>
-                <th>Section</th>
                 <th>Item Name</th>
-                <th>Total Quantity</th>
+                <?php foreach ($sectionNames as $sectionId => $sectionName): ?>
+                    <th><?= htmlspecialchars($sectionName) ?></th>
+                <?php endforeach; ?>
+                <th>Total</th>  <!-- Add the Total column header -->
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($orders as $order): ?>
+            <?php foreach ($itemNames as $itemId => $itemName): ?>
                 <tr>
-                    <td><?= htmlspecialchars($order['section_name'] ?? '') ?></td>
-                    <td><?= htmlspecialchars($order['name'] ?? '') ?></td>
-                    <td><?= htmlspecialchars($order['total_quantity'] ?? '') ?></td>
+                    <td><?= htmlspecialchars($itemName) ?></td>
+                    <?php foreach ($sectionNames as $sectionId => $sectionName): ?>
+                        <td><?= isset($tableData[$itemId][$sectionId]) ? htmlspecialchars($tableData[$itemId][$sectionId]) : '' ?></td>
+                    <?php endforeach; ?>
+                    <td><?= htmlspecialchars($itemTotals[$itemId] ?? '') ?></td>  <!-- Display the item total -->
                 </tr>
             <?php endforeach; ?>
         </tbody>

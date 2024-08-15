@@ -629,28 +629,39 @@ class Admins extends Controller
     
         $orders = $this->orderModel->monthlyReport($sectionId, $selectedMonth);
     
+        // Prepare a table structure with items as rows and sections as columns
+        $tableData = [];
+        $sectionNames = [];
+        $itemNames = [];
+        $itemTotals = [];  // Array to hold the total quantity for each item
+    
+        foreach ($orders as $order) {
+            $itemNames[$order['item_id']] = $order['item_name'];
+            $sectionNames[$order['section_id']] = $order['section_name'];
+            $tableData[$order['item_id']][$order['section_id']] = $order['total_quantity'];
+    
+            // Calculate the total quantity for each item across all sections
+            if (!isset($itemTotals[$order['item_id']])) {
+                $itemTotals[$order['item_id']] = 0;
+            }
+            $itemTotals[$order['item_id']] += $order['total_quantity'];
+        }
+    
         $months = [];
         for ($i = 0; $i < 12; $i++) {
             $months[] = date('Y-m', strtotime("-$i month"));
         }
     
-        $selectedSectionName = '';
-        if ($sectionId) {
-            foreach ($sections as $section) {
-                if ($section['id'] == $sectionId) {
-                    $selectedSectionName = $section['name'];
-                    break;
-                }
-            }
-        } else {
-            $selectedSectionName = 'All Sections';
-        }
+        $selectedSectionName = $sectionId ? $sections[array_search($sectionId, array_column($sections, 'id'))]['name'] : 'All Sections';
     
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Monthly", "heading" => "Section Items (30 Days)"]));
     
-        // Render the new admin form
+        // Render the view
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/monthly.php", [
-            "orders" => $orders,
+            "tableData" => $tableData,
+            "sectionNames" => $sectionNames,
+            "itemNames" => $itemNames,
+            "itemTotals" => $itemTotals,  // Pass the item totals to the view
             "sections" => $sections,
             "section_id" => $sectionId,
             "months" => $months,
@@ -658,13 +669,10 @@ class Admins extends Controller
             "selected_section_name" => $selectedSectionName
         ]));
     
-        // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php"));
     
         return $this->response;
     }
-    
-    
 
     public function denied(): Response
     {
