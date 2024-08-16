@@ -87,6 +87,41 @@ class Order extends Model
         }
     }
 
+    // Order submitted to warehouse by warehouse staff
+    public function submitWarehouseOrder()
+    {
+        // Fetch data from session
+        $supervisorId = $_SESSION['user_id'] ?? null;
+        $items = $_SESSION['selected_items'] ?? [];
+        $sectionId = 18;
+
+        if ($supervisorId && $sectionId && !empty($items)) {
+            try {
+                $conn = $this->db->getConn();
+                $conn->beginTransaction();
+
+                $itemsJson = json_encode($items);
+
+                $stmt = $conn->prepare("INSERT INTO `{$this->table}` (user_id, supervisor_id, section_id, items, status) VALUES (:user_id, :supervisor_id, $sectionId, :items, 'pending warehouse approval')");
+
+                $stmt->bindValue(':user_id', $supervisorId, PDO::PARAM_INT); // Both user_id and supervisor_id are the supervisor's ID
+                $stmt->bindValue(':supervisor_id', $supervisorId, PDO::PARAM_INT);
+                $stmt->bindValue(':items', $itemsJson, PDO::PARAM_STR);
+
+                $stmt->execute();
+
+                $conn->commit();
+
+                echo "Order submitted successfully.";
+            } catch (Exception $e) {
+                $conn->rollBack();
+                throw new Exception("Failed to submit order: " . $e->getMessage());
+            }
+        } else {
+            throw new Exception("Incomplete order data.");
+        }
+    }
+
     /*********** Warehouse Manager Pages ********************************************************************************************************************** */
     
     // Get all pending orders to display in the dashboard

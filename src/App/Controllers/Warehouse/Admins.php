@@ -10,6 +10,7 @@ use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Section;
 use App\Models\Warehouse\Mail;
+use App\Models\Warehouse\User;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -25,7 +26,7 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel, private Section $sectionModel, private Mail $mailer){}
+    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel, private Section $sectionModel, private Mail $mailer, private User $userModel){}
 
     public function dashboard(): Response
     {
@@ -471,7 +472,7 @@ class Admins extends Controller
         $order = $this->orderModel->getOne($id);
     
         // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Note", "heading" => "Add Denial Reason"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Note", "heading" => "Reson for Edit"]));
     
         // Render the order details
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_note.php", ["order" => $order]));
@@ -707,14 +708,130 @@ class Admins extends Controller
 
     public function createOrder(): Response
     {
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Create", "heading" => "Create a Request"]));
-    
-        // Render the new admin form
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/create.php"));
-    
+        // Extract search parameters from GET or POST
+        $search = $this->request->post['search'] ?? $this->request->get['search'] ?? '';
+        $itemType = $this->request->post['item_type'] ?? $this->request->get['item_type'] ?? '';
+        $sort = $this->request->post['sort'] ?? $this->request->get['sort'] ?? 'name';
+        $order = $this->request->post['order'] ?? $this->request->get['order'] ?? 'asc';
+
+        $itemTypes = $this->itemModel->getItemTypes();
+
+        if ($search || $itemType) {
+            // Perform search query
+            $items = $this->itemModel->searchItems($search, $itemType, $sort, $order);
+        } else {
+            // Retrieve all records if no search query
+            $items = $this->itemModel->getAllItems($sort, $order);
+        }
+
+        // Get previously selected items and quantities from the session
+        $selectedItems = $_SESSION['selected_items'] ?? [];
+
+        // Handle form submission to add item to the cart
+        if ($this->request->method === 'POST' && isset($this->request->post['item_id']) && isset($this->request->post['quantity'])) {
+            $itemId = $this->request->post['item_id'];
+            $quantity = (int)$this->request->post['quantity'];
+
+            if ($quantity > 0) {
+                // Add or update the item in the session if quantity is greater than zero
+                $item = $this->itemModel->getItemById($itemId);
+                $item['quantity'] = $quantity;
+                $selectedItems[$itemId] = $item;
+            } else {
+                // Remove the item if quantity is zero
+                unset($selectedItems[$itemId]);
+            }
+
+            // Update the session with the selected items
+            $_SESSION['selected_items'] = $selectedItems;
+        }
+
+        // Render the header
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Create Request",
+                                                                                "heading" => "Create Request"]));
+
+        // Render the all items view
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/create.php", ["items" => $items,
+                                                                                                    "itemTypes" => $itemTypes,
+                                                                                                    "selectedItems" => $selectedItems,
+                                                                                                    "search" => $search,
+                                                                                                    "itemType" => $itemType,
+                                                                                                    "sort" => $sort,
+                                                                                                    "order" => $order]));
+
         // Render the footer
-        $this->response->appendBody($this->viewer->render("shared/footer.php"));
-    
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
         return $this->response;
+    }
+
+    public function verifyOrder(): Response
+    {
+        $items = $_SESSION['selected_items'] ?? [];
+
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Verify Request",
+                                                                                "heading" => "Verify Your Request"]));
+
+        // Render the verification view
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/verify.php", ['items' => $items]));
+
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
+    public function update(): Response
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $items = $_SESSION['selected_items'] ?? [];
+
+            foreach ($_POST['items'] as $index => $item) {
+                if ($_POST['action'] === 'update') {
+                    if ($item['quantity'] == 0) {
+                        // Remove item if quantity is 0
+                        unset($items[$index]);
+                    } else {
+                        // Update quantity
+                        $items[$index]['quantity'] = $item['quantity'];
+                    }
+                } elseif ($_POST['action'] === 'remove') {
+                    // Remove item
+                    unset($items[$index]);
+                }
+            }
+
+            // Update the session with modified items
+            $_SESSION['selected_items'] = array_values($items);
+        }
+
+        // Redirect back to the verify page
+        header('Location: /warehouse/managers/inhouse/verify');
+        exit;
+    }
+
+    public function submitOrder(): Response
+    {
+        // Confirmation email information
+        $items = $_SESSION['selected_items'] ?? [];
+
+        // Get all warehouse managers to email request
+        // $warehouseManagers = $this->userModel->getWarehouseManagers();
+    
+        try {
+            $this->orderModel->submitWarehouseOrder();
+            
+            // Send Email to warehouse manager
+            // $this->mailer->sendNewRequestToWarehouse($warehouseManagers);
+    
+            // Remove items from cart
+            unset($_SESSION['selected_items']);
+    
+            return $this->redirect('/warehouse/dashboard');
+    
+        } catch (Exception $e) {
+            $this->response->setBody('Failed to submit order: ' . $e->getMessage());
+            return $this->response;
+        }
     }
 }
