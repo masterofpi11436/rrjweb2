@@ -39,6 +39,9 @@
 </script>
 
 <div>
+
+    <p>You must select the print button in order to approve the request.</p>
+    <p>Printing is not required, but this button must be pressed in order to approve</p>
     <!-- Print button -->
     <button type="button" onclick="printAndShowApprove()">Print</button>
 
