@@ -141,16 +141,16 @@ class Item extends Model
     public function getOne(string $id): array
     {
         $conn = $this->db->getConn();
-
-        $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image, item.quantity
+    
+        $sql = "SELECT item.id, item.name, item.item_type, item_type.type AS item_type_name, item.image, item.quantity
                 FROM item
                 JOIN item_type ON item.item_type = item_type.id
                 WHERE item.id = :id";
-
+    
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         $stmt->execute();
-
+    
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 

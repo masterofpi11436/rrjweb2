@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <th>Type</th>
-        <td><?= htmlspecialchars($item["item_type"] ?? '') ?></td>
+        <td><?= htmlspecialchars($item["item_type_name"] ?? '') ?></td>
     </tr>
     <tr>
         <th>Image</th>
