@@ -140,24 +140,20 @@ class Admins extends Controller
             "first_name" => $this->request->post["first_name"],
             "last_name" => $this->request->post["last_name"],
             "email" => $this->request->post["email"],
-            "password" => $this->request->post["password"],
             "role_id" => $this->request->post["role_id"]
         ];
-
+    
         // Generate reset token and expiry time
         $resetToken = bin2hex(random_bytes(32)); // Secure token generation
-        $tokenExpiry = date('Y-m-d H:i:s', strtotime('+48 hour')); // Token expires in 48 hours
-
+        $tokenExpiry = date('Y-m-d H:i:s', strtotime('+48 hours')); // Token expires in 48 hours
+    
         // Add reset token and expiry time to the data
         $data['reset_token'] = $resetToken;
         $data['token_expiry'] = $tokenExpiry;
-
-        // Hash the password
-        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-
+    
         // Check if the user already exists by email
         $existingUser = $this->model->findUserByEmail($data['email']);
-
+    
         if ($existingUser) {
             // User exists, update the warehouse_role
             $updateData = [
@@ -166,9 +162,9 @@ class Admins extends Controller
                 'token_expiry' => $tokenExpiry
             ];
             if ($this->model->updateUserRecord($existingUser['id'], $updateData)) {
-                $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
+                $resetLink = "localhost/reset_password?token=" . $resetToken;
                 $this->mailer->registerEmail($data['email'], $resetLink);
-
+    
                 // Redirect to the updated user's page
                 return $this->redirect("/warehouse/admins/one/{$existingUser['id']}");
             } else {
@@ -176,15 +172,16 @@ class Admins extends Controller
                 $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
                 $this->response->appendBody($this->viewer->render("Warehouse/Admins/add_admin.php", ["errorMessage" => $this->model->getErrors(), "admin" => $data]));
                 $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-
+    
                 return $this->response;
             }
         } else {
             // User does not exist, insert new record
+            
             if ($this->model->insertRecord($data)) {
-                $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
+                $resetLink = "localhost/reset_password?token=" . $resetToken;
                 $this->mailer->registerEmail($data['email'], $resetLink);
-
+    
                 // Redirect to the newly created admin's page
                 return $this->redirect("/warehouse/admins/one/{$this->model->getInsertID()}");
             } else {
@@ -192,11 +189,12 @@ class Admins extends Controller
                 $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
                 $this->response->appendBody($this->viewer->render("Warehouse/Admins/add_admin.php", ["errorMessage" => $this->model->getErrors(), "admin" => $data]));
                 $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-
+    
                 return $this->response;
             }
         }
     }
+    
 
     /**
      * Renders the form to edit an existing admin.

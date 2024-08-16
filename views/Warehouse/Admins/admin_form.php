@@ -1,5 +1,4 @@
 <div class="form-container">
-    
     <div>
         <label for="first_name">First Name:</label>
         <input type="text" id="first_name" name="first_name" value="<?= isset($admin) ? htmlspecialchars($admin['first_name'] ?? '') : '' ?>">
@@ -28,15 +27,6 @@
     <?php endif; ?>
 
     <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" value="">
-    </div>
-
-    <?php if (isset($errorMessage["password"])): ?>
-        <p><?= $errorMessage["password"] ?></p>
-    <?php endif; ?>
-
-    <div>
         <label for="role_id">Role:</label>
         <select id="role_id" name="role_id">
             <option value="8" <?= isset($admin) && $admin['role_id'] == 8 ? 'selected' : '' ?>>Warehouse Manager</option>
@@ -48,6 +38,6 @@
     </div>
 
     <div>
-        <button type="submit" onclick="return validatePassword()">Save</button>
+        <button type="submit">Save</button>
     </div>
 </div>

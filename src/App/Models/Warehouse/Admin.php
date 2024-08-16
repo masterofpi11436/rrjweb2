@@ -27,10 +27,6 @@ class Admin extends Model
         if (empty($data["first_name"])) {
             $this->addError("first_name", "First name is required!");
         }
-
-        if (empty($data["password"])) {
-            $this->addError("password", "Password is required!");
-        }
     }
 
     public function findUserByEmail($email)
