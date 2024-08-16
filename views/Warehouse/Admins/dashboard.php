@@ -18,8 +18,8 @@
     <button>History</button>
 </form>
 
-<form action="/warehouse/managers/oneforone/create">
-    <button>1 for 1 Exchange</button>
+<form action="/warehouse/managers/inhouse/create">
+    <button>Create Request</button>
 </form>
 
 <h1>Pending Warehouse Supply Requests</h1>
