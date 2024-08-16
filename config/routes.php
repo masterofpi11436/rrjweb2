@@ -157,6 +157,9 @@ $router->add("/warehouse/admins/update/{id:\d+}", ["controller" => "admins", "ac
 $router->add("/warehouse/admins/delete/{id:\d+}", ["controller" => "admins", "action" => "deleteAdmin", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/admins/destroy/{id:\d+}", ["controller" => "admins", "action" => "destroyAdmin", "method" => "post", "middleware" => "auth", "namespace" => "Warehouse"]);
 
+// 1 for 1 exchange pages
+$router->add("/warehouse/managers/oneforone/create", ["controller" => "admins", "action" => "createOneForOne", "middleware" => "auth", "namespace" => "Warehouse"]);
+
 // Approve/Deny Page
 $router->add("/warehouse/managers/request/one/{id:\d+}", ["controller" => "admins", "action" => "viewOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/request/approve/{id:\d+}", ["controller" => "admins", "action" => "approveOrder", "middleware" => "auth", "namespace" => "Warehouse"]);

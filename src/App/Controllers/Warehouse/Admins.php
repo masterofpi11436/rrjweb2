@@ -703,4 +703,20 @@ class Admins extends Controller
     
         return $this->response;
     }
+
+    /*********************************************************************************************************************************** */
+    // 1 for 1 pages
+
+    public function createOneForOne(): Response
+    {
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "1 for 1", "heading" => "Create a 1 for 1 Exchange"]));
+    
+        // Render the new admin form
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/OneForOne/create.php"));
+    
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+    
+        return $this->response;
+    }
 }
