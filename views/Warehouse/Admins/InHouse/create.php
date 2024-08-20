@@ -2,7 +2,13 @@
     <button>Back to Dashboard</button>
 </form>
 
-<form method="get" action="/warehouse/managers/inhouse/createe" id="searchForm">
+<form action="/warehouse/supervisors/items" method="post">
+    
+
+    <button>Submit</button>
+</form>
+
+<form method="get" action="/warehouse/managers/inhouse/create" id="searchForm">
     <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
     
     <select name="item_type">

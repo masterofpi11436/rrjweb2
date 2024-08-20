@@ -28,8 +28,8 @@ class Users extends Controller
         $supervisors = $this->userModel->getSupervisors();
         $sections = $this->userModel->getSections();
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Select Supervisor and Section",
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Select Supervisor and Section",
                                                                                 "heading" => "Select Supervisor and Section"]));
 
         // Render the all items view
@@ -81,8 +81,8 @@ class Users extends Controller
             $_SESSION['selected_items'] = $selectedItems;
         }
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "WSR",
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "WSR",
                                                                                 "heading" => "Request Supplies"]));
 
         // Render the all items view
@@ -107,7 +107,7 @@ class Users extends Controller
         $section = $_SESSION['selected_section'];
         $items = $_SESSION['selected_items'] ?? [];
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Verify Request",
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Verify Request",
                                                                                 "heading" => "Submit Request"]));
 
         // Render the verification view
@@ -160,6 +160,8 @@ class Users extends Controller
             // Send Email to warehouse manager
             $this->mailer->sendNewRequestToSupervisor($email);
 
+            unset($_SESSION['selected_items'], $_SESSION['selected_session']);
+
             return $this->redirect('/warehouse/users/success');
 
         } catch (Exception $e) {
@@ -170,8 +172,8 @@ class Users extends Controller
 
     public function success(): Response
     {
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Next Steps",
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Next Steps",
                                                                                 "heading" => "Next Steps"]));
 
         // Render the all items view

@@ -31,8 +31,8 @@ class Supervisors extends Controller
 
         $pendings = $this->orderModel->getAllPendingWarehouseOrders($supervisorId);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Supervisor Dashboard",
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Supervisor Dashboard",
                                                                                 "heading" => "Supervisor Dashboard"]));
 
         // Render the all items view
@@ -59,8 +59,8 @@ class Supervisors extends Controller
     // Cancel success page.
     public function cancelSuccess()
     {
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Order Canceled",
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Order Canceled",
                                                                                 "heading" => "Order Canceled"]));
 
         // Render the all items view
@@ -76,7 +76,7 @@ class Supervisors extends Controller
     {
         $sections = $this->userModel->getSections();
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Section Select",
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Section Select",
                                                                                "heading" => "Select Your Section"]));
 
         $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/section.php", ["sections" => $sections]));
@@ -126,8 +126,8 @@ class Supervisors extends Controller
             $_SESSION['selected_items'] = $selectedItems;
         }
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "WSR",
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "WSR",
                                                                                 "heading" => "WSR Supplies"]));
 
         // Render the all items view
@@ -151,7 +151,7 @@ class Supervisors extends Controller
         $section = $_SESSION['selected_section'];
         $items = $_SESSION['selected_items'] ?? [];
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Verify Request",
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Verify Request",
                                                                                 "heading" => "Verify Your Request"]));
 
         // Render the verification view
@@ -203,7 +203,7 @@ class Supervisors extends Controller
 
         // Get all warehouse managers to email request
         $warehouseManagers = $this->userModel->getWarehouseManagers();
-    
+
         try {
             $this->orderModel->submitSupervisorOrder();
     
@@ -212,7 +212,7 @@ class Supervisors extends Controller
             
             // Send Email to warehouse manager
             $this->mailer->sendNewRequestToWarehouse($warehouseManagers);
-    
+
             // Remove items from cart
             unset($_SESSION['selected_section'], $_SESSION['selected_items']);
     
@@ -227,8 +227,8 @@ class Supervisors extends Controller
 
     public function success(): Response
     {
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Next Steps",
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Next Steps",
                                                                                 "heading" => "Next Steps"]));
 
         // Render the all items view
@@ -260,8 +260,8 @@ class Supervisors extends Controller
     {
         $order = $this->orderModel->getOrderById($id);
 
-       // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Approve Deny", "heading" => "Order Details"]));
+       // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Approve Deny", "heading" => "Order Details"]));
 
         // Render the order details view and pass the order data
         $this->response->appendBody($this->viewer->render("Warehouse/Supervisors/approve_deny.php", ["order" => $order]));

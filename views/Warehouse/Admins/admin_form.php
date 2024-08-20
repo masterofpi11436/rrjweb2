@@ -29,10 +29,10 @@
     <div>
         <label for="role_id">Role:</label>
         <select id="role_id" name="role_id">
-            <option value="8" <?= isset($admin) && $admin['role_id'] == 8 ? 'selected' : '' ?>>Warehouse Manager</option>
-            <option value="11" <?= isset($admin) && $admin['role_id'] == 11 ? 'selected' : '' ?>>Warehouse Supervisor</option>
-            <option value="9" <?= isset($admin) && $admin['role_id'] == 9 ? 'selected' : '' ?>>Supervisor</option>
-            <option value="10" <?= isset($admin) && $admin['role_id'] == 10 ? 'selected' : '' ?>>User</option>
+            <option value="8" <?= isset($admin) && $admin['warehouse_role'] == 8 ? 'selected' : '' ?>>Warehouse Manager</option>
+            <option value="11" <?= isset($admin) && $admin['warehouse_role'] == 11 ? 'selected' : '' ?>>Warehouse Supervisor</option>
+            <option value="9" <?= isset($admin) && $admin['warehouse_role'] == 9 ? 'selected' : '' ?>>Supervisor</option>
+            <option value="10" <?= isset($admin) && $admin['warehouse_role'] == 10 ? 'selected' : '' ?>>User</option>
             <!-- Add more roles as needed -->
         </select>
     </div>

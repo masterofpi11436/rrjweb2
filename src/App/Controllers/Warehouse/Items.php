@@ -61,8 +61,8 @@ class Items extends Controller
             $items = $this->model->getAll($sort, $order);
         }
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Items", "heading" => "All Items"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "All Items", "heading" => "All Items"]));
 
         // Render the all items view
         $this->response->appendBody($this->viewer->render("Warehouse/Items/all_items.php", ["items" => $items]));
@@ -83,8 +83,8 @@ class Items extends Controller
     {
         $item = $this->getItemID($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Showing One", "heading" => "Item Details"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Showing One", "heading" => "Item Details"]));
 
         // Render the one item view
         $this->response->appendBody($this->viewer->render("Warehouse/Items/one_item.php", ["item" => $item]));
@@ -102,7 +102,7 @@ class Items extends Controller
     {
         $itemTypes = $this->model->getItemTypes();
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Item", "heading" => "Add Item"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Item", "heading" => "Add Item"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Items/add_item.php", ["itemTypes" => $itemTypes]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -125,7 +125,7 @@ class Items extends Controller
         } else {
             $itemTypes = $this->model->getItemTypes();
 
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Items", "heading" => "Add Item"]));
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Items", "heading" => "Add Item"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Items/add_item.php", ["errorMessage" => $this->model->getErrors(), "item" => $data, "itemTypes" => $itemTypes]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -143,7 +143,7 @@ class Items extends Controller
         $item = $this->getItemID($id);
         $itemTypes = $this->model->getItemTypes();
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Item", "heading" => "Edit Item"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Item", "heading" => "Edit Item"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Items/edit_item.php", ["item" => $item, "itemTypes" => $itemTypes]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -154,7 +154,7 @@ class Items extends Controller
     {
         $item = $this->getItemID($id);
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Picture", "heading" => "Add/Edit Picture"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Picture", "heading" => "Add/Edit Picture"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Items/add_picture.php", ["item" => $item]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -194,7 +194,7 @@ class Items extends Controller
             $errorMessage = "No file uploaded or upload error.";
         }
     
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Picture", "heading" => "Add/Edit Picture"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Picture", "heading" => "Add/Edit Picture"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Items/add_picture.php", ["errorMessage" => $errorMessage, "item" => $item]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
     
@@ -220,7 +220,7 @@ class Items extends Controller
         } else {
             $itemTypes = $this->model->getItemTypes();
 
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Item", "heading" => "Edit Item"]));
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Item", "heading" => "Edit Item"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Items/edit_item.php", ["errorMessage" => $this->model->getErrors(), "item" => $item, "itemTypes" => $itemTypes]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -238,8 +238,8 @@ class Items extends Controller
         // Get the ID of the record
         $item = $this->getItemID($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Delete Listing", "heading" => "Delete Listing"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Delete Listing", "heading" => "Delete Listing"]));
 
         // Render the new item form
         $this->response->appendBody($this->viewer->render("Warehouse/Items/delete_item.php", ["item" => $item]));

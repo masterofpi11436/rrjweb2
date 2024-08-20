@@ -31,9 +31,3 @@
 <form action="/warehouse/dashboard">
     <button>Warehouse Dashboard</button>
 </form>
-
-<?php if (!is_null($user['warehouse_role'])): ?>
-    <form action="/admins/switchRole" method="post">
-        <button type="submit" name="warehouse_role" value="<?php echo $user['warehouse_role']; ?>">Warehouse Supply Request</button>
-    </form>
-<?php endif; ?>

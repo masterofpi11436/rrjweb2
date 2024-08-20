@@ -32,8 +32,8 @@ class Admins extends Controller
     {
         $orders = $this->orderModel->getAllPendingOrders();
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Dashboard", "heading" => "WSR Admin Dashboard"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Admin Dashboard", "heading" => "WSR Admin Dashboard"]));
 
         // Render the dashboard console
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/dashboard.php", ["orders" => $orders]));
@@ -80,8 +80,8 @@ class Admins extends Controller
             $admins = $this->model->getAdminsWithRoles();
         }
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Users", "heading" => "All Users"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "All Users", "heading" => "All Users"]));
 
         // Render the all admins view
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/all_admins.php", ["admins" => $admins]));
@@ -102,8 +102,8 @@ class Admins extends Controller
     {
         $admin = $this->getAdminID($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Showing One", "heading" => "Admin's Details"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Showing One", "heading" => "Admin's Details"]));
 
         // Render the one admins view
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/one_admin.php", ["admin" => $admin]));
@@ -119,8 +119,8 @@ class Admins extends Controller
      */
     public function addNewAdmin()
     {
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
 
         // Render the form for adding a new admin
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/add_admin.php"));
@@ -141,7 +141,7 @@ class Admins extends Controller
             "first_name" => $this->request->post["first_name"],
             "last_name" => $this->request->post["last_name"],
             "email" => $this->request->post["email"],
-            "role_id" => $this->request->post["role_id"]
+            "warehouse_role" => $this->request->post["role_id"]
         ];
     
         // Generate reset token and expiry time
@@ -163,14 +163,14 @@ class Admins extends Controller
                 'token_expiry' => $tokenExpiry
             ];
             if ($this->model->updateUserRecord($existingUser['id'], $updateData)) {
-                $resetLink = "localhost/reset_password?token=" . $resetToken;
+                $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
                 $this->mailer->registerEmail($data['email'], $resetLink);
     
                 // Redirect to the updated user's page
                 return $this->redirect("/warehouse/admins/one/{$existingUser['id']}");
             } else {
                 // Render the form again with error messages
-                $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
+                $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
                 $this->response->appendBody($this->viewer->render("Warehouse/Admins/add_admin.php", ["errorMessage" => $this->model->getErrors(), "admin" => $data]));
                 $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
     
@@ -180,14 +180,14 @@ class Admins extends Controller
             // User does not exist, insert new record
             
             if ($this->model->insertRecord($data)) {
-                $resetLink = "localhost/reset_password?token=" . $resetToken;
+                $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
                 $this->mailer->registerEmail($data['email'], $resetLink);
     
                 // Redirect to the newly created admin's page
                 return $this->redirect("/warehouse/admins/one/{$this->model->getInsertID()}");
             } else {
                 // Render the form again with error messages
-                $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
+                $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Admin", "heading" => "Add Admin"]));
                 $this->response->appendBody($this->viewer->render("Warehouse/Admins/add_admin.php", ["errorMessage" => $this->model->getErrors(), "admin" => $data]));
                 $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
     
@@ -206,8 +206,8 @@ class Admins extends Controller
     {
         $admin = $this->getAdminID($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Number", "heading" => "Edit Number"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Number", "heading" => "Edit Number"]));
 
         // Render the edit admin view
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/edit_admin.php", ["admin" => $admin]));
@@ -232,22 +232,7 @@ class Admins extends Controller
         $admin["first_name"] = $this->request->post["first_name"];
         $admin["last_name"] = $this->request->post["last_name"];
         $admin["email"] = $this->request->post["email"];
-    
-        // Check if password field is not empty before hashing and updating
-        if (!empty($this->request->post["password"])) {
-            $admin["password"] = $this->request->post["password"];
-            $admin['password'] = password_hash($admin['password'], PASSWORD_DEFAULT);
-        } else {
-            // Unset password key to prevent updating it
-            unset($admin['password']);
-        }
-    
-        // Check if the user has data in the warehouse_role column
-        if (!is_null($admin["warehouse_role"])) {
-            $admin["warehouse_role"] = $this->request->post["role_id"];
-        } else {
-            $admin["role_id"] = $this->request->post["role_id"];
-        }
+        $admin["warehouse_role"] = $this->request->post["role_id"];
         
         // Attempt to update the admin record
         if ($this->model->updateRecord($id, $admin)) {
@@ -255,7 +240,7 @@ class Admins extends Controller
             return $this->redirect("/warehouse/admins/one/{$id}");
         } else {
             // Render the form again with error messages if update fails
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Admin", "heading" => "Edit Admin"]));
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Admin", "heading" => "Edit Admin"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Admins/edit_admin.php", ["errorMessage" => $this->model->getErrors(), "admin" => $admin]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
     
@@ -273,8 +258,8 @@ class Admins extends Controller
         // Get the ID of the record
         $admin = $this->getAdminID($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Delete Listing", "heading" => "Delete Listing"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Delete Listing", "heading" => "Delete Listing"]));
 
         // Render the new admin form
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/delete_admin.php", ["admin" => $admin]));
@@ -327,8 +312,8 @@ class Admins extends Controller
             return $this->response->redirect('/warehouse/dashboard');
         }
     
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "View Order", "heading" => "Order Details"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "View Order", "heading" => "Order Details"]));
     
         // Render the order details
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/one.php", ["order" => $order]));
@@ -355,8 +340,8 @@ class Admins extends Controller
             return $this->response->redirect('/warehouse/dashboard');
         }
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Print Order", "heading" => "Print the Request?"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Print Order", "heading" => "Print the Request?"]));
     
         // Render the order details
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/print.php", ["order" => $order]));
@@ -393,8 +378,8 @@ class Admins extends Controller
     {
         $order = $this->orderModel->getOne($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Note", "heading" => "Add Denial Reason"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Note", "heading" => "Add Denial Reason"]));
 
         // Render the order details
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/deny_note.php", ["order" => $order]));
@@ -452,8 +437,8 @@ class Admins extends Controller
             $_SESSION['selected_items'] = $order['items'];
         }
     
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Order", "heading" => "Edit Order"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Order", "heading" => "Edit Order"]));
     
         // Render the edit order page
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_order.php", ["order" => $order,
@@ -471,8 +456,8 @@ class Admins extends Controller
     {
         $order = $this->orderModel->getOne($id);
     
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Note", "heading" => "Reson for Edit"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Note", "heading" => "Reson for Edit"]));
     
         // Render the order details
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_note.php", ["order" => $order]));
@@ -557,7 +542,7 @@ class Admins extends Controller
     // Main History Page
     public function historyDashboard(): Response
     {
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "History", "heading" => "History Dashboard"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "History", "heading" => "History Dashboard"]));
 
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/history_dashboard.php"));
 
@@ -582,7 +567,7 @@ class Admins extends Controller
         $orders = $this->orderModel->approvedReport($week, $year, $section_id);
         $sections = $this->sectionModel->getAll();
     
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Approved", "heading" => "Approved Reports"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Approved", "heading" => "Approved Reports"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/approved.php", ["orders" => $orders, "sections" => $sections]));
         $this->response->appendBody($this->viewer->render("shared/footer.php"));
     
@@ -594,7 +579,7 @@ class Admins extends Controller
     {
         $order = $this->orderModel->apprveOne($id);
     
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "One", "heading" => "Approved Requests"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "One", "heading" => "Approved Requests"]));
     
         // Render the new admin form
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/approved_one.php", ["order" => $order]));
@@ -609,7 +594,7 @@ class Admins extends Controller
     {
         $orders = $this->orderModel->yearlyReport();
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Yearly", "heading" => "Yearly Report (365 days)"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Yearly", "heading" => "Yearly Report (365 days)"]));
 
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/yearly.php", ["orders" => $orders]));
 
@@ -653,7 +638,7 @@ class Admins extends Controller
     
         $selectedSectionName = $sectionId ? $sections[array_search($sectionId, array_column($sections, 'id'))]['name'] : 'All Sections';
     
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Monthly", "heading" => "Section Items (30 Days)"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Monthly", "heading" => "Section Items (30 Days)"]));
     
         // Render the view
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/monthly.php", [
@@ -677,7 +662,7 @@ class Admins extends Controller
     {
         $orders = $this->orderModel->deniedReport();
     
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Denied", "heading" => "Denied Requests"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Denied", "heading" => "Denied Requests"]));
     
         // Render the new admin form
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/denied_requests.php", ["orders" => $orders]));
@@ -692,7 +677,7 @@ class Admins extends Controller
     {
         $order = $this->orderModel->denyOne($id);
     
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Denied", "heading" => "Denied Requests"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Denied", "heading" => "Denied Requests"]));
     
         // Render the new admin form
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/denied_one.php", ["order" => $order]));
@@ -704,7 +689,21 @@ class Admins extends Controller
     }
 
     /*********************************************************************************************************************************** */
-    // 1 for 1 pages
+    // In House Request
+
+    public function sectionOrder(): Response
+    {
+        $sections = $this->userModel->getSections();
+
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Section Select",
+                                                                               "heading" => "Select Your Section"]));
+
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/section.php", ["sections" => $sections]));
+
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
 
     public function createOrder(): Response
     {
@@ -713,7 +712,6 @@ class Admins extends Controller
         $itemType = $this->request->post['item_type'] ?? $this->request->get['item_type'] ?? '';
         $sort = $this->request->post['sort'] ?? $this->request->get['sort'] ?? 'name';
         $order = $this->request->post['order'] ?? $this->request->get['order'] ?? 'asc';
-
         $itemTypes = $this->itemModel->getItemTypes();
 
         if ($search || $itemType) {
@@ -746,18 +744,18 @@ class Admins extends Controller
             $_SESSION['selected_items'] = $selectedItems;
         }
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Create Request",
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Create Request",
                                                                                 "heading" => "Create Request"]));
 
         // Render the all items view
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/create.php", ["items" => $items,
-                                                                                                    "itemTypes" => $itemTypes,
-                                                                                                    "selectedItems" => $selectedItems,
-                                                                                                    "search" => $search,
-                                                                                                    "itemType" => $itemType,
-                                                                                                    "sort" => $sort,
-                                                                                                    "order" => $order]));
+                                                                                                  "itemTypes" => $itemTypes,
+                                                                                                  "selectedItems" => $selectedItems,
+                                                                                                  "search" => $search,
+                                                                                                  "itemType" => $itemType,
+                                                                                                  "sort" => $sort,
+                                                                                                  "order" => $order]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
@@ -766,20 +764,22 @@ class Admins extends Controller
     }
 
     public function verifyOrder(): Response
-    {
+    {    
+        $section = $_SESSION['selected_section'];
         $items = $_SESSION['selected_items'] ?? [];
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Verify Request",
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Verify Request",
                                                                                 "heading" => "Verify Your Request"]));
 
         // Render the verification view
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/verify.php", ['items' => $items]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/verify.php", ['section' => $section, 'items' => $items]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;
     }
+    
 
     public function update(): Response
     {
@@ -814,18 +814,12 @@ class Admins extends Controller
     {
         // Confirmation email information
         $items = $_SESSION['selected_items'] ?? [];
-
-        // Get all warehouse managers to email request
-        // $warehouseManagers = $this->userModel->getWarehouseManagers();
     
         try {
             $this->orderModel->submitWarehouseOrder();
-            
-            // Send Email to warehouse manager
-            // $this->mailer->sendNewRequestToWarehouse($warehouseManagers);
     
             // Remove items from cart
-            unset($_SESSION['selected_items']);
+            unset($_SESSION['selected_items'], $_SESSION['selected_session']);
     
             return $this->redirect('/warehouse/dashboard');
     

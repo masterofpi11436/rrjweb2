@@ -61,8 +61,8 @@ class Sections extends Controller
             $sections = $this->model->getAll($sort, $order);
         }
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Sections", "heading" => "All Sections"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "All Sections", "heading" => "All Sections"]));
 
         // Render the all sections view
         $this->response->appendBody($this->viewer->render("Warehouse/Sections/all_sections.php", ["sections" => $sections]));
@@ -83,8 +83,8 @@ class Sections extends Controller
     {
         $section = $this->getSectionID($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Showing One", "heading" => "Section Details"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Showing One", "heading" => "Section Details"]));
 
         // Render the one section view
         $this->response->appendBody($this->viewer->render("Warehouse/Sections/one_section.php", ["section" => $section]));
@@ -100,7 +100,7 @@ class Sections extends Controller
      */
     public function addNewSection()
     {
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Section", "heading" => "Add Section"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Section", "heading" => "Add Section"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Sections/add_section.php"));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -120,7 +120,7 @@ class Sections extends Controller
             return $this->redirect("/warehouse/sections/one/{$this->model->getInsertID()}");
         } else {
 
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Section", "heading" => "Add Section"]));
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Section", "heading" => "Add Section"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Sections/add_section.php", ["errorMessage" => $this->model->getErrors(), "section" => $data]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -138,7 +138,7 @@ class Sections extends Controller
     {
         $section = $this->getSectionID($id);
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Number", "heading" => "Edit Number"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Number", "heading" => "Edit Number"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Sections/edit_section.php", ["section" => $section]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -161,7 +161,7 @@ class Sections extends Controller
             return $this->redirect("/warehouse/sections/one/{$id}");
         } else {
 
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Section", "heading" => "Edit Section"]));
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Section", "heading" => "Edit Section"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Sections/edit_section.php", ["errorMessage" => $this->model->getErrors(), "section" => $section]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -179,8 +179,8 @@ class Sections extends Controller
         // Get the ID of the record
         $section = $this->getSectionID($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Delete Listing", "heading" => "Delete Listing"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Delete Listing", "heading" => "Delete Listing"]));
 
         // Render the new section form
         $this->response->appendBody($this->viewer->render("Warehouse/Sections/delete_section.php", ["section" => $section]));

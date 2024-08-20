@@ -61,8 +61,8 @@ class ItemTypes extends Controller
             $itemTypes = $this->model->getAll($sort, $order);
         }
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "All Item Types", "heading" => "All Item Types"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "All Item Types", "heading" => "All Item Types"]));
 
         // Render the all itemTypes view
         $this->response->appendBody($this->viewer->render("Warehouse/Types/all_itemTypes.php", ["itemTypes" => $itemTypes]));
@@ -83,8 +83,8 @@ class ItemTypes extends Controller
     {
         $itemType = $this->getItemTypeID($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Showing One", "heading" => "Item Type Details"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Showing One", "heading" => "Item Type Details"]));
 
         // Render the one itemType view
         $this->response->appendBody($this->viewer->render("Warehouse/Types/one_itemType.php", ["itemType" => $itemType]));
@@ -100,7 +100,7 @@ class ItemTypes extends Controller
      */
     public function addNewItemType()
     {
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Item Type", "heading" => "Add Item Type"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Item Type", "heading" => "Add Item Type"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Types/add_itemType.php"));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -120,7 +120,7 @@ class ItemTypes extends Controller
             return $this->redirect("/warehouse/itemtype/one/{$this->model->getInsertID()}");
         } else {
 
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Add Item Type", "heading" => "Add Item Type"]));
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Item Type", "heading" => "Add Item Type"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Types/add_itemType.php", ["errorMessage" => $this->model->getErrors(), "itemType" => $data]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -138,7 +138,7 @@ class ItemTypes extends Controller
     {
         $itemType = $this->getItemTypeID($id);
 
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Number", "heading" => "Edit Number"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Number", "heading" => "Edit Number"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Types/edit_itemType.php", ["itemType" => $itemType]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -161,7 +161,7 @@ class ItemTypes extends Controller
             return $this->redirect("/warehouse/itemtype/one/{$id}");
         } else {
 
-            $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Edit Item Type", "heading" => "Edit Item Type"]));
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Item Type", "heading" => "Edit Item Type"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Types/edit_itemType.php", ["errorMessage" => $this->model->getErrors(), "itemType" => $itemType]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -179,8 +179,8 @@ class ItemTypes extends Controller
         // Get the ID of the record
         $itemType = $this->getItemTypeID($id);
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Delete Listing", "heading" => "Delete Listing"]));
+        // Render the warehouse_header
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Delete Listing", "heading" => "Delete Listing"]));
 
         // Render the new itemType form
         $this->response->appendBody($this->viewer->render("Warehouse/Types/delete_itemType.php", ["itemType" => $itemType]));

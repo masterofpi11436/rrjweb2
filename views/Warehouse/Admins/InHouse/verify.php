@@ -2,8 +2,8 @@
     <button>Back</button>
 </form>
 
-<?php if ($items): ?>
-    <h3>Would you like to submit this request to the warehouse for record keeping?</h3>
+<?php if ($section && $items): ?>
+    <h3>Would you like to complete this request for section <?= htmlspecialchars($section['name']) ?>?</h3>
 
     <h2>Selected Items</h2>
     <table>

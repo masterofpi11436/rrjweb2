@@ -1,8 +1,3 @@
-<?php if (!is_null($user['warehouse_role'])): ?>
-    <form action="/admins/switchRole" method="post">
-        <button type="submit" name="warehouse_role" value="<?php echo $user['warehouse_role']; ?>">Warehouse Supply Request</button>
-    </form>
-<?php endif; ?>
 
 <form action="/mailrooms/add">
     <button>Add New Name</button>

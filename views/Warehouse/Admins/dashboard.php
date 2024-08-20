@@ -18,7 +18,7 @@
     <button>History</button>
 </form>
 
-<form action="/warehouse/managers/inhouse/create">
+<form action="/warehouse/managers/inhouse/section">
     <button>Create Request</button>
 </form>
 
