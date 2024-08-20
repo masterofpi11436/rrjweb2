@@ -163,7 +163,7 @@ class Admins extends Controller
                 'token_expiry' => $tokenExpiry
             ];
             if ($this->model->updateUserRecord($existingUser['id'], $updateData)) {
-                $resetLink = "localhost/reset_password?token=" . $resetToken;
+                $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
                 $this->mailer->registerEmail($data['email'], $resetLink);
     
                 // Redirect to the updated user's page
@@ -180,7 +180,7 @@ class Admins extends Controller
             // User does not exist, insert new record
             
             if ($this->model->insertRecord($data)) {
-                $resetLink = "localhost/reset_password?token=" . $resetToken;
+                $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
                 $this->mailer->registerEmail($data['email'], $resetLink);
     
                 // Redirect to the newly created admin's page
