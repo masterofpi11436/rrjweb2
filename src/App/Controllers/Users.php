@@ -28,9 +28,9 @@ class Users extends Controller
     // Log in Page
     public function login(): Response
     {
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => "Log In"]));
+        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => ""]));
 
-        $this->response->appendBody($this->viewer->render("Logins/login.php"));
+        $this->response->appendBody($this->viewer->render("Logins/under_construction.php"));
 
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -69,7 +69,7 @@ class Users extends Controller
                     case 7:
                         return $this->redirect('/programs/volunteers/all');
                     default:
-                        return $this->redirect('/login'); // Default fallback
+                        return $this->redirect('/warehouse/login'); // Default fallback
                 }
             }
         }
@@ -91,7 +91,7 @@ class Users extends Controller
         session_destroy();
 
         // Redirect to the login page or home page
-        return $this->redirect('/login');
+        return $this->redirect('/warehouse/logout');
     }
 
     // Page to verify email of user if password is forgotten
@@ -189,7 +189,7 @@ class Users extends Controller
 
             // Attempt to update the password
             if ($this->model->updatePassword($data)) {
-                return $this->redirect("/login");
+                return $this->redirect("/warehouse/login");
             } else {
                 $errorMessage = "Failed to update the password.";
             }

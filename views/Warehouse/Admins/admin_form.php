@@ -33,6 +33,7 @@
             <option value="11" <?= isset($admin) && $admin['warehouse_role'] == 11 ? 'selected' : '' ?>>Warehouse Supervisor</option>
             <option value="9" <?= isset($admin) && $admin['warehouse_role'] == 9 ? 'selected' : '' ?>>Supervisor</option>
             <option value="10" <?= isset($admin) && $admin['warehouse_role'] == 10 ? 'selected' : '' ?>>User</option>
+            <option value="12" <?= isset($admin) && $admin['warehouse_role'] == 12 ? 'selected' : '' ?>>Property</option>
             <!-- Add more roles as needed -->
         </select>
     </div>

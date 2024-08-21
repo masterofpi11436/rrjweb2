@@ -10,31 +10,17 @@ Excel: =CONCATENATE("('", B2, "', '", C2, "', '", D2, "', '", E2, "', '", F2, "'
 
 WSR To Do List
 
-Warehouse Supervisor Account
-
-***Manager Account***
-Weekly Report
-- Total quantity per item per housing unit
-
-Monthly Report
-- Total quantity per item per housing unit
-
-Yearly Report
-- Total quantity per item July 1st - June 31st. Annual report per year.
+-Warehouse Supervisor can send a reset link to the password.
+-Data validation for fields and error messages
+-Get Desktop icon
+-Write how to docs
 
 ***Warehouse Supervisors***
 - Create routes and files for supervisor only
 
-***Supervisor Account***
-
-***User Account***
-
-***App Wide***
-- Make a desktop icon
-
-CHANGE PASSWORD TO DATABASE!!!
-
-Swap warehouse_role with role_id
+***Swap warehouse_role with role_id***
 UPDATE user
 SET warehouse_role = role_id
 WHERE role_id IN (8, 9, 10, 11);
+
+***Add Property role. ID 12***

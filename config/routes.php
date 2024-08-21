@@ -265,6 +265,29 @@ $router->add("/warehouse/supervisors/request/deny/{id:\d+}", ["controller" => "s
 $router->add("/warehouse/supervisors/request/edit/{id:\d+}", ["controller" => "supervisors", "action" => "editOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/supervisors/request/update/{id:\d+}", ["controller" => "supervisors", "action" => "updateOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 
+// *************************************************************************************************************************************************//
+
+// Property Role Pages
+
+$router->add("/warehouse/properties/dashboard", ["controller" => "properties", "action" => "dashboard", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/cancel/{id:\d+}", ["controller" => "properties", "action" => "cancel", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/cancelrequest", ["controller" => "properties", "action" => "cancelSuccess", "middleware" => "auth", "namespace" => "Warehouse"]);
+
+// Creating Request Pages
+$router->add("/warehouse/properties/section", ["controller" => "properties", "action" => "section", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/items", ["controller" => "properties", "action" => "items", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/verify", ["controller" => "properties", "action" => "verify", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/update", ["controller" => "properties", "action" => "update", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/submit", ["controller" => "properties", "action" => "submit", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/success", ["controller" => "properties", "action" => "success", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+
+// Submited Order Approve/Deny Pages
+$router->add("/warehouse/properties/request/one/{id:\d+}", ["controller" => "properties", "action" => "viewOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/request/approve/{id:\d+}", ["controller" => "properties", "action" => "approveOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/request/deny/{id:\d+}", ["controller" => "properties", "action" => "denyOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/request/edit/{id:\d+}", ["controller" => "properties", "action" => "editOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/properties/request/update/{id:\d+}", ["controller" => "properties", "action" => "updateOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
+
 // Blanket Route
 // $router->add("/{controller}/{action}");
 // $router->add("/{controller}/{action}/{id:\d+}");

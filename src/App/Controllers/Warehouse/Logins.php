@@ -62,8 +62,10 @@ class Logins extends Controller
                         return $this->redirect('/warehouse/users/section');
                     case 11:
                         return $this->redirect('/warehouse/warehousesupervisors/dashboard');
+                    case 12:
+                        return $this->redirect('/warehouse/properties/dashboard');
                     default:
-                        return $this->redirect('/login'); // Default fallback
+                        return $this->redirect('/warehouse/login'); // Default fallback
                 }
             }
         }
@@ -72,7 +74,7 @@ class Logins extends Controller
         $errorMessage = 'Incorrect email or password. Please try again.';
 
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Admin Login", "heading" => "Log In"]));
-        $this->response->appendBody($this->viewer->render("Logins/login.php", ["errorMessage" => $errorMessage]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Logins/login.php", ["errorMessage" => $errorMessage]));
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
         return $this->response;
