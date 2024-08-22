@@ -42,6 +42,20 @@ class Admin extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Get user's email for resetting token
+    public function findUserByEmailById($id)
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT email FROM user WHERE id = :id";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function updateUserRecord($id, $data)
     {
         $conn = $this->db->getConn();

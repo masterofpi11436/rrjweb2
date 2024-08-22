@@ -9,3 +9,7 @@
 <form method="post" action="/warehouse/admins/update/<?= htmlspecialchars($admin['id']) ?>">
     <?php require "admin_form.php"; ?>
 </form>
+
+<form action="/warehouse/admins/resetToken/<?= htmlspecialchars($admin['id']) ?>">
+    <button>Send Reset Link</button>
+</form>

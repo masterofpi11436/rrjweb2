@@ -248,6 +248,38 @@ class Admins extends Controller
         }
     }
 
+    public function resetToken($id)
+    {
+        $userEmail = $this->model->findUserByEmailById($id);
+        
+        // Generate reset token and expiry time
+        $resetToken = bin2hex(random_bytes(32)); // Secure token generation
+        $tokenExpiry = date('Y-m-d H:i:s', strtotime('+48 hours')); // Token expires in 48 hours
+
+        $updateData = [
+            'reset_token' => $resetToken,
+            'token_expiry' => $tokenExpiry
+        ];
+
+        $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
+
+        if ($this->model->updateUserRecord($id, $updateData)) {
+
+            $this->mailer->registerEmail($userEmail['email'], $resetLink);
+        }
+
+        return $this->redirect("/warehouse/admins/resetTokenSuccess");
+    }
+
+    public function resetTokenSuccess (): Response
+    {
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Admin", "heading" => "Edit Admin"]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/reset_token_success.php"));
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
     /**
      * Renders the form to delete a admin.
      *
