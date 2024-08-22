@@ -712,14 +712,14 @@ class Admins extends Controller
         $itemType = $this->request->post['item_type'] ?? $this->request->get['item_type'] ?? '';
         $sort = $this->request->post['sort'] ?? $this->request->get['sort'] ?? 'name';
         $order = $this->request->post['order'] ?? $this->request->get['order'] ?? 'asc';
-        $itemTypes = $this->itemModel->getItemTypes();
+        $itemTypes = $this->itemModel->getItemTypesforManagers();
 
         if ($search || $itemType) {
             // Perform search query
-            $items = $this->itemModel->searchItems($search, $itemType, $sort, $order);
+            $items = $this->itemModel->searchItemsForManagers($search, $itemType, $sort, $order);
         } else {
             // Retrieve all records if no search query
-            $items = $this->itemModel->getAllItems($sort, $order);
+            $items = $this->itemModel->getAllItemsForManagers($sort, $order);
         }
 
         // Get previously selected items and quantities from the session
