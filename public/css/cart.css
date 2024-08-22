@@ -179,3 +179,59 @@ input[type="text"], select {
 #cartItems h3 {
     text-align: center;
 }
+
+/* Styling for the search section */
+.container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#searchForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #2b2b2b; /* Background for the search form */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for the form */
+}
+
+#searchForm label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #e0e0e0; /* Label color */
+}
+
+#searchForm .search-input {
+    flex: 1;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #404040; /* Darker background for input */
+    color: #e0e0e0; /* Input text color */
+}
+
+#searchForm select {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #404040; /* Darker background for select */
+    color: #e0e0e0; /* Select text color */
+}
+
+#searchForm button[type="submit"] {
+    background-color: #3a7bd5; /* Blue button color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#searchForm button[type="submit"]:hover {
+    background-color: #2f548d; /* Darker blue on hover */
+}

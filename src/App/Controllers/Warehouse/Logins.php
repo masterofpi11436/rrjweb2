@@ -44,41 +44,74 @@ class Logins extends Controller
             "email" => $this->request->post["email"],
             "password" => $this->request->post["password"]
         ];
-
-        if ($this->model->validateLogin($data)) {
-            $user = $this->model->findByEmail($data["email"]);
-            if ($user && password_verify($data['password'], $user['password'])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_email'] = $user['email'];
-                $_SESSION['role_id'] = $user['warehouse_role']; // Store role_id in session
-
-                // Redirect based on role
-                switch ($user['warehouse_role']) {
-                    case 8:
-                        return $this->redirect('/warehouse/dashboard');
-                    case 9:
-                        return $this->redirect('/warehouse/supervisors/dashboard');
-                    case 10:
-                        return $this->redirect('/warehouse/users/section');
-                    case 11:
-                        return $this->redirect('/warehouse/warehousesupervisors/dashboard');
-                    case 12:
-                        return $this->redirect('/warehouse/properties/dashboard');
-                    default:
-                        return $this->redirect('/warehouse/login'); // Default fallback
-                }
-            }
+    
+        // Initialize session attempt counter if not set
+        if (!isset($_SESSION['login_attempts'])) {
+            $_SESSION['login_attempts'] = 0;
         }
-
-        // Set error message
-        $errorMessage = 'Incorrect email or password. Please try again.';
-
-        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Admin Login", "heading" => "Log In"]));
-        $this->response->appendBody($this->viewer->render("Warehouse/Logins/login.php", ["errorMessage" => $errorMessage]));
-        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-
-        return $this->response;
+    
+        // Validate the login data
+        if (!$this->model->validateLogin($data)) {
+            $errors = $this->model->getErrors();
+    
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Admin Login", "heading" => "Log In"]));
+            $this->response->appendBody($this->viewer->render("Warehouse/Logins/login.php", ["errors" => $errors]));
+            $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    
+            return $this->response;
+        }
+    
+        $user = $this->model->findByEmail($data["email"]);
+        if ($user && password_verify($data['password'], $user['password'])) {
+            // Reset attempts on successful login
+            $_SESSION['login_attempts'] = 0;
+    
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['role_id'] = $user['warehouse_role']; // Store role_id in session
+    
+            // Redirect based on role
+            switch ($user['warehouse_role']) {
+                case 8:
+                    return $this->redirect('/warehouse/dashboard');
+                case 9:
+                    return $this->redirect('/warehouse/supervisors/dashboard');
+                case 10:
+                    return $this->redirect('/warehouse/users/section');
+                case 11:
+                    return $this->redirect('/warehouse/warehousesupervisors/dashboard');
+                case 12:
+                    return $this->redirect('/warehouse/properties/dashboard');
+                default:
+                    return $this->redirect('/warehouse/login'); // Default fallback
+            }
+        } else {
+            // Increment the attempt counter
+            $_SESSION['login_attempts']++;
+    
+            // Check if attempts exceed the limit
+            if ($_SESSION['login_attempts'] >= 3) {
+                // If the user doesn't exist after 3 attempts, suggest they may not have an account
+                if (!$user) {
+                    $errorMessage = 'It seems you may not have an account. Please reach out to the Warehouse Manager to get an account.';
+                    $_SESSION['login_attempts'] = 0;
+                } else {
+                    $errorMessage = 'If you have forgotten your password, click the reset password button to change it.';
+                }
+            } else {
+                $errorMessage = 'Incorrect email or password. Please try again.';
+            }
+    
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Admin Login", "heading" => "Log In"]));
+            $this->response->appendBody($this->viewer->render("Warehouse/Logins/login.php", ["errorMessage" => $errorMessage]));
+            $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    
+            return $this->response;
+        }
     }
+    
+    
+    
 
     public function logout(): Response
     {

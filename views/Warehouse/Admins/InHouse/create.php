@@ -2,12 +2,6 @@
     <button>Back to Dashboard</button>
 </form>
 
-<form action="/warehouse/supervisors/items" method="post">
-    
-
-    <button>Submit</button>
-</form>
-
 <form method="get" action="/warehouse/managers/inhouse/create" id="searchForm">
     <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
     
@@ -58,7 +52,7 @@
 <div class="items-container">
     <?php foreach ($items as $item): ?>
         <div class="item-card">
-            <img src="public/images/<?= $item['name']; ?>.jpg" alt="No Image Available" onerror="this.onerror=null; this.src='/public/images/no-image.jpg';" class="item-image">
+            <img src="<?= $item['image']; ?>" alt="No Image Available" onerror="this.onerror=null; this.src='/public/images/no-image.jpg';" class="item-image">
             <div class="item-details">
                 <div class="item-name"><?= htmlspecialchars($item['name']); ?></div>
                 <form action="/warehouse/managers/inhouse/create" method="post" class="cartForm">

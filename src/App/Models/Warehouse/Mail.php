@@ -20,7 +20,9 @@ class Mail extends Mailer
             $fromName = 'WSR Account Activation'; // Sender's name
             $subject = 'Account Activation';
             $body = "Hello,<br><br>Please click the following link to finish registering for your <strong>Warehouse Supply Request</strong> account:<br>
-                     <a href=\"$registerLink\">Register</a>";
+                     <a href=\"$registerLink\">Register</a><br><br>
+                     <strong>Please note that this link expires in 48 hours to finish setting up your account</strong> <br>
+                     If you try to log in after 48 hours, contact the warehouse manager to send you another link.";
 
             // Set the sender's address
             $this->mail->setFrom($from, $fromName);
@@ -55,7 +57,9 @@ class Mail extends Mailer
             $fromName = 'Password Reset Service'; // Sender's name
             $subject = 'Password Reset Request';
             $body = "Hello,<br><br>Please click the following link to reset your password:<br><a href=\"$resetLink\">Reset Password</a><br><br>If you did not request a password reset,
-                     please notify MIU at extension 6035.";
+                     please notify MIU at extension 6035. <br><br>
+                     
+                     The link expires in 1 hour.";
 
             // Set the sender's address
             $this->mail->setFrom($from, $fromName);
@@ -122,10 +126,10 @@ class Mail extends Mailer
             $fromName = 'Warehouse Service'; // Sender's name
             $subject = 'Warehouse Supply Request Confirmation';
             $body = "Hello,<br><br>
-                    Your Warehouse Supply Request was successful!<br><br>
-                    Here is your order:<br><br>
+                    Your Warehouse Supply Request submission was successful!<br><br>
+                    Here is your submitted order:<br><br>
                     <strong>Section:</strong> $section<br><br>
-                    <strong>Items Ordered:</strong><br>";
+                    <strong>Items Ordered:</strong>";
 
             // Add each item and quantity to the email body
             foreach ($items as $item) {
@@ -134,8 +138,8 @@ class Mail extends Mailer
             }
 
             $body .= "Thank you for your order!<br><br>
-                    Regards,<br>
-                    The Warehouse Team";
+                      Regards,<br>
+                      The Warehouse Team";
 
             // Set the sender's address
             $this->mail->setFrom($from, $fromName);

@@ -1,12 +1,12 @@
 <form action="/warehouse/users/items" method="post">
-    <label for="supervisor">Select Supervisor:</label>
+    <label for="supervisor">What supervisor is to recieve the request?</label>
     <select name="supervisor" id="supervisor">
         <?php foreach ($supervisors as $supervisor): ?>
             <option value="<?= htmlspecialchars($supervisor['id']) ?>"><?= htmlspecialchars($supervisor['last_name']) ?>, <?= htmlspecialchars($supervisor['first_name']) ?></option>
         <?php endforeach; ?>
     </select>
 
-    <label for="section">Select Section:</label>
+    <label for="section">What section are you submitting this request for?</label>
     <select name="section" id="section">
         <?php foreach ($sections as $section): ?>
             <option value="<?= htmlspecialchars($section['id']) ?>"><?= htmlspecialchars($section['name']) ?></option>

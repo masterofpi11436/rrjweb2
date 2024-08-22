@@ -61,10 +61,6 @@ class Item extends Model
                 JOIN item_type ON item.item_type = item_type.id
                 WHERE (item.name LIKE :search OR item_type.type LIKE :search)  AND item.item_type != 4";
 
-        if ($itemType) {
-            $sql .= " AND item.item_type = :itemType";
-        }
-
         $sql .= " ORDER BY {$sort} {$order}";
 
         $stmt = $conn->prepare($sql);
@@ -130,7 +126,8 @@ class Item extends Model
 
         $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image, item.quantity
                 FROM item
-                JOIN item_type ON item.item_type = item_type.id";
+                JOIN item_type ON item.item_type = item_type.id
+                WHERE item.item_type != 4";
         
         $stmt = $conn->prepare($sql);
         $stmt->execute();

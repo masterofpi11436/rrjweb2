@@ -10,7 +10,6 @@ Excel: =CONCATENATE("('", B2, "', '", C2, "', '", D2, "', '", E2, "', '", F2, "'
 
 WSR To Do List
 
--Warehouse Supervisor can send a reset link to the password.
 -Data validation for fields and error messages
 -Get Desktop icon
 -Write how to docs

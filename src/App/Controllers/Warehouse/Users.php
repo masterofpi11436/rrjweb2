@@ -83,7 +83,7 @@ class Users extends Controller
 
         // Render the warehouse_header
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "WSR",
-                                                                                "heading" => "Request Supplies"]));
+                                                                                          "heading" => "Warehouse Store"]));
 
         // Render the all items view
         $this->response->appendBody($this->viewer->render("Warehouse/users/form.php", ["items" => $items,

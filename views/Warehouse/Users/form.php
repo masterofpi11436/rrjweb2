@@ -2,20 +2,23 @@
     <button>Back</button>
 </form>
 
-<form method="get" action="/warehouse/users/items" id="searchForm">
-    <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
-    
-    <select name="item_type">
-        <option value="">Select Item Type</option>
-        <?php foreach ($itemTypes as $type): ?>
-            <option value="<?= htmlspecialchars($type['id']); ?>" <?= (isset($itemType) && $itemType == $type['id']) ? 'selected' : ''; ?>>
-                <?= htmlspecialchars($type['type']); ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
+<div class="container">
+    <form method="get" action="/warehouse/users/items" id="searchForm">
+        <label for="search">Search</label>
+        <input type="text" id="search" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
+        
+        <select name="item_type">
+            <option value="">Select Item Type</option>
+            <?php foreach ($itemTypes as $type): ?>
+                <option value="<?= htmlspecialchars($type['id']); ?>" <?= (isset($itemType) && $itemType == $type['id']) ? 'selected' : ''; ?>>
+                    <?= htmlspecialchars($type['type']); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
 
-    <button type="submit">Search</button>
-</form>
+        <button type="submit">Search</button>
+    </form>
+</div>
 
 <h2>Select Items to add to Request</h2>
 

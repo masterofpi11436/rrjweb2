@@ -2,20 +2,22 @@
     <button>Home</button>
 </form>
 
-<form method="get" action="/warehouse/supervisors/items" id="searchForm">
-    <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
-    
-    <select name="item_type">
-        <option value="">Select Item Type</option>
-        <?php foreach ($itemTypes as $type): ?>
-            <option value="<?= htmlspecialchars($type['id']); ?>" <?= (isset($itemType) && $itemType == $type['id']) ? 'selected' : ''; ?>>
-                <?= htmlspecialchars($type['type']); ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
+<div class="container">
+    <form method="get" action="/warehouse/supervisors/items" id="searchForm">
+        <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
+        
+        <select name="item_type">
+            <option value="">Select Item Type</option>
+            <?php foreach ($itemTypes as $type): ?>
+                <option value="<?= htmlspecialchars($type['id']); ?>" <?= (isset($itemType) && $itemType == $type['id']) ? 'selected' : ''; ?>>
+                    <?= htmlspecialchars($type['type']); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
 
-    <button type="submit">Search</button>
-</form>
+        <button type="submit">Search</button>
+    </form>
+</div>
 
 <h2>Select Items to add to Request</h2>
 
@@ -52,7 +54,7 @@
 <div class="items-container">
     <?php foreach ($items as $item): ?>
         <div class="item-card">
-            <img src="public/images/<?= $item['name']; ?>.jpg" alt="No Image Available" onerror="this.onerror=null; this.src='/public/images/no-image.jpg';" class="item-image">
+            <img src="<?= $item['image']; ?>" alt="No Image Available" onerror="this.onerror=null; this.src='/public/images/no-image.jpg';" class="item-image">
             <div class="item-details">
                 <div class="item-name"><?= htmlspecialchars($item['name']); ?></div>
                 <form action="/warehouse/supervisors/items" method="post" class="cartForm">
