@@ -61,7 +61,7 @@ class Properties extends Controller
     {
         // Render the warehouse_header
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Order Canceled",
-                                                                                "heading" => "Order Canceled"]));
+                                                                                          "heading" => "Order Canceled"]));
 
         // Render the all items view
         $this->response->appendBody($this->viewer->render("Warehouse/Properties/order_canceled.php"));
@@ -77,7 +77,7 @@ class Properties extends Controller
         $sections = $this->userModel->getSections();
 
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Section Select",
-                                                                               "heading" => "Select Your Section"]));
+                                                                                          "heading" => "Select Your Section"]));
 
         $this->response->appendBody($this->viewer->render("Warehouse/Properties/section.php", ["sections" => $sections]));
 
@@ -94,14 +94,14 @@ class Properties extends Controller
         $sort = $this->request->post['sort'] ?? $this->request->get['sort'] ?? 'name';
         $order = $this->request->post['order'] ?? $this->request->get['order'] ?? 'asc';
 
-        $itemTypes = $this->itemModel->getItemTypes();
+        $itemTypes = $this->itemModel->getItemTypesforManagers();
 
         if ($search || $itemType) {
             // Perform search query
-            $items = $this->itemModel->searchItems($search, $itemType, $sort, $order);
+            $items = $this->itemModel->searchItemsForManagers($search, $itemType, $sort, $order);
         } else {
             // Retrieve all records if no search query
-            $items = $this->itemModel->getAllItems($sort, $order);
+            $items = $this->itemModel->getAllItemsForManagers($sort, $order);
         }
 
         // Get previously selected items and quantities from the session
