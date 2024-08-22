@@ -81,7 +81,7 @@ class Item extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Search for the Manager pages to create request.
+    // Search for the Manager and Property pages to create request.
     public function searchItemsForManagers(string $search = '', string $itemType = '', string $sort = 'name', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();
@@ -138,7 +138,7 @@ class Item extends Model
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // All Items for the manager create request pages
+    // All Items for the manager and property create request pages
     public function getAllItemsForManagers()
     {
         $conn = $this->db->getConn();
