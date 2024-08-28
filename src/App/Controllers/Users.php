@@ -30,7 +30,7 @@ class Users extends Controller
     {
         $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Admin Login", "heading" => ""]));
 
-        $this->response->appendBody($this->viewer->render("Logins/under_construction.php"));
+        $this->response->appendBody($this->viewer->render("Logins/login.php"));
 
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
