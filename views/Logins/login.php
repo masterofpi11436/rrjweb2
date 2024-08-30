@@ -1,3 +1,8 @@
+<h3>If you are trying to reach the warehouse store, this is the wrong login page. Please press the button to go to the login page for the warehouse store.</h3>
+<form action="/warehouse/login">
+    <button>Warehouse Store</button>
+</form>
+
 <form method="post" action="/login/auth">
 
     <label for="email">Email:</label>

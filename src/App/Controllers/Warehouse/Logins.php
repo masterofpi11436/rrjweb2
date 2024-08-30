@@ -28,9 +28,9 @@ class Logins extends Controller
     // Log in Page
     public function login(): Response
     {
-        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Admin Login", "heading" => "Log In"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "WSR Login", "heading" => ""]));
 
-        $this->response->appendBody($this->viewer->render("Warehouse/Logins/login.php"));
+        $this->response->appendBody($this->viewer->render("Warehouse/Logins/coming_soon.php")); //login       coming_soon
 
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
