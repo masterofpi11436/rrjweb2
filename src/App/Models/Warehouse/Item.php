@@ -39,43 +39,50 @@ class Item extends Model
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Search for the User and Supervisor pages
     public function searchItems(string $search = '', string $itemType = '', string $sort = 'name', string $order = 'asc'): array
     {
         $conn = $this->db->getConn();
-
+    
         // Validate the sorting parameters
         $validColumns = ['name', 'item_type'];
         if (!in_array($sort, $validColumns)) {
             $sort = 'name'; // Default to 'name' if an invalid column is provided
         }
         $order = ($order === 'desc') ? 'desc' : 'asc'; // Ensure order is either 'asc' or 'desc'
-
+    
         // Map 'item_type' to 'item_type.type' for sorting
         if ($sort === 'item_type') {
             $sort = 'item_type.type';
         }
-
+    
+        // Start building the SQL query
         $sql = "SELECT item.id, item.name, item_type.type AS item_type, item.image, item.quantity
                 FROM item
                 JOIN item_type ON item.item_type = item_type.id
-                WHERE (item.name LIKE :search OR item_type.type LIKE :search)  AND item.item_type != 4";
-
+                WHERE (item.name LIKE :search OR item_type.type LIKE :search)
+                AND item.item_type != 4"; // Exclude items with item_type = 4
+    
+        // Add item type filter if provided
+        if ($itemType) {
+            $sql .= " AND item.item_type = :itemType";
+        }
+    
         $sql .= " ORDER BY {$sort} {$order}";
-
+    
         $stmt = $conn->prepare($sql);
-
+    
         $searchTerm = '%' . $search . '%';
         $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
         
         if ($itemType) {
-            $stmt->bindParam(':itemType', $itemType, PDO::PARAM_STR);
+            $stmt->bindParam(':itemType', $itemType, PDO::PARAM_INT);
         }
-
+    
         $stmt->execute();
-
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 
     // Search for the Manager and Property pages to create request.
     public function searchItemsForManagers(string $search = '', string $itemType = '', string $sort = 'name', string $order = 'asc'): array

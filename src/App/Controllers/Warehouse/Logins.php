@@ -30,7 +30,7 @@ class Logins extends Controller
     {
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "WSR Login", "heading" => ""]));
 
-        $this->response->appendBody($this->viewer->render("Warehouse/Logins/coming_soon.php")); //login       coming_soon
+        $this->response->appendBody($this->viewer->render("Warehouse/Logins/login.php")); //login       coming_soon
 
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
