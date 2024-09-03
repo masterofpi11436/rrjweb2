@@ -725,12 +725,13 @@ class Admins extends Controller
 
     public function sectionOrder(): Response
     {
+        $supervisors = $this->userModel->getSupervisors();
         $sections = $this->userModel->getSections();
 
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Section Select",
                                                                                "heading" => "Select Your Section"]));
 
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/section.php", ["sections" => $sections]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/section.php", ["supervisors" => $supervisors, "sections" => $sections]));
 
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
@@ -799,12 +800,13 @@ class Admins extends Controller
     {    
         $section = $_SESSION['selected_section'];
         $items = $_SESSION['selected_items'] ?? [];
+        $supervisor = $_SESSION['selected_supervisor'];
 
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Verify Request",
                                                                                 "heading" => "Verify Your Request"]));
 
         // Render the verification view
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/verify.php", ['section' => $section, 'items' => $items]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/InHouse/verify.php", ["supervisor" => $supervisor, 'section' => $section, 'items' => $items]));
 
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
@@ -844,8 +846,9 @@ class Admins extends Controller
 
     public function submitOrder(): Response
     {
-        // Confirmation email information
+        $section = $_SESSION['selected_section'];
         $items = $_SESSION['selected_items'] ?? [];
+        $supervisor = $_SESSION['selected_supervisor'];
     
         try {
             $this->orderModel->submitWarehouseOrder();

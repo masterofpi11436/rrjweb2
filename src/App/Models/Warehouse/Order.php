@@ -91,9 +91,9 @@ class Order extends Model
     public function submitWarehouseOrder()
     {
         // Fetch data from session
-        $supervisorId = $_SESSION['user_id'] ?? null;
+        $supervisorId = $_SESSION['selected_supervisor']['id'] ?? null;
+        $sectionId = $_SESSION['selected_section']['id'] ?? null;
         $items = $_SESSION['selected_items'] ?? [];
-        $sectionId = 18;
 
         if ($supervisorId && $sectionId && !empty($items)) {
             try {

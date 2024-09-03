@@ -3,7 +3,8 @@
 </form>
 
 <?php if ($section && $items): ?>
-    <h3>Would you like to complete this request for section <?= htmlspecialchars($section['name']) ?>?</h3>
+    <h2>Would you like to submit this request to your supervisor 
+        <?= htmlspecialchars($supervisor['first_name']) . ' ' . htmlspecialchars($supervisor['last_name']) ?> for the section <?= htmlspecialchars($section['name']) ?>?</h2>
 
     <h2>Selected Items</h2>
     <table>
