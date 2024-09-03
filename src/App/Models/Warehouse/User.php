@@ -19,7 +19,7 @@ class User extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->userTable} WHERE role_id = 9 ORDER BY last_name";
+        $sql = "SELECT * FROM {$this->userTable} WHERE warehouse_role = 9 ORDER BY last_name";
 
         $stmt = $conn->query($sql);
 
@@ -30,7 +30,7 @@ class User extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->userTable} WHERE id = :id AND role_id = 9";
+        $sql = "SELECT * FROM {$this->userTable} WHERE id = :id AND warehouse_role = 9";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_STR);
@@ -80,7 +80,7 @@ class User extends Model
     public function getWarehouseManagers(): array
     {
         $conn = $this->db->getConn();
-        $sql = "SELECT email FROM {$this->userTable} WHERE role_id = 8 or role_id = 11";
+        $sql = "SELECT email FROM {$this->userTable} WHERE warehouse_role = 8 or warehouse_role = 11";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

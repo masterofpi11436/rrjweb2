@@ -81,25 +81,26 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Save scroll position before form submission
-    document.querySelectorAll("form").forEach(form => {
-        form.addEventListener("submit", function() {
+    var forms = document.querySelectorAll("form");
+    for (var i = 0; i < forms.length; i++) {
+        forms[i].addEventListener("submit", function(event) {
             sessionStorage.setItem('scrollPos', window.scrollY);
 
             // Populate hidden fields for the cart form with current search parameters
-            if (form.classList.contains('cartForm')) {
-                const searchForm = document.getElementById('searchForm');
-                form.querySelector('#searchHidden').value = searchForm.querySelector('input[name="search"]').value;
-                form.querySelector('#itemTypeHidden').value = searchForm.querySelector('select[name="item_type"]').value;
-                form.querySelector('#sortHidden').value = searchForm.querySelector('input[name="sort"]').value;
-                form.querySelector('#orderHidden').value = searchForm.querySelector('input[name="order"]').value;
+            if (this.classList.contains('cartForm')) {
+                var searchForm = document.getElementById('searchForm');
+                this.querySelector('#searchHidden').value = searchForm.querySelector('input[name="search"]').value;
+                this.querySelector('#itemTypeHidden').value = searchForm.querySelector('select[name="item_type"]').value;
+                this.querySelector('#sortHidden').value = searchForm.querySelector('input[name="sort"]').value;
+                this.querySelector('#orderHidden').value = searchForm.querySelector('input[name="order"]').value;
             }
         });
-    });
+    }
 });
 
 function changeQuantity(button, delta) {
-    const input = button.parentElement.querySelector('input[name="quantity"]');
-    let quantity = parseInt(input.value) || 0;
+    var input = button.parentElement.querySelector('input[name="quantity"]');
+    var quantity = parseInt(input.value, 10) || 0;
     quantity += delta;
     if (quantity < 0) quantity = 0;
     input.value = quantity;
