@@ -716,12 +716,11 @@ class Admins extends Controller
             $itemTotals[$order['item_id']] += $order['total_quantity'];
         }
     
-        // Set headers for downloading a CSV file
-        header('Content-Type: text/csv; charset=utf-8');
-        header('Content-Disposition: attachment; filename=Monthly_Report.csv');
+        // Define file path for saving the CSV temporarily
+        $filePath = sys_get_temp_dir() . '/monthly_report.csv';
     
-        // Open a file pointer for output
-        $output = fopen('php://output', 'w');
+        // Open a file pointer for writing the CSV to disk
+        $output = fopen($filePath, 'w');
     
         // Set the header row
         $headers = ['Item Name'];
@@ -746,8 +745,11 @@ class Admins extends Controller
         // Close the file pointer
         fclose($output);
     
-        // End the script (because the file is streamed)
-        exit();
+        // Call the mailer to send the report
+        $this->mailer->sendCSVReportByEmail($filePath); // Make sure the mailer is set up correctly
+    
+        // Redirect the user to another page after sending the email
+        return $this->redirect('/warehouse/managers/history/monthly'); // Change the redirect path to wherever you need
     }
     
 

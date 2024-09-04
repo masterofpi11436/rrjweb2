@@ -305,4 +305,31 @@ class Mail extends Mailer
             return "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
         }
     }
+
+    // Atomated Monthly report
+    public function sendCSVReportByEmail($filePath)
+    {
+        try {
+            // Recipients
+            $this->mail->setFrom('rrjweb2@rrjva.org', 'Report System');
+            $this->mail->addAddress('tugglem@rrjva.org'); // Add recipient
+    
+            // Content
+            $this->mail->isHTML(true);                            
+            $this->mail->Subject = 'Monthly Report';
+            $this->mail->Body    = 'Please find the attached monthly report.';
+    
+            // Attach the CSV file
+            $this->mail->addAttachment($filePath, 'monthly_report.csv');
+    
+            // Send the email
+            $this->mail->send();
+    
+            // Delete the temporary file after sending the email
+            unlink($filePath);
+            
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$this->$mail->ErrorInfo}";
+        }
+    }    
 }
