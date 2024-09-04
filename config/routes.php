@@ -190,6 +190,7 @@ $router->add("/warehouse/managers/history/yearly", ["controller" => "admins", "a
 $router->add("/warehouse/managers/history/monthly", ["controller" => "admins", "action" => "monthly", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/history/denied", ["controller" => "admins", "action" => "denied", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/history/denied/{id:\d+}", ["controller" => "admins", "action" => "deniedOne", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/history/monthly-pdf", ["controller" => "admins", "action" => "generatePDFReport", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // *************************************************************************************************************************************************//
 

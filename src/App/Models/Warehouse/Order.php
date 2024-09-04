@@ -422,6 +422,36 @@ class Order extends Model
         return $orders;
     }
 
+    // Automated monthly report generator
+    public function monthlyReportPreviousMonth(): array
+    {
+        $conn = $this->db->getConn();
+        
+        // Calculate the previous month
+        $previousMonth = date('Y-m', strtotime('first day of last month'));
+    
+        // SQL to get the total quantity of each item per section for the previous month
+        $sql = "SELECT section.name as section_name, 
+                       section.id as section_id, 
+                       item.id as item_id, 
+                       item.name as item_name, 
+                       SUM(CAST(JSON_UNQUOTE(JSON_EXTRACT(items, CONCAT('$.\"', item.id, '\".quantity'))) AS UNSIGNED)) AS total_quantity
+                FROM orders
+                JOIN item ON JSON_CONTAINS_PATH(items, 'one', CONCAT('$.\"', item.id, '\"'))
+                JOIN section ON orders.section_id = section.id
+                WHERE orders.status = 'approved' 
+                  AND DATE_FORMAT(orders.approved_denied_at, '%Y-%m') = :previous_month
+                GROUP BY section.id, item.id, item.name
+                ORDER BY item_name";
+    
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':previous_month', $previousMonth, PDO::PARAM_STR);
+        $stmt->execute();
+        $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $orders;
+    }    
+
     public function approvedReport($week = null, $year = null, $section_id = null)
     {
         $conn = $this->db->getConn();
