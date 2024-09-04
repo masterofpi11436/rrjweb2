@@ -311,16 +311,18 @@ class Mail extends Mailer
     {
         try {
             // Recipients
-            $this->mail->setFrom('rrjweb2@rrjva.org', 'Report System');
+            $this->mail->setFrom('rrjweb2@rrjva.org', 'WSR');
             $this->mail->addAddress('watson.charles@rrjva.org'); // Add recipient
+            $this->mail->addAddress('tugglem@rrjva.org'); // Add recipient
     
             // Content
             $this->mail->isHTML(true);                            
             $this->mail->Subject = 'WSR Monthly Report';
-            $this->mail->Body    = 'Please find the attached monthly report.';
+            $this->mail->Body    = 'Please find the attached monthly report. <br><br>
+                                    Please use Google Sheets, Microsoft Excel, or Libre Office Calc to view the file Properly';
     
             // Attach the CSV file
-            $this->mail->addAttachment($filePath, 'monthly_report.csv');
+            $this->mail->addAttachment($filePath, 'monthly_report.csv', 'base64', 'text/csv');
     
             // Send the email
             $this->mail->send();
