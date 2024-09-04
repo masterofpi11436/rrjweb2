@@ -312,11 +312,11 @@ class Mail extends Mailer
         try {
             // Recipients
             $this->mail->setFrom('rrjweb2@rrjva.org', 'Report System');
-            $this->mail->addAddress('tugglem@rrjva.org'); // Add recipient
+            $this->mail->addAddress('watson.charles@rrjva.org'); // Add recipient
     
             // Content
             $this->mail->isHTML(true);                            
-            $this->mail->Subject = 'Monthly Report';
+            $this->mail->Subject = 'WSR Monthly Report';
             $this->mail->Body    = 'Please find the attached monthly report.';
     
             // Attach the CSV file
