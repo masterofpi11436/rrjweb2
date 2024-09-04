@@ -5,6 +5,9 @@ declare(strict_types=1);
 
 namespace App\Controllers\Warehouse;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 use App\Models\Warehouse\Admin;
 use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Item;
@@ -690,13 +693,13 @@ class Admins extends Controller
         return $this->response;
     }
 
-    // Automated PDF created for the monthly report
-    public function generatePDFReport(): Response
+    // Automated spreadsheet created for the monthly report
+    public function generateCSVReport(): Response
     {
-        // Fetch data for the previous month (no need for sectionId)
+        // Fetch data for the previous month (same as before)
         $orders = $this->orderModel->monthlyReportPreviousMonth();
     
-        // Prepare data for the PDF report
+        // Prepare data for the CSV report (same structure as before)
         $tableData = [];
         $sectionNames = [];
         $itemNames = [];
@@ -713,56 +716,40 @@ class Admins extends Controller
             $itemTotals[$order['item_id']] += $order['total_quantity'];
         }
     
-        $pdf = new \FPDF();
-        $pdf->AddPage();
-        $pdf->SetFont('Arial', 'B', 12);
-        
-        // Define column widths
-        $itemNameWidth = 60; // Wider column for item names
-        $sectionWidth = 50;  // Standard width for section columns (adjust as needed)
-        $totalWidth = 20;    // Total column width
-        
-        // Table Header
-        $pdf->Cell($itemNameWidth, 10, 'Item Name', 1, 0, 'C'); // Center align the header
-        $xPos = $pdf->GetX();  // Save the starting X position
-        $yPos = $pdf->GetY();  // Save the starting Y position
-        
-        foreach ($sectionNames as $sectionName) {
-            // Center-align section names with MultiCell
-            $pdf->MultiCell($sectionWidth, 10, $sectionName, 1, 'C'); // 'C' for center alignment
-            $xPos += $sectionWidth; // Move X position for the next section header
-            $pdf->SetXY($xPos, $yPos); // Move cursor to the right for the next section name
-        }
-        
-        // Add the "Total" header
-        $pdf->Cell($totalWidth, 10, 'Total', 1, 0, 'C'); // Center align the Total header
-        $pdf->Ln(); // Move to the next line for the data rows
-        
-        // Table Data
-        $pdf->SetFont('Arial', '', 10); // Normal font for data rows
-        
-        foreach ($itemNames as $itemId => $itemName) {
-            // Use MultiCell for item names to wrap long text and center it
-            $pdf->MultiCell($itemNameWidth, 10, $itemName, 1, 'C'); // Center align the item names
-        
-            // Move cursor back to the right position for the next columns
-            $pdf->SetXY($pdf->GetX() + $itemNameWidth, $pdf->GetY() - 10);
-        
-            foreach ($sectionNames as $sectionId => $sectionName) {
-                // Center align the data cells
-                $pdf->Cell($sectionWidth, 10, isset($tableData[$itemId][$sectionId]) ? $tableData[$itemId][$sectionId] : '', 1, 0, 'C');
-            }
-        
-            // Center align the total column
-            $pdf->Cell($totalWidth, 10, $itemTotals[$itemId] ?? 0, 1, 0, 'C');
-            $pdf->Ln();
-        }
-        
+        // Set headers for downloading a CSV file
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename=Monthly_Report.csv');
     
-        // Output PDF
-        $pdf->Output('I', 'Monthly_Report.pdf'); // 'I' sends the PDF inline to the browser
+        // Open a file pointer for output
+        $output = fopen('php://output', 'w');
+    
+        // Set the header row
+        $headers = ['Item Name'];
+        foreach ($sectionNames as $sectionName) {
+            $headers[] = $sectionName;
+        }
+        $headers[] = 'Total'; // Add "Total" column
+    
+        // Write the header row to the CSV
+        fputcsv($output, $headers);
+    
+        // Fill in the data rows
+        foreach ($itemNames as $itemId => $itemName) {
+            $row = [$itemName];
+            foreach ($sectionNames as $sectionId => $sectionName) {
+                $row[] = isset($tableData[$itemId][$sectionId]) ? $tableData[$itemId][$sectionId] : '';
+            }
+            $row[] = $itemTotals[$itemId] ?? 0; // Add the total column
+            fputcsv($output, $row);
+        }
+    
+        // Close the file pointer
+        fclose($output);
+    
+        // End the script (because the file is streamed)
+        exit();
     }
-
+    
 
     public function denied(): Response
     {
