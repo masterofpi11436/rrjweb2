@@ -14,12 +14,12 @@ class User extends Model
     protected $userTable = "user";
     protected $sectionTable = "section";
 
-    // Populate the drop down menu with the list of supervisors
+    // Populate the drop down menu with the list of supervisors includes warehouse personnel to submit orderes themselves
     public function getSupervisors()
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->userTable} WHERE warehouse_role = 9 ORDER BY last_name";
+        $sql = "SELECT * FROM {$this->userTable} WHERE warehouse_role = 9 || warehouse_role = 8 || warehouse_role = 11 ORDER BY last_name";
 
         $stmt = $conn->query($sql);
 

@@ -10,4 +10,5 @@ Excel: =CONCATENATE("('", B2, "', '", C2, "', '", D2, "', '", E2, "', '", F2, "'
 
 WSR To Do List
 
--Automated Monthly Report Feature
+- Automated Monthly Report Feature
+- Warehouse Manager can submit a request himself.
