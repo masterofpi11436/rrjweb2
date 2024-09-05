@@ -65,7 +65,7 @@
                     <input type="hidden" name="order" id="orderHidden" value="<?= htmlspecialchars($order ?? 'asc') ?>">
                     <div class="quantity-input">
                         <button type="button" onclick="changeQuantity(this, -1)">-</button>
-                        <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($selectedItems[$item['id']]['quantity'] ?? 0); ?>" readonly>
+                        <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($selectedItems[$item['id']]['quantity'] ?? 0); ?>">
                         <button type="button" onclick="changeQuantity(this, 1)">+</button>
                     </div>
                     <button type="submit">Add</button>

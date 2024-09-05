@@ -100,7 +100,7 @@ class Items extends Controller
      */
     public function addNewItem()
     {
-        $itemTypes = $this->model->getItemTypes();
+        $itemTypes = $this->model->getItemTypesforManagers();
 
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Item", "heading" => "Add Item"]));
         $this->response->appendBody($this->viewer->render("Warehouse/Items/add_item.php", ["itemTypes" => $itemTypes]));
