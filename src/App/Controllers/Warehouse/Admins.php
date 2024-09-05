@@ -14,6 +14,7 @@ use App\Models\Warehouse\Item;
 use App\Models\Warehouse\Section;
 use App\Models\Warehouse\Mail;
 use App\Models\Warehouse\User;
+use App\Models\Warehouse\Monthly;
 use Framework\Viewer;
 use Framework\Exceptions\PageNotFoundException;
 use Framework\Controller;
@@ -29,7 +30,7 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel, private Section $sectionModel, private Mail $mailer, private User $userModel){}
+    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel, private Section $sectionModel, private Mail $mailer, private User $userModel, private Monthly $monthlyModel){}
 
     public function dashboard(): Response
     {
@@ -399,7 +400,7 @@ class Admins extends Controller
 
         if ($success) {
             // Email the supervisor that their order was approved
-            // $this->mailer->sendApproved($requestorEmail);
+            $this->mailer->sendApproved($requestorEmail);
             // Redirect to a success page or the dashboard
             return $this->redirect('/warehouse/dashboard');
         } else {
@@ -693,18 +694,116 @@ class Admins extends Controller
         return $this->response;
     }
 
+    // Helper function go to get the recipient id
+    private function getRecipientID(string $id): array
+    {
+        // Assign this model's id to the $item variable to the 
+        $recipient = $this->monthlyModel->getOne($id);
+
+        // Verify if the item was found
+        if ($recipient === false) {
+
+            throw new PageNotFoundException("No Information Found");
+        }
+
+        return $recipient;
+    }
+
     // List of people to send the monthly report too automatically
     public function monthlyReportRecipients()
     {
-        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Monthly", "heading" => "Recipient List"]));
+        $monthly = $this->monthlyModel->getAll();
+
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Monthly List", "heading" => "Recipient List"]));
     
         // Render the new admin form
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/monthly_list.php"));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/Recipients/monthly_list.php", ['monthly' => $monthly]));
     
         // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php"));
     
         return $this->response;
+    }
+
+    // Add a recipient
+    public function addRecipient()
+    {
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Recipient", "heading" => "Add Recipient"]));
+        
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/Recipients/add.php"));
+        
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
+    // Create Recipient
+    public function createRecipient()
+    {
+        $data = [
+            "first_name" => $this->request->post["first_name"],
+            "last_name" => $this->request->post["last_name"],
+            "email" => $this->request->post["email"]
+        ];
+
+        if ($this->monthlyModel->insertRecord($data)) {
+            return $this->redirect('/warehouse/managers/history/monthly-list');
+        } else {
+
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Add Recipient", "heading" => "Add Recipient"]));
+        
+            $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/Recipients/add.php", ["errorMessage" => $this->monthlyModel->getErrors()]));
+            
+            $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    
+            return $this->response;
+        }
+    }
+
+    // Edit a recipient
+    public function editRecipient(string $id)
+    {
+        $recipient = $this->getRecipientID($id);
+    
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Monthly List", "heading" => "Recipient List"]));
+        
+        // Render the new admin form
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/Recipients/edit.php", ['recipient' => $recipient]));
+        
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+        
+        return $this->response;
+    }
+
+    public function updateRecipient(string $id)
+    {
+        $recipient = $this->getRecipientID($id);
+
+        $recipient["first_name"] = $this->request->post["first_name"];
+        $recipient["last_name"] = $this->request->post["last_name"];
+        $recipient["email"] = $this->request->post["email"];
+
+        if ($this->monthlyModel->updateRecord($id, $recipient)) {
+            return $this->redirect("/warehouse/managers/history/monthly-list");
+        } else {
+
+            $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Item", "heading" => "Edit Item"]));
+            $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/Recipients/edit.php", ["errorMessage" => $this->monthlyModel->getErrors(), "recipient" => $recipient]));
+            $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+            return $this->response;
+        }
+    }
+
+    // Destroy Recipient
+    public function destroyRecipient($id): Response
+    {
+        $recipient = $this->getRecipientID($id);
+
+        $this->monthlyModel->deleteRecord($id);
+
+        return $this->redirect("/warehouse/managers/history/monthly-list");
     }
 
     // Automated spreadsheet created for the monthly report
