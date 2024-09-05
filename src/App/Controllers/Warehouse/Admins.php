@@ -788,7 +788,7 @@ class Admins extends Controller
 
     public function sectionOrder(): Response
     {
-        $supervisors = $this->userModel->getSupervisors();
+        $supervisors = $this->userModel->getSupervisorsAndManagers();
         $sections = $this->userModel->getSections();
 
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Section Select",

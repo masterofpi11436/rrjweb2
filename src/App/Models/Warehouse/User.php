@@ -19,6 +19,17 @@ class User extends Model
     {
         $conn = $this->db->getConn();
 
+        $sql = "SELECT * FROM {$this->userTable} WHERE warehouse_role = 9 ORDER BY last_name";
+
+        $stmt = $conn->query($sql);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getSupervisorsAndManagers()
+    {
+        $conn = $this->db->getConn();
+
         $sql = "SELECT * FROM {$this->userTable} WHERE warehouse_role = 9 || warehouse_role = 8 || warehouse_role = 11 ORDER BY last_name";
 
         $stmt = $conn->query($sql);
