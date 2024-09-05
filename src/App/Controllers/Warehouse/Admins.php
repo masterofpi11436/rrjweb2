@@ -693,6 +693,20 @@ class Admins extends Controller
         return $this->response;
     }
 
+    // List of people to send the monthly report too automatically
+    public function monthlyReportRecipients()
+    {
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Monthly", "heading" => "Recipient List"]));
+    
+        // Render the new admin form
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/monthly_list.php"));
+    
+        // Render the footer
+        $this->response->appendBody($this->viewer->render("shared/footer.php"));
+    
+        return $this->response;
+    }
+
     // Automated spreadsheet created for the monthly report
     public function generateCSVReport(): Response
     {

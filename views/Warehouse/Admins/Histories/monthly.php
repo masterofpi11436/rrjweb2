@@ -2,6 +2,10 @@
     <button>Go Back</button>
 </form>
 
+<form action="/warehouse/managers/history/monthly-list">
+    <button>Recipient List</button>
+</form>
+
 <form method="get" action="/warehouse/managers/history/monthly">
     <label for="section">Select Section:</label>
     <select name="section_id" id="section">
@@ -47,13 +51,3 @@
 <?php else: ?>
     <p>No requests found for <?= htmlspecialchars($selected_section_name) ?> in the month of <?= htmlspecialchars(date('F Y', strtotime($selected_month))) ?>.</p>
 <?php endif; ?>
-
-<div>
-    <?php
-        // Get the previous URL from the HTTP referer
-        $previousUrl = $_SERVER['HTTP_REFERER'] ?? '/login';
-    ?>
-    <form action="<?= htmlspecialchars($previousUrl) ?>">
-        <button>Go Back</button>
-    </form>
-</div>

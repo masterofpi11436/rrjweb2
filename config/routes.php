@@ -188,6 +188,7 @@ $router->add("/warehouse/managers/history/approved", ["controller" => "admins", 
 $router->add("/warehouse/managers/history/approved/{id:\d+}", ["controller" => "admins", "action" => "approvedOne", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/history/yearly", ["controller" => "admins", "action" => "yearly", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/history/monthly", ["controller" => "admins", "action" => "monthly", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/history/monthly-list", ["controller" => "admins", "action" => "monthlyReportRecipients", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/history/denied", ["controller" => "admins", "action" => "denied", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/history/denied/{id:\d+}", ["controller" => "admins", "action" => "deniedOne", "middleware" => "auth", "namespace" => "Warehouse"]);
 
