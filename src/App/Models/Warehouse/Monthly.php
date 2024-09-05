@@ -28,4 +28,19 @@ class Monthly extends Model
             $this->addError("first_name", "First name is required!");
         }
     }
+
+    public function getEmails(): array
+    {
+        $conn = $this->db->getConn();
+
+        $sql = "SELECT email FROM monthly";
+
+        $stmt = $conn->prepare($sql);
+
+        $stmt->execute();
+        $mailingList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $mailingList;
+    }
+
 }

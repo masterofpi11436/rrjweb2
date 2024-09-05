@@ -307,19 +307,21 @@ class Mail extends Mailer
     }
 
     // Atomated Monthly report
-    public function sendCSVReportByEmail($filePath)
+    public function sendCSVReportByEmail($filePath, $mailingList)
     {
         try {
             // Recipients
             $this->mail->setFrom('rrjweb2@rrjva.org', 'WSR');
-            // $this->mail->addAddress('watson.charles@rrjva.org'); // Add recipient
-            $this->mail->addAddress('tugglem@rrjva.org'); // Add recipient
+            
+            foreach ($mailingList as $recipient) {
+                $this->mail->addAddress($recipient['email']);
+            }
     
             // Content
             $this->mail->isHTML(true);                            
-            $this->mail->Subject = 'WSR Monthly Report';
-            $this->mail->Body    = 'Please find the attached monthly report. <br><br>
-                                    Please use Google Sheets, Microsoft Excel, or Libre Office Calc to view the file Properly';
+            $this->mail->Subject = 'Warehouse Monthly Report';
+            $this->mail->Body    = 'Please find the attached the warehouse\'s monthly report. <br><br>
+                                    Please use Google Sheets, Microsoft Excel, or Libre Office Calc to view the file in its original form';
     
             // Attach the CSV file
             $this->mail->addAttachment($filePath, 'monthly_report.csv', 'base64', 'text/csv');

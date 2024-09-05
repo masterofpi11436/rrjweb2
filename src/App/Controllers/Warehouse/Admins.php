@@ -866,11 +866,13 @@ class Admins extends Controller
     
         // Close the file pointer
         fclose($output);
-    
+
+        // Get emailing list
+        $mailingList = $this->monthlyModel->getEmails();
+
         // Call the mailer to send the report
-        $this->mailer->sendCSVReportByEmail($filePath); // Make sure the mailer is set up correctly
+        $this->mailer->sendCSVReportByEmail($filePath, $mailingList); // Make sure the mailer is set up correctly
     
-        // Redirect the user to another page after sending the email
         exit;
     }
     
