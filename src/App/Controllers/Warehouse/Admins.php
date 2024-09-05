@@ -875,7 +875,81 @@ class Admins extends Controller
     
         exit;
     }
+
+    // Manual spreadsheet created for the monthly report
+    public function generateCSVReport2(): Response
+    {
+        // Setting server address to trusted IP to allow task schedular to run this action method
+        $trustIP = ['::1', '127.0.0.1'];
     
+        // Exit the script if it cannot be executed
+    
+        if (!in_array($_SERVER['REMOTE_ADDR'], $trustIP)) {
+            exit('Unauthorized');
+        }
+    
+        // Fetch data for the previous month (same as before)
+        $orders = $this->orderModel->monthlyReportPreviousMonth();
+        
+        // Prepare data for the CSV report (same structure as before)
+        $tableData = [];
+        $sectionNames = [];
+        $itemNames = [];
+        $itemTotals = [];
+        
+        foreach ($orders as $order) {
+            $itemNames[$order['item_id']] = $order['item_name'];
+            $sectionNames[$order['section_id']] = $order['section_name'];
+            $tableData[$order['item_id']][$order['section_id']] = $order['total_quantity'];
+        
+            if (!isset($itemTotals[$order['item_id']])) {
+                $itemTotals[$order['item_id']] = 0;
+            }
+            $itemTotals[$order['item_id']] += $order['total_quantity'];
+        }
+        
+        // Define file path for saving the CSV temporarily
+        $filePath = sys_get_temp_dir() . '/monthly_report.csv';
+        
+        // Open a file pointer for writing the CSV to disk
+        $output = fopen($filePath, 'w');
+        
+        // Set the header row
+        $headers = ['Item Name'];
+        foreach ($sectionNames as $sectionName) {
+            $headers[] = $sectionName;
+        }
+        $headers[] = 'Total'; // Add "Total" column
+    
+        // Write the header row to the CSV
+        fputcsv($output, $headers);
+    
+        // Fill in the data rows
+        foreach ($itemNames as $itemId => $itemName) {
+            $row = [$itemName];
+            foreach ($sectionNames as $sectionId => $sectionName) {
+                $row[] = isset($tableData[$itemId][$sectionId]) ? $tableData[$itemId][$sectionId] : '';
+            }
+            $row[] = $itemTotals[$itemId] ?? 0; // Add the total column
+            fputcsv($output, $row);
+        }
+        
+        // Close the file pointer
+        fclose($output);
+
+        // Get emailing list
+        $mailingList = $this->monthlyModel->getEmails();
+
+        // Call the mailer to send the report
+        if ($this->mailer->sendCSVReportByEmail($filePath, $mailingList)) {
+            
+            $_SESSION['success_message'] = 'Monthly report sent successfully!';
+            return $this->redirect('/warehouse/managers/history/monthly');
+        } else {
+            $_SESSION['error_message'] = 'Failed to send the monthly report. Verify that the emails are correct!';
+            return $this->redirect('/warehouse/managers/history/monthly');
+        }
+    }
 
     public function denied(): Response
     {

@@ -6,6 +6,24 @@
     <button>Recipient List</button>
 </form>
 
+<?php if (!empty($_SESSION['success_message'])): ?>
+    <div class="alert alert-success">
+        <?php echo $_SESSION['success_message']; ?>
+        <?php unset($_SESSION['success_message']); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (!empty($_SESSION['error_message'])): ?>
+    <div class="alert alert-danger">
+        <?php echo $_SESSION['error_message']; ?>
+        <?php unset($_SESSION['error_message']); ?>
+    </div>
+<?php endif; ?>
+
+<form action="/warehouse/managers/history/monthly-report2">
+    <button>Send Monthly Report</button>
+</form>
+
 <form method="get" action="/warehouse/managers/history/monthly">
     <label for="section">Select Section:</label>
     <select name="section_id" id="section">
