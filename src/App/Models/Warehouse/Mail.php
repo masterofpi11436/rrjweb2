@@ -312,7 +312,7 @@ class Mail extends Mailer
         try {
             // Recipients
             $this->mail->setFrom('rrjweb2@rrjva.org', 'WSR');
-            $this->mail->addAddress('watson.charles@rrjva.org'); // Add recipient
+            // $this->mail->addAddress('watson.charles@rrjva.org'); // Add recipient
             $this->mail->addAddress('tugglem@rrjva.org'); // Add recipient
     
             // Content
