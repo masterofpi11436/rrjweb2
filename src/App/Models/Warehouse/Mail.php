@@ -327,7 +327,14 @@ class Mail extends Mailer
             $this->mail->addAttachment($filePath, 'monthly_report.csv', 'base64', 'text/csv');
     
             // Send the email
-            $this->mail->send();
+            if ($this->mail->send()) {
+                // Delete the temporary file after sending the email
+                unlink($filePath);
+                return true; // Email sent successfully
+            } else {
+                unlink($filePath);
+                return false; // Email sending failed
+            }
     
             // Delete the temporary file after sending the email
             unlink($filePath);

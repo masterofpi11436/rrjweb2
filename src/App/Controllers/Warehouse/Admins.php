@@ -878,16 +878,7 @@ class Admins extends Controller
 
     // Manual spreadsheet created for the monthly report
     public function generateCSVReport2(): Response
-    {
-        // Setting server address to trusted IP to allow task schedular to run this action method
-        $trustIP = ['::1', '127.0.0.1'];
-    
-        // Exit the script if it cannot be executed
-    
-        if (!in_array($_SERVER['REMOTE_ADDR'], $trustIP)) {
-            exit('Unauthorized');
-        }
-    
+    {    
         // Fetch data for the previous month (same as before)
         $orders = $this->orderModel->monthlyReportPreviousMonth();
         
@@ -940,15 +931,17 @@ class Admins extends Controller
         // Get emailing list
         $mailingList = $this->monthlyModel->getEmails();
 
-        // Call the mailer to send the report
-        if ($this->mailer->sendCSVReportByEmail($filePath, $mailingList)) {
-            
-            $_SESSION['success_message'] = 'Monthly report sent successfully!';
-            return $this->redirect('/warehouse/managers/history/monthly');
+        // Check the result of the email sending process
+        $success = $this->mailer->sendCSVReportByEmail($filePath, $mailingList);
+
+        if ($success === true) {
+            $_SESSION['success_message'] = 'Monthly report successfully sent!';
         } else {
             $_SESSION['error_message'] = 'Failed to send the monthly report. Verify that the emails are correct!';
-            return $this->redirect('/warehouse/managers/history/monthly');
         }
+
+        // Redirect after setting the message
+        return $this->redirect('/warehouse/managers/history/monthly');
     }
 
     public function denied(): Response

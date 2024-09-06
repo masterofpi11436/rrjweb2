@@ -18,6 +18,10 @@ class Monthly extends Model
     {
         if (empty($data["email"])) {
             $this->addError("email", "Email is required!");
+        } elseif (!filter_var($data["email"], FILTER_VALIDATE_EMAIL)) {
+            $this->addError("email", "Invalid email format!");
+        } elseif (!str_ends_with($data["email"], '@rrjva.org')) {
+            $this->addError("email", "Email must end with '@rrjva.org'.");
         }
 
         if (empty($data["last_name"])) {

@@ -11,11 +11,9 @@
         <?php echo $_SESSION['success_message']; ?>
         <?php unset($_SESSION['success_message']); ?>
     </div>
-<?php endif; ?>
-
-<?php if (!empty($_SESSION['error_message'])): ?>
+<?php elseif (!empty($_SESSION['error_message'])): ?>
     <div class="alert alert-danger">
-        <?php echo $_SESSION['error_message']; ?>
+        <p>Email Failed to send!</p>
         <?php unset($_SESSION['error_message']); ?>
     </div>
 <?php endif; ?>
