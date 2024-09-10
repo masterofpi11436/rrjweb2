@@ -463,9 +463,9 @@ class Admins extends Controller
         // Check if a search query is present
         $searchQuery = $_GET['search'] ?? ($_POST['search'] ?? '');
         if (!empty($searchQuery)) {
-            $items = $this->itemModel->searchItems($searchQuery);
+            $items = $this->itemModel->searchItemsForManagers($searchQuery);
         } else {
-            $items = $this->itemModel->getAllItems();
+            $items = $this->itemModel->getAllItemsForManagers();
         }
     
         // Store the current order items in the session if not already set
