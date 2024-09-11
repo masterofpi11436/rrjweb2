@@ -274,12 +274,16 @@ class Supervisors extends Controller
 
     public function approveOrder(string $id): Response
     {
+
+        // Get all warehouse managers to email request
+        $warehouseManagers = $this->userModel->getWarehouseManagers();
+        
         $success = $this->orderModel->approveUserOrder($id);
 
         if ($success) {
 
             // Send Email to warehouse manager
-            $this->mailer->sendNewRequestToWarehouse();
+            $this->mailer->sendNewRequestToWarehouse($warehouseManagers);
             
             // Redirect to a success page or the dashboard
             return $this->redirect('/warehouse/supervisors/dashboard');

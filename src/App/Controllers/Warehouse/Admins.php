@@ -674,14 +674,14 @@ class Admins extends Controller
     
         $selectedSectionName = $sectionId ? $sections[array_search($sectionId, array_column($sections, 'id'))]['name'] : 'All Sections';
     
-        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Monthly", "heading" => "Section Items (30 Days)"]));
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Monthly", "heading" => "Monthly Reports"]));
     
         // Render the view
         $this->response->appendBody($this->viewer->render("Warehouse/Admins/Histories/monthly.php", [
             "tableData" => $tableData,
             "sectionNames" => $sectionNames,
             "itemNames" => $itemNames,
-            "itemTotals" => $itemTotals,  // Pass the item totals to the view
+            "itemTotals" => $itemTotals,
             "sections" => $sections,
             "section_id" => $sectionId,
             "months" => $months,
