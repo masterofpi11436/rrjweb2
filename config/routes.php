@@ -200,6 +200,7 @@ $router->add("/warehouse/managers/history/denied/{id:\d+}", ["controller" => "ad
 // Automated Monthly Report
 $router->add("/warehouse/managers/history/monthly-report", ["controller" => "admins", "action" => "generateCSVReport", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/history/monthly-report2", ["controller" => "admins", "action" => "generateCSVReport2", "middleware" => "auth", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/history/monthly-report-print", ["controller" => "admins", "action" => "printCurrentMonthlyReport", "middleware" => "auth", "namespace" => "Warehouse"]);
 
 // *************************************************************************************************************************************************//
 

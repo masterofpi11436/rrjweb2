@@ -22,6 +22,10 @@
     <button>Send Monthly Report</button>
 </form>
 
+<form action="/warehouse/managers/history/monthly-report-print">
+    <button>Download Monthly Report</button>
+</form>
+
 <form method="get" action="/warehouse/managers/history/monthly">
     <label for="section">Select Section:</label>
     <select name="section_id" id="section">
@@ -42,28 +46,29 @@
 </form>
 
 <?php if (!empty($itemNames) && !empty($sectionNames)): ?>
-    <table border="1" cellpadding="10" cellspacing="0" style="width:100%; margin-top:20px; border-collapse:collapse;">
-        <thead>
-            <tr>
-                <th>Item Name</th>
-                <?php foreach ($sectionNames as $sectionId => $sectionName): ?>
-                    <th><?= htmlspecialchars($sectionName) ?></th>
-                <?php endforeach; ?>
-                <th>Total</th>  <!-- Add the Total column header -->
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($itemNames as $itemId => $itemName): ?>
-                <tr>
-                    <td><?= htmlspecialchars($itemName) ?></td>
-                    <?php foreach ($sectionNames as $sectionId => $sectionName): ?>
-                        <td><?= isset($tableData[$itemId][$sectionId]) ? htmlspecialchars($tableData[$itemId][$sectionId]) : '' ?></td>
-                    <?php endforeach; ?>
-                    <td><?= htmlspecialchars($itemTotals[$itemId] ?? '') ?></td>  <!-- Display the item total -->
-                </tr>
+<table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse:collapse;">
+    <thead>
+        <tr>
+            <th style="width: 150px; text-align: center; height: auto;">Item Name</th>
+            <?php foreach ($sectionNames as $sectionId => $sectionName): ?>
+                <th style="width: 120px; text-align: center; height: auto;"><?= htmlspecialchars($sectionName) ?></th>
             <?php endforeach; ?>
-        </tbody>
-    </table>
+            <th style="width: 100px; text-align: center; height: auto;">Total</th> <!-- Add the Total column header with fixed width -->
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($itemNames as $itemId => $itemName): ?>
+            <tr style="height: 40px;"> <!-- Define row height -->
+                <td style="width: 200px; text-align: center; height: auto;"><?= htmlspecialchars($itemName) ?></td>
+                <?php foreach ($sectionNames as $sectionId => $sectionName): ?>
+                    <td style="width: 150px; text-align: center; height: auto;"><?= isset($tableData[$itemId][$sectionId]) ? htmlspecialchars($tableData[$itemId][$sectionId]) : '' ?></td>
+                <?php endforeach; ?>
+                <td style="width: 150px; text-align: center; height: auto;"><?= htmlspecialchars($itemTotals[$itemId] ?? '') ?></td> <!-- Item total -->
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
 <?php else: ?>
     <p>No requests found for <?= htmlspecialchars($selected_section_name) ?> in the month of <?= htmlspecialchars(date('F Y', strtotime($selected_month))) ?>.</p>
 <?php endif; ?>

@@ -944,6 +944,69 @@ class Admins extends Controller
         return $this->redirect('/warehouse/managers/history/monthly');
     }
 
+    // Manual spreadsheet created for the monthly report
+    public function printCurrentMonthlyReport(): Response
+    {
+        // Fetch data for the previous month
+        $orders = $this->orderModel->monthlyReportPreviousMonth();
+        
+        // Prepare data for the CSV report
+        $tableData = [];
+        $sectionNames = [];
+        $itemNames = [];
+        $itemTotals = [];
+        
+        foreach ($orders as $order) {
+            $itemNames[$order['item_id']] = $order['item_name'];
+            $sectionNames[$order['section_id']] = $order['section_name'];
+            $tableData[$order['item_id']][$order['section_id']] = $order['total_quantity'];
+        
+            if (!isset($itemTotals[$order['item_id']])) {
+                $itemTotals[$order['item_id']] = 0;
+            }
+            $itemTotals[$order['item_id']] += $order['total_quantity'];
+        }
+        
+        // Set the file name for download
+        $fileName = 'monthly_report_' . date('Y-m-d') . '.csv';
+        
+        // Set the headers to force download the CSV file
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment;filename="' . $fileName . '"');
+        header('Cache-Control: no-cache, no-store, must-revalidate');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+        
+        // Open output stream for writing CSV directly to the browser
+        $output = fopen('php://output', 'w');
+        
+        // Set the header row
+        $headers = ['Item Name'];
+        foreach ($sectionNames as $sectionName) {
+            $headers[] = $sectionName;
+        }
+        $headers[] = 'Total'; // Add "Total" column
+    
+        // Write the header row to the CSV
+        fputcsv($output, $headers);
+    
+        // Fill in the data rows
+        foreach ($itemNames as $itemId => $itemName) {
+            $row = [$itemName];
+            foreach ($sectionNames as $sectionId => $sectionName) {
+                $row[] = isset($tableData[$itemId][$sectionId]) ? $tableData[$itemId][$sectionId] : '';
+            }
+            $row[] = $itemTotals[$itemId] ?? 0; // Add the total column
+            fputcsv($output, $row);
+        }
+        
+        // Close the output stream
+        fclose($output);
+    
+        // Terminate the script to prevent further output
+        exit;
+    }
+
     public function denied(): Response
     {
         $orders = $this->orderModel->deniedReport();
