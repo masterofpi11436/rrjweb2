@@ -209,21 +209,26 @@ class Items extends Controller
      */
     public function updateItem(string $id): Response
     {
+        // Get the current item data
         $item = $this->getItemID($id);
-
-        $item["name"] = $this->request->post["name"];
-        $item["item_type"] = $this->request->post["item_type"];
-        $item["quantity"] = $this->request->post["quantity"];
-
-        if ($this->model->updateRecord($id, $item)) {
+    
+        // Prepare the data for updating (only the fields in the "item" table)
+        $updateData = [
+            "name" => $this->request->post["name"],
+            "item_type" => $this->request->post["item_type"],
+            "quantity" => $this->request->post["quantity"]
+        ];
+    
+        // Perform the update
+        if ($this->model->updateRecord($id, $updateData)) {
             return $this->redirect("/warehouse/items/one/{$id}");
         } else {
             $itemTypes = $this->model->getItemTypes();
-
+    
             $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Item", "heading" => "Edit Item"]));
             $this->response->appendBody($this->viewer->render("Warehouse/Items/edit_item.php", ["errorMessage" => $this->model->getErrors(), "item" => $item, "itemTypes" => $itemTypes]));
             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
-
+    
             return $this->response;
         }
     }
