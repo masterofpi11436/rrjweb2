@@ -1056,6 +1056,8 @@ class Admins extends Controller
         $items = $_SESSION['selected_items'] ?? [];
         $supervisor = $_SESSION['selected_supervisor'];
 
+        // var_dump($_SESSION); die;
+
         $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Verify Request",
                                                                                 "heading" => "Verify Your Request"]));
 
@@ -1067,36 +1069,43 @@ class Admins extends Controller
 
         return $this->response;
     }
-    
 
-    public function update(): Response
+    public function updateItems(): Response
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Get current session items
             $items = $_SESSION['selected_items'] ?? [];
-
-            foreach ($_POST['items'] as $index => $item) {
-                if ($_POST['action'] === 'update') {
-                    if ($item['quantity'] == 0) {
-                        // Remove item if quantity is 0
-                        unset($items[$index]);
-                    } else {
-                        // Update quantity
-                        $items[$index]['quantity'] = $item['quantity'];
+    
+            // Loop through the posted items and handle updates/removals
+            if (isset($_POST['items'])) {
+                foreach ($_POST['items'] as $item_id => $item_data) {
+                    if ($_POST['action'] === 'update') {
+                        // Update the quantity if greater than 0, otherwise remove
+                        $new_quantity = (int)$item_data['quantity'];
+                        if ($new_quantity > 0) {
+                            // Update the item's quantity
+                            $items[$item_id]['quantity'] = $new_quantity;
+                        } else {
+                            // Remove item if quantity is 0
+                            unset($items[$item_id]);
+                        }
+                    } elseif ($_POST['action'] === 'remove') {
+                        // Remove the item completely
+                        unset($items[$item_id]);
                     }
-                } elseif ($_POST['action'] === 'remove') {
-                    // Remove item
-                    unset($items[$index]);
                 }
             }
-
-            // Update the session with modified items
-            $_SESSION['selected_items'] = array_values($items);
+    
+            // Update the session with the modified items
+            $_SESSION['selected_items'] = $items;
+    
+            // Redirect back to the verification page
+            header('Location: /warehouse/managers/inhouse/verify');
+            exit;
         }
-
-        // Redirect back to the verify page
-        header('Location: /warehouse/managers/inhouse/verify');
-        exit;
-    }
+    
+        return $this->response;
+    }    
 
     public function submitOrder(): Response
     {

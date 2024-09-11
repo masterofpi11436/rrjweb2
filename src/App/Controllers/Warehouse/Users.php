@@ -160,7 +160,7 @@ class Users extends Controller
             // Send Email to warehouse manager
             $this->mailer->sendNewRequestToSupervisor($email);
 
-            unset($_SESSION['selected_items'], $_SESSION['selected_session']);
+            unset($_SESSION['selected_items'], $_SESSION['selected_supervisor']);
 
             return $this->redirect('/warehouse/users/success');
 

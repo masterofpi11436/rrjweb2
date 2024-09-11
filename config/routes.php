@@ -167,8 +167,8 @@ $router->add("/warehouse/admins/destroy/{id:\d+}", ["controller" => "admins", "a
 // In House request creation pages
 $router->add("/warehouse/managers/inhouse/section", ["controller" => "admins", "action" => "sectionOrder", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/inhouse/create", ["controller" => "admins", "action" => "createOrder", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
-$router->add("/warehouse/managers/inhouse/verify", ["controller" => "admins", "action" => "verifyOrder", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
-$router->add("/warehouse/managers/inhouse/update", ["controller" => "admins", "action" => "updateOrder", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/inhouse/verify", ["controller" => "admins", "action" => "verifyOrder", "method" => "get", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
+$router->add("/warehouse/managers/inhouse/update", ["controller" => "admins", "action" => "updateItems", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 $router->add("/warehouse/managers/inhouse/submit", ["controller" => "admins", "action" => "submitOrder", "middleware" => "auth|store_wsr_info", "namespace" => "Warehouse"]);
 
 // Approve/Deny Page
