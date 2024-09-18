@@ -4,7 +4,8 @@
 
 <div class="container">
     <form method="get" action="/warehouse/supervisors/items" id="searchForm">
-        <input type="text" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
+        <label for="search">Search</label>
+        <input type="text" id="search" name="search" placeholder="Search by Name or Type" class="search-input" value="<?= htmlspecialchars($search ?? '') ?>">
         
         <select name="item_type">
             <option value="">Select Item Type</option>
