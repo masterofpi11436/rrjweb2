@@ -301,6 +301,12 @@ $router->add("/warehouse/properties/request/deny/{id:\d+}", ["controller" => "pr
 $router->add("/warehouse/properties/request/edit/{id:\d+}", ["controller" => "properties", "action" => "editOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 $router->add("/warehouse/properties/request/update/{id:\d+}", ["controller" => "properties", "action" => "updateOrder", "middleware" => "auth", "namespace" => "Warehouse"]);
 
+// *************************************************************************************************************************************************//
+
+// Medical PDF Splitter
+$router->add("/medical/main", ["controller" => "medicals", "action" => "index"]);
+$router->add("/medical/processpdf", ["controller" => "medicals", "action" => "processpdf"]);
+
 // Blanket Route
 // $router->add("/{controller}/{action}");
 // $router->add("/{controller}/{action}/{id:\d+}");

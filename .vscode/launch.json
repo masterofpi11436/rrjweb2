@@ -8,7 +8,7 @@
             "name": "Launch Edge",
             "request": "launch",
             "type": "msedge",
-            "url": "http://localhost/warehouse/login",
+            "url": "http://localhost/medical/main",
             "webRoot": "${workspaceFolder}"
         }
         
