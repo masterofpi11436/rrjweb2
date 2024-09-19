@@ -305,7 +305,9 @@ $router->add("/warehouse/properties/request/update/{id:\d+}", ["controller" => "
 
 // Medical PDF Splitter
 $router->add("/medical/main", ["controller" => "medicals", "action" => "index"]);
-$router->add("/medical/processpdf", ["controller" => "medicals", "action" => "processpdf"]);
+$router->add("/medical/uploadpdf", ["controller" => "medicals", "action" => "uploadpdf"]);
+$router->add("/medical/processpdf", ["controller" => "medicals", "action" => "processPDF"]);
+$router->add("/medical/downloadpdf", ["controller" => "medicals", "action" => "downloadpdf"]);
 
 // Blanket Route
 // $router->add("/{controller}/{action}");
