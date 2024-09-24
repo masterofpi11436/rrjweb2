@@ -34,6 +34,11 @@ class Admins extends Controller
 
     public function dashboard(): Response
     {
+        // Reset Session to zero to navigate to other pages
+        unset($_SESSION['selected_items']);
+        unset($_SESSION['selected_supervisor']);
+        unset($_SESSION['selected_section']);
+
         $orders = $this->orderModel->getAllPendingOrders();
 
         // Render the warehouse_header
