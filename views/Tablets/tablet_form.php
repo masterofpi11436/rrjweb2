@@ -62,11 +62,6 @@
     </div>
 
     <div>
-        <label for="created_at">Date Created:</label>
-        <input type="date" id="created_at" name="created_at" value="<?= htmlspecialchars($tablet['created_at'] ?? '') ?>">
-    </div>
-
-    <div>
         <button type="submit">Save</button>
     </div>
 </div>
