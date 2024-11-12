@@ -25,8 +25,8 @@ $router->add('/logout', ["controller" => "users", "action" => "logout"]);
 // *************************************************************************************************************************************************//
 
 // Search for names on the Restricted tablet list and the OPR list
-$router->add("/names/all", ["controller" => "names", "action" => "viewall", "middleware" => "auth"]);
-$router->add("/names/viewall", ["controller" => "names", "action" => "viewall", "middleware" => "auth"]);
+$router->add("/names/all", ["controller" => "names", "action" => "viewall"]);
+$router->add("/names/viewall", ["controller" => "names", "action" => "viewall"]);
 
 // *************************************************************************************************************************************************//
 
