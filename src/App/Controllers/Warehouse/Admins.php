@@ -5,20 +5,22 @@ declare(strict_types=1);
 
 namespace App\Controllers\Warehouse;
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Exception;
+use Framework\Viewer;
 
-use App\Models\Warehouse\Admin;
-use App\Models\Warehouse\Order;
+use Framework\Response;
+use Framework\Controller;
 use App\Models\Warehouse\Item;
-use App\Models\Warehouse\Section;
 use App\Models\Warehouse\Mail;
 use App\Models\Warehouse\User;
+use App\Models\Warehouse\Admin;
+use App\Models\Warehouse\Order;
 use App\Models\Warehouse\Monthly;
-use Framework\Viewer;
+use App\Models\Warehouse\Section;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Framework\Exceptions\PageNotFoundException;
-use Framework\Controller;
-use Framework\Response;
+use Framework\Exceptions\FailedProcessingRequest;
 
 /**
  * Controller for handling admin-related actions.
@@ -457,15 +459,37 @@ class Admins extends Controller
     // Page for the warehouse manager to edit the order
     public function editOrder(string $id): Response
     {
+        // Step 1: Fetch the order
         $order = $this->orderModel->getOrderForEdit($id);
-    
         if (!$order) {
             return $this->response->redirect('/warehouse/admins/dashboard');
         }
     
+        // Step 2: Initialize or update the session with selected items
+        if (!isset($_SESSION['selected_items'])) {
+            $_SESSION['selected_items'] = $order['items'];
+        } else {
+            // Merge new items from the order into the session
+            $existingItemIds = array_column($_SESSION['selected_items'], 'id');
+            foreach ($order['items'] as $newItem) {
+                $found = false;
+                foreach ($_SESSION['selected_items'] as &$selectedItem) {
+                    if ($selectedItem['id'] == $newItem['id']) {
+                        $selectedItem['quantity'] = $newItem['quantity'];
+                        $found = true;
+                        break;
+                    }
+                }
+                if (!$found) {
+                    $_SESSION['selected_items'][] = $newItem;
+                }
+            }
+        }
+    
+        // Step 3: Fetch item types
         $itemTypes = $this->itemModel->getItemTypes();
     
-        // Check if a search query is present
+        // Step 4: Handle search queries or fetch all items
         $searchQuery = $_GET['search'] ?? ($_POST['search'] ?? '');
         if (!empty($searchQuery)) {
             $items = $this->itemModel->searchItemsForManagers($searchQuery);
@@ -473,26 +497,24 @@ class Admins extends Controller
             $items = $this->itemModel->getAllItemsForManagers();
         }
     
-        // Store the current order items in the session if not already set
-        if (!isset($_SESSION['selected_items'])) {
-            $_SESSION['selected_items'] = $order['items'];
-        }
+        // Step 5: Render the view
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", [
+            "title" => "Edit Order",
+            "heading" => "Edit Order"
+        ]));
     
-        // Render the warehouse_header
-        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "Edit Order", "heading" => "Edit Order"]));
+        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_order.php", [
+            "order" => $order,
+            "itemTypes" => $itemTypes,
+            "items" => $items,
+            "selectedItems" => $_SESSION['selected_items']
+        ]));
     
-        // Render the edit order page
-        $this->response->appendBody($this->viewer->render("Warehouse/Admins/Requests/edit_order.php", ["order" => $order,
-                                                                                                       "itemTypes" => $itemTypes,
-                                                                                                       "items" => $items,
-                                                                                                       "selectedItems" => $_SESSION['selected_items']]));
-    
-        // Render the footer
         $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
     
         return $this->response;
     }
-    
+
     public function edit(string $id): Response
     {
         $order = $this->orderModel->getOne($id);
@@ -513,69 +535,79 @@ class Admins extends Controller
     {
         // Retrieve the order
         $order = $this->orderModel->getOrderForEdit($id);
-    
         if (!$order) {
             return $this->response->redirect('/warehouse/admins/dashboard');
         }
     
+        // Initialize variables
         $note = $_POST['note'] ?? '';
         $searchQuery = $_POST['search'] ?? '';
-    
-        // Get previously selected items and quantities from the session
         $selectedItems = $_SESSION['selected_items'] ?? [];
     
         // Check if item_id is set in the POST request
         if (isset($_POST['item_id'])) {
-            $itemId = $_POST['item_id'];
+            $itemId = (int)$_POST['item_id'];
             $quantity = (int)$_POST['quantity'];
     
-            // Add or update the item in the session if quantity is greater than zero
-            if ($quantity > 0) {
-                if (isset($order['items'][$itemId])) {
-                    $order['items'][$itemId]['quantity'] = $quantity;
-                } else {
-                    $item = $this->itemModel->getItemById($itemId);
-                    $order['items'][$itemId] = [
+            // Find the item in the existing order or session
+            $itemFound = false;
+    
+            // Update existing item quantities or add a new item
+            foreach ($selectedItems as &$selectedItem) {
+                if ($selectedItem['id'] === $itemId) {
+                    if ($quantity > 0) {
+                        $selectedItem['quantity'] = $quantity;
+                    } else {
+                        // Remove the item if quantity is zero
+                        $itemFound = true;
+                        unset($selectedItems[array_search($selectedItem, $selectedItems)]);
+                    }
+                    $itemFound = true;
+                    break;
+                }
+            }
+    
+            // If the item is not found, add it
+            if (!$itemFound && $quantity > 0) {
+                $item = $this->itemModel->getItemById($id);
+                if ($item) {
+                    $selectedItems[] = [
                         'id' => $itemId,
                         'name' => $item['name'],
                         'item_type' => $item['item_type'],
-                        'quantity' => $quantity
+                        'quantity' => $quantity,
                     ];
                 }
-                $selectedItems[$itemId] = $order['items'][$itemId];
-            } else {
-                // Remove the item if quantity is zero
-                unset($order['items'][$itemId]);
-                unset($selectedItems[$itemId]);
             }
     
+            // Update session with selected items
             $_SESSION['selected_items'] = $selectedItems;
         }
     
-        // Update the order items and note in the database
-        $updatedItems = json_encode($order['items']);
+        // Update the order items in the database
+        $updatedItems = json_encode($selectedItems);
         $success = $this->orderModel->updateOrderItems($id, $updatedItems, $note);
     
         if ($success) {
             // Send email only if the note is being updated
             if (isset($_POST['update_note'])) {
-                // Get the supervisor's email
                 $requestorEmail = $this->orderModel->getSupervisorEmail($id);
     
                 // Send email with the note
                 if ($requestorEmail) {
                     $this->mailer->sendEdited($requestorEmail, $note);
                 }
-                
-                // Redirect to the Order Details page after submitting the note
+    
+                // Redirect to the Order Details page
                 return $this->redirect("/warehouse/managers/request/one/$id");
             }
     
+            // Redirect back to the edit page with the search query
             return $this->redirect("/warehouse/managers/request/edit/$id?search=" . urlencode($searchQuery));
         } else {
             return $this->redirect("/warehouse/managers/request/edit/$id?error=update_failed&search=" . urlencode($searchQuery));
         }
-    }    
+    }
 
     /*********************************************************************************************************************************** */
     // History Pages
