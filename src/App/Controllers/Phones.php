@@ -266,74 +266,74 @@ class Phones extends Controller
         return $this->response;
     }
 
-    public function updatePhones(): Response
-    {
-        $sender = '';
-        $oldNum = '';
-        $newNum = '';
-        $oldName = '';
-        $newName = '';
-        $oldSection = '';
-        $newSection = '';
-        $oldRankTitle = '';
-        $newRankTitle = '';
-        $note = '';
+    // public function updatePhones(): Response
+    // {
+    //     $sender = '';
+    //     $oldNum = '';
+    //     $newNum = '';
+    //     $oldName = '';
+    //     $newName = '';
+    //     $oldSection = '';
+    //     $newSection = '';
+    //     $oldRankTitle = '';
+    //     $newRankTitle = '';
+    //     $note = '';
 
-        // Render the header
-        $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Email Update", "heading" => ""]));
+    //     // Render the header
+    //     $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Email Update", "heading" => ""]));
 
-        // Render the all phones view
-        $this->response->appendBody($this->viewer->render("Phones/Reports/email_form.php", ["sender" => $sender,
-                                                                                            "oldNum" => $oldNum,
-                                                                                            "newNum" => $newNum,
-                                                                                            "oldName" => $oldName,
-                                                                                            "newNum" => $newNum,
-                                                                                            "newName" => $newName,
-                                                                                            "oldSection" => $oldSection,
-                                                                                            "newSection" => $newSection,
-                                                                                            "oldRankTitle" => $oldRankTitle,
-                                                                                            "newRankTitle" => $newRankTitle, 
-                                                                                            "note" => $note]));
+    //     // Render the all phones view
+    //     $this->response->appendBody($this->viewer->render("Phones/Reports/email_form.php", ["sender" => $sender,
+    //                                                                                         "oldNum" => $oldNum,
+    //                                                                                         "newNum" => $newNum,
+    //                                                                                         "oldName" => $oldName,
+    //                                                                                         "newNum" => $newNum,
+    //                                                                                         "newName" => $newName,
+    //                                                                                         "oldSection" => $oldSection,
+    //                                                                                         "newSection" => $newSection,
+    //                                                                                         "oldRankTitle" => $oldRankTitle,
+    //                                                                                         "newRankTitle" => $newRankTitle, 
+    //                                                                                         "note" => $note]));
 
-        // Render the footer
-        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    //     // Render the footer
+    //     $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
-        return $this->response;
-    }
+    //     return $this->response;
+    // }
 
-    public function emailSuccess(): Response
-    {
-        if(!empty($this->request->post)) {
+    // public function emailSuccess(): Response
+    // {
+    //     if(!empty($this->request->post)) {
 
-            // Add to Email the information and Send
-            $success = $this->mailer->sendPhoneUpdate($this->request->post['sender'],
-            $this->request->post['old_extension'],
-            $this->request->post['new_extension'],
-            $this->request->post['old_name'],
-            $this->request->post['new_name'],
-            $this->request->post['old_section'],
-            $this->request->post['new_section'],
-            $this->request->post['old_ranktitle'],
-            $this->request->post['new_ranktitle'],
-            $this->request->post['note'],);
+    //         // Add to Email the information and Send
+    //         $success = $this->mailer->sendPhoneUpdate($this->request->post['sender'],
+    //         $this->request->post['old_extension'],
+    //         $this->request->post['new_extension'],
+    //         $this->request->post['old_name'],
+    //         $this->request->post['new_name'],
+    //         $this->request->post['old_section'],
+    //         $this->request->post['new_section'],
+    //         $this->request->post['old_ranktitle'],
+    //         $this->request->post['new_ranktitle'],
+    //         $this->request->post['note'],);
 
-            if ($success) {
-                // Render the header
-                $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Success", "heading" => "Success, an email notification has been sent!"]));
+    //         if ($success) {
+    //             // Render the header
+    //             $this->response->appendBody($this->viewer->render("shared/header.php", ["title" => "Success", "heading" => "Success, an email notification has been sent!"]));
 
-                // Render the all phones view
-                $this->response->appendBody($this->viewer->render("Phones/Reports/email_success.php"));
+    //             // Render the all phones view
+    //             $this->response->appendBody($this->viewer->render("Phones/Reports/email_success.php"));
 
-                // Render the footer
-                $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+    //             // Render the footer
+    //             $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
 
-                return $this->response;
-            }
+    //             return $this->response;
+    //         }
             
-        } else {
+    //     } else {
 
 
-        }
-    }
+    //     }
+    // }
     
 }

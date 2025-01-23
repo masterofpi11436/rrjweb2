@@ -313,4 +313,10 @@ $router->add("/medical/downloadpdf", ["controller" => "medicals", "action" => "d
 // $router->add("/{controller}/{action}");
 // $router->add("/{controller}/{action}/{id:\d+}");
 
+// Email test ground
+$router->add("/mailtest/mailtest", [
+    "controller" => "MailTest", // Ensure correct case
+    "action" => "sendEmailView"
+]);
+
 return $router;

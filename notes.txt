@@ -12,3 +12,5 @@ WSR To Do List
 
 - Automated Monthly Report Feature
 - Warehouse Manager can submit a request himself.
+
+http://localhost/?state=0cf64cf69c4780f35b6a4b0df2ca84fe&code=4/0AanRRrthrNrpAo5LfLEO-z69TNIeH8MhUhkkCzXn0-Dq9jng1ojd7XLDwqzOklTcD2Zmpw&scope=email%20profile%20openid%20https://www.googleapis.com/auth/userinfo.email%20https://www.googleapis.com/auth/userinfo.profile%20https://mail.google.com/&authuser=1&hd=rrjva.org&prompt=consent

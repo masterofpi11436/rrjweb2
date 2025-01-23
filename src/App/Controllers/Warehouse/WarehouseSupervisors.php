@@ -116,7 +116,7 @@ class WarehouseSupervisors extends Controller
 
         if ($success) {
             // Email the supervisor that their order was approved
-            $this->mailer->sendApproved($requestorEmail);
+            // $this->mailer->sendApproved($requestorEmail);
             // Redirect to a success page or the dashboard
             return $this->redirect('/warehouse/dashboard');
         } else {
@@ -157,7 +157,7 @@ class WarehouseSupervisors extends Controller
 
         if ($success) {
             
-            $this->mailer->sendDenied($requestorEmail, $note);
+            // $this->mailer->sendDenied($requestorEmail, $note);
             return $this->redirect('/warehouse/dashboard');
         } else {
             // Handle failure case
@@ -275,7 +275,7 @@ class WarehouseSupervisors extends Controller
     
                 // Send email with the note
                 if ($requestorEmail) {
-                    $this->mailer->sendEdited($requestorEmail, $note);
+                    // $this->mailer->sendEdited($requestorEmail, $note);
                 }
                 
                 // Redirect to the Order Details page after submitting the note
