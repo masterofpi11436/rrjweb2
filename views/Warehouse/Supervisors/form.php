@@ -60,6 +60,7 @@
                 <div class="item-name"><?= htmlspecialchars($item['name']); ?></div>
                 <form action="/warehouse/supervisors/items" method="post" class="cartForm">
                     <input type="hidden" name="item_id" value="<?= htmlspecialchars($item['id']); ?>">
+                    <input type="hidden" id="scrollPosition" name="scrollPosition" value="<?= htmlspecialchars($_POST['scrollPosition'] ?? ''); ?>">
                     <input type="hidden" name="search" id="searchHidden" value="<?= htmlspecialchars($search ?? '') ?>">
                     <input type="hidden" name="item_type" id="itemTypeHidden" value="<?= htmlspecialchars($itemType ?? '') ?>">
                     <input type="hidden" name="sort" id="sortHidden" value="<?= htmlspecialchars($sort ?? 'name') ?>">
@@ -78,28 +79,29 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Restore scroll position
-    if (sessionStorage.getItem('scrollPos')) {
-        window.scrollTo(0, sessionStorage.getItem('scrollPos'));
+    // Restore scroll position on page load
+    var scrollInput = document.querySelector('input[name="scrollPosition"]');
+    if (scrollInput && scrollInput.value) {
+        var storedPos = parseInt(scrollInput.value, 10);
+        if (!isNaN(storedPos)) {
+            window.scrollTo(0, storedPos);
+        }
     }
 
     // Save scroll position before form submission
     var forms = document.querySelectorAll("form");
     for (var i = 0; i < forms.length; i++) {
-        forms[i].addEventListener("submit", function(event) {
-            sessionStorage.setItem('scrollPos', window.scrollY);
-
-            // Populate hidden fields for the cart form with current search parameters
-            if (this.classList.contains('cartForm')) {
-                var searchForm = document.getElementById('searchForm');
-                this.querySelector('#searchHidden').value = searchForm.querySelector('input[name="search"]').value;
-                this.querySelector('#itemTypeHidden').value = searchForm.querySelector('select[name="item_type"]').value;
-                this.querySelector('#sortHidden').value = searchForm.querySelector('input[name="sort"]').value;
-                this.querySelector('#orderHidden').value = searchForm.querySelector('input[name="order"]').value;
+        forms[i].addEventListener("submit", function() {
+            // Find the scrollPosition field within the specific form
+            var scrollField = this.querySelector('input[name="scrollPosition"]');
+            if (scrollField) {
+                scrollField.value = window.scrollY;
             }
         });
     }
 });
+
+
 
 function changeQuantity(button, delta) {
     var input = button.parentElement.querySelector('input[name="quantity"]');

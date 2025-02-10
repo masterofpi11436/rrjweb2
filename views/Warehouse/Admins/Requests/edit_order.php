@@ -53,6 +53,15 @@
         <th>Action</th>
     </tr>
     <?php foreach ($items as $item): ?>
+        <?php
+            $itemQuantity = 0;
+            foreach($_SESSION['selected_items'] as $selectedItem) {
+                if ($selectedItem['id'] == $item['id']) {
+                    $itemQuantity = $selectedItem['quantity'];
+                    break;
+                }
+            }
+        ?>
         <tr>
             <td><?= htmlspecialchars($item['name']); ?></td>
             <td><?= htmlspecialchars($item['item_type']); ?></td>
@@ -60,7 +69,7 @@
                 <form action="/warehouse/managers/request/update/<?= htmlspecialchars($order['id']); ?>" method="post">
                     <input type="hidden" name="item_id" value="<?= htmlspecialchars($item['id']); ?>">
                     <input type="hidden" name="search" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>">
-                    <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($order['items'][$item['id']]['quantity'] ?? 0); ?>">
+                    <input type="number" name="quantity" min="0" value="<?= htmlspecialchars($itemQuantity); ?>">
             </td>
             <td>
                 <button type="submit">Update Cart</button>
