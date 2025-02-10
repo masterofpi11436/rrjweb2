@@ -27,7 +27,7 @@ class Item extends Model
     //     }
     // }
 
-    public function getItemById(string $id): array|bool
+    public function getItemById($id): array|bool
     {
         $conn = $this->db->getConn();
 

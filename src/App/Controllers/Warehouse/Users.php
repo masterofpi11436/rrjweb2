@@ -158,7 +158,7 @@ class Users extends Controller
             $email = $_SESSION['selected_supervisor']['email'];
 
             // Send Email to warehouse manager
-            // $this->mailer->sendNewRequestToSupervisor($email);
+            $this->mailer->sendNewRequestToSupervisor($email);
 
             unset($_SESSION['selected_items'], $_SESSION['selected_supervisor']);
 

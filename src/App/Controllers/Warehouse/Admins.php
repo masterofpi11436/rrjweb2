@@ -11,7 +11,7 @@ use Framework\Viewer;
 use Framework\Response;
 use Framework\Controller;
 use App\Models\Warehouse\Item;
-// use App\Models\Warehouse\Mail;
+use App\Models\Warehouse\Mail;
 use App\Models\Warehouse\User;
 use App\Models\Warehouse\Admin;
 use App\Models\Warehouse\Order;
@@ -32,7 +32,7 @@ class Admins extends Controller
      *
      * @param Admin $model The admin model
      */
-    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel, private Section $sectionModel, private User $userModel, private Monthly $monthlyModel){}
+    public function __construct(private Admin $model, private Order $orderModel, private Item $itemModel, private Section $sectionModel, private Mail $mailer, private User $userModel, private Monthly $monthlyModel){}
 
     public function dashboard(): Response
     {
@@ -403,11 +403,11 @@ class Admins extends Controller
 
         $success = $this->orderModel->approveOrder($id, $userId);
 
-        // $requestorEmail = $this->orderModel->getSupervisorEmail($id);
+        $requestorEmail = $this->orderModel->getSupervisorEmail($id);
 
         if ($success) {
             // Email the supervisor that their order was approved
-            // $this->mailer->sendApproved($requestorEmail);
+            $this->mailer->sendApproved($requestorEmail);
             // Redirect to a success page or the dashboard
             return $this->redirect('/warehouse/dashboard');
         } else {
@@ -444,7 +444,7 @@ class Admins extends Controller
 
         // Add the denial note to the order
         $success = $this->orderModel->addDenyNoteAndSetDeniedStatus($id, $userId, $note);
-        // $requestorEmail = $this->orderModel->getSupervisorEmail($id);
+        $requestorEmail = $this->orderModel->getSupervisorEmail($id);
 
         if ($success) {
             
@@ -569,7 +569,7 @@ class Admins extends Controller
     
             // If the item is not found, add it
             if (!$itemFound && $quantity > 0) {
-                $item = $this->itemModel->getItemById($id);
+                $item = $this->itemModel->getItemById($itemId);
                 if ($item) {
                     $selectedItems[] = [
                         'id' => $itemId,
@@ -595,7 +595,7 @@ class Admins extends Controller
     
                 // Send email with the note
                 if ($requestorEmail) {
-                    // $this->mailer->sendEdited($requestorEmail, $note);
+                    $this->mailer->sendEdited($requestorEmail, $note);
                 }
     
                 // Redirect to the Order Details page
@@ -908,7 +908,7 @@ class Admins extends Controller
         $mailingList = $this->monthlyModel->getEmails();
 
         // Call the mailer to send the report
-        // $this->mailer->sendCSVReportByEmail($filePath, $mailingList);
+        $this->mailer->sendCSVReportByEmail($filePath, $mailingList);
     
         exit;
     }
@@ -969,7 +969,7 @@ class Admins extends Controller
         $mailingList = $this->monthlyModel->getEmails();
 
         // Check the result of the email sending process
-        // $success = $this->mailer->sendCSVReportByEmail($filePath, $mailingList);
+        $success = $this->mailer->sendCSVReportByEmail($filePath, $mailingList);
 
         if ($success === true) {
             $_SESSION['success_message'] = 'Monthly report successfully sent!';

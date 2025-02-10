@@ -30,7 +30,7 @@ class User extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->userTable} WHERE warehouse_role = 9 || warehouse_role = 8 || warehouse_role = 11 ORDER BY last_name";
+        $sql = "SELECT * FROM {$this->userTable} WHERE warehouse_role = 9 || warehouse_role = 8 || warehouse_role = 11 || warehouse_role = 12 ORDER BY last_name";
 
         $stmt = $conn->query($sql);
 
