@@ -19,7 +19,7 @@ class User extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->userTable} WHERE warehouse_role = 9 ORDER BY last_name";
+        $sql = "SELECT * FROM {$this->userTable} WHERE warehouse_role = 9 OR warehouse_role = 12 ORDER BY last_name";
 
         $stmt = $conn->query($sql);
 
@@ -41,7 +41,7 @@ class User extends Model
     {
         $conn = $this->db->getConn();
 
-        $sql = "SELECT * FROM {$this->userTable} WHERE id = :id AND (warehouse_role = 9 OR warehouse_role = 8 OR warehouse_role = 11)";
+        $sql = "SELECT * FROM {$this->userTable} WHERE id = :id AND (warehouse_role = 9 OR warehouse_role = 8 OR warehouse_role = 11 OR warehouse_role = 12)";
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_STR);
