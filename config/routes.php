@@ -21,6 +21,7 @@ $router->add('/process_password', ["controller" => "users", "action" => "createN
 
 // Log Out
 $router->add('/logout', ["controller" => "users", "action" => "logout"]);
+$router->add('/logout/admin', ["controller" => "users", "action" => "logoutAdmin"]);
 
 // *************************************************************************************************************************************************//
 

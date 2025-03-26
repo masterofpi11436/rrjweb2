@@ -94,6 +94,16 @@ class Users extends Controller
         return $this->redirect('/warehouse/logout');
     }
 
+    // Log out of the current session for admin
+    public function logoutAdmin(): Response
+    {
+        // Destroy the session
+        session_destroy();
+
+        // Redirect to the login page or home page
+        return $this->redirect('/login');
+    }
+
     // Page to verify email of user if password is forgotten
     public function forgotPassword(): Response
     {

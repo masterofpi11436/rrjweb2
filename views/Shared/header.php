@@ -32,6 +32,11 @@
                     <button type="submit">Back to Dashboard</button>
                 </form>
             </div>
+            <div class="logout-button-container">
+                <form action="/logout/admin" method="post" style="display:inline;">
+                    <button type="submit">Admin Logout</button>
+                </form>
+            </div>
         <?php endif; ?>
 
         <div class="logout-button-container">
