@@ -175,7 +175,7 @@ class Admins extends Controller
             ];
             if ($this->model->updateUserRecord($existingUser['id'], $updateData)) {
                 $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
-                // $this->mailer->registerEmail($data['email'], $resetLink);
+                $this->mailer->registerEmail($data['email'], $resetLink);
     
                 // Redirect to the updated user's page
                 return $this->redirect("/warehouse/admins/one/{$existingUser['id']}");
@@ -192,7 +192,7 @@ class Admins extends Controller
             
             if ($this->model->insertRecord($data)) {
                 $resetLink = "rrjweb2/reset_password?token=" . $resetToken;
-                // $this->mailer->registerEmail($data['email'], $resetLink);
+                $this->mailer->registerEmail($data['email'], $resetLink);
     
                 // Redirect to the newly created admin's page
                 return $this->redirect("/warehouse/admins/one/{$this->model->getInsertID()}");
@@ -276,7 +276,7 @@ class Admins extends Controller
 
         if ($this->model->updateUserRecord($id, $updateData)) {
 
-            // $this->mailer->registerEmail($userEmail['email'], $resetLink);
+            $this->mailer->registerEmail($userEmail['email'], $resetLink);
         }
 
         return $this->redirect("/warehouse/admins/resetTokenSuccess");
@@ -407,7 +407,7 @@ class Admins extends Controller
 
         if ($success) {
             // Email the supervisor that their order was approved
-            // $this->mailer->sendApproved($requestorEmail);
+            $this->mailer->sendApproved($requestorEmail);
             // Redirect to a success page or the dashboard
             return $this->redirect('/warehouse/dashboard');
         } else {
@@ -448,7 +448,7 @@ class Admins extends Controller
 
         if ($success) {
             
-            // $this->mailer->sendDenied($requestorEmail, $note);
+            $this->mailer->sendDenied($requestorEmail, $note);
             return $this->redirect('/warehouse/dashboard');
         } else {
              // Handle failure case
@@ -595,7 +595,7 @@ class Admins extends Controller
     
                 // Send email with the note
                 if ($requestorEmail) {
-                    // $this->mailer->sendEdited($requestorEmail, $note);
+                    $this->mailer->sendEdited($requestorEmail, $note);
                 }
     
                 // Redirect to the Order Details page
@@ -908,7 +908,7 @@ class Admins extends Controller
         $mailingList = $this->monthlyModel->getEmails();
 
         // Call the mailer to send the report
-        // $this->mailer->sendCSVReportByEmail($filePath, $mailingList);
+        $this->mailer->sendCSVReportByEmail($filePath, $mailingList);
     
         exit;
     }
@@ -969,7 +969,7 @@ class Admins extends Controller
         $mailingList = $this->monthlyModel->getEmails();
 
         // Check the result of the email sending process
-        // $success = $this->mailer->sendCSVReportByEmail($filePath, $mailingList);
+        $success = $this->mailer->sendCSVReportByEmail($filePath, $mailingList);
 
         if ($success === true) {
             $_SESSION['success_message'] = 'Monthly report successfully sent!';
