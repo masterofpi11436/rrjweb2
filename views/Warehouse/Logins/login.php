@@ -1,3 +1,5 @@
+<h1>Warehouse Store Login</h1>
+
 <form method="post" action="/warehouse/login/auth">
 
     <label for="email">Email:</label>
