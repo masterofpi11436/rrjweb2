@@ -208,10 +208,10 @@ class Supervisors extends Controller
             $this->orderModel->submitSupervisorOrder();
     
             // Send an email confirmation to the Supervisor
-            $this->mailer->emailConfirmation($section, $items, $supervisorEmail);
+            // $this->mailer->emailConfirmation($section, $items, $supervisorEmail);
             
             // Send Email to warehouse manager
-            $this->mailer->sendNewRequestToWarehouse($warehouseManagers);
+            // $this->mailer->sendNewRequestToWarehouse($warehouseManagers);
 
             // Remove items from cart
             unset($_SESSION['selected_section'], $_SESSION['selected_items']);
@@ -283,7 +283,7 @@ class Supervisors extends Controller
         if ($success) {
 
             // Send Email to warehouse manager
-            $this->mailer->sendNewRequestToWarehouse($warehouseManagers);
+            // $this->mailer->sendNewRequestToWarehouse($warehouseManagers);
             
             // Redirect to a success page or the dashboard
             return $this->redirect('/warehouse/supervisors/dashboard');
