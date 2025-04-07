@@ -41,3 +41,4 @@
 <?php else: ?>
     <p>No Extension Found.</p>
 <?php endif; ?>
+<p>If an entry needs to be changed, added, or removed, please contact Mark Tuggle in MIU with the details</p>
