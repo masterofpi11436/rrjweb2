@@ -1,4 +1,4 @@
-<!-- <h1>Warehouse Store Login</h1>
+<h1>Warehouse Store Login</h1>
 
 <form method="post" action="/warehouse/login/auth">
 
@@ -24,9 +24,4 @@
 
 <?php if (isset($errorMessage)): ?>
     <p><?= htmlspecialchars($errorMessage) ?></p>
-<?php endif; ?> -->
-<div">
-    <h1>The Warehouse Store Has Moved</h1><br>
-    <p>Please visit the new store at the link below and please make sure that you view the page in either the Firefox or Chrome Browser:</p><br><br>
-    <a href="http://rrjapps/warehouse/login">Go to the New Store</a>
-</div>
+<?php endif; ?>

@@ -37,6 +37,17 @@ class Logins extends Controller
         return $this->response;
     }
 
+    public function loginTemp(): Response
+    {
+        $this->response->appendBody($this->viewer->render("shared/warehouse_header.php", ["title" => "WSR Login", "heading" => ""]));
+
+        $this->response->appendBody($this->viewer->render("Warehouse/Logins/login-temp.php"));
+
+        $this->response->appendBody($this->viewer->render("shared/footer.php", ["creator" => "Mark Tuggle"]));
+
+        return $this->response;
+    }
+
     // Modify the auth() method in Users controller
     public function auth(): Response
     {

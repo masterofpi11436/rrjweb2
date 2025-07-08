@@ -149,6 +149,7 @@ $router->add("/programs/volunteers/destroy/{id:\d+}", ["controller" => "voluntee
 
 // Warehouse Login Pages
 $router->add("/warehouse/login", ["controller" => "logins", "action" => "login", "namespace" => "Warehouse"]);
+$router->add("/warehouse-temp/login", ["controller" => "logins", "action" => "loginTemp", "namespace" => "Warehouse"]);
 $router->add("/warehouse/login/auth", ["controller" => "logins", "action" => "auth", "method" => "post", "namespace" => "Warehouse"]);
 $router->add('/warehouse/logout', ["controller" => "logins", "action" => "logout", "namespace" => "Warehouse"]);
 $router->add("/warehouse/admins/resetToken/{id:\d+}", ["controller" => "admins", "action" => "resetToken", "middleware" => "auth", "namespace" => "Warehouse"]);

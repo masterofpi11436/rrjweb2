@@ -377,7 +377,7 @@ class Order extends Model
         $sql = "SELECT item.id, item.name, SUM(CAST(JSON_UNQUOTE(JSON_EXTRACT(items, CONCAT('$.\"', item.id, '\".quantity'))) AS UNSIGNED)) AS total_quantity
                 FROM orders
                 JOIN item ON JSON_CONTAINS_PATH(items, 'one', CONCAT('$.\"', item.id, '\"'))
-                WHERE orders.status = 'approved' AND orders.approved_denied_at >= NOW() - INTERVAL 365 DAY
+                WHERE orders.status = 'approved'
                 GROUP BY item.id, item.name";
     
         
