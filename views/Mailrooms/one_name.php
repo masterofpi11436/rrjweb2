@@ -13,7 +13,7 @@
     </tr>
     <tr>
         <th>First Name</th>
-        <td><?= htmlspecialchars($name["last_name"] ?? '') ?></td>
+        <td><?= htmlspecialchars($name["first_name"] ?? '') ?></td>
     </tr>
     <tr>
         <th>Last Name</th>
